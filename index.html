@@ -5,20 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestão Comercial</title>
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
   <style>
     :root {
-      --black: #080808;
-      --black2: #121212;
-      --black3: #1d1d1d;
-      --red: #e50914;
-      --red-dark: #6d0b10;
-      --white: #ffffff;
-      --gray: #a9a9a9;
-      --border: #333333;
-      --green: #2dcc80;
-      --yellow: #f2c14e;
-      --blue: #4b9cff;
-      --orange: #f58b2a;
+      --preto: #080808;
+      --preto-2: #121212;
+      --preto-3: #1d1d1d;
+      --preto-4: #292929;
+      --vermelho: #e50914;
+      --vermelho-escuro: #7f0b11;
+      --branco: #ffffff;
+      --cinza: #a8a8a8;
+      --borda: #363636;
+      --verde: #2dcc83;
+      --amarelo: #f4c542;
+      --azul: #4b9cff;
+      --roxo: #a676ff;
     }
 
     * {
@@ -27,8 +30,8 @@
 
     body {
       margin: 0;
-      background: var(--black);
-      color: var(--white);
+      background: var(--preto);
+      color: var(--branco);
       font-family: Arial, Helvetica, sans-serif;
     }
 
@@ -39,38 +42,43 @@
       font: inherit;
     }
 
-    button {
+    button,
+    a {
       cursor: pointer;
     }
 
-    .app {
+    button {
+      color: white;
+    }
+
+    .layout {
       min-height: 100vh;
     }
 
     .sidebar {
       position: fixed;
-      top: 0;
-      left: 0;
-      bottom: 0;
       z-index: 10;
+      top: 0;
+      bottom: 0;
+      left: 0;
       width: 245px;
       padding: 22px 14px;
       overflow-y: auto;
       background: #050505;
-      border-right: 1px solid var(--border);
+      border-right: 1px solid var(--borda);
     }
 
-    .brand {
+    .logo {
       margin: 0 10px 28px;
-      color: var(--red);
+      color: var(--vermelho);
       font-size: 23px;
       font-weight: bold;
     }
 
-    .brand small {
+    .logo small {
       display: block;
       margin-top: 5px;
-      color: var(--gray);
+      color: var(--cinza);
       font-size: 10px;
       font-weight: normal;
       letter-spacing: 1px;
@@ -83,18 +91,20 @@
       border: 0;
       border-radius: 7px;
       background: transparent;
-      color: #bbb;
+      color: #bdbdbd;
       text-align: left;
+      transition: .2s;
     }
 
     .nav-button:hover,
     .nav-button.active {
-      background: var(--red);
+      background: var(--vermelho);
       color: white;
     }
 
     .main {
       width: calc(100% - 245px);
+      min-height: 100vh;
       margin-left: 245px;
       padding: 28px;
     }
@@ -104,16 +114,18 @@
       align-items: center;
       justify-content: space-between;
       gap: 15px;
-      margin-bottom: 24px;
+      margin-bottom: 25px;
     }
 
     h1,
     h2,
-    h3 {
-      margin: 0;
+    h3,
+    p {
+      margin-top: 0;
     }
 
     h1 {
+      margin-bottom: 5px;
       font-size: 27px;
     }
 
@@ -128,7 +140,7 @@
     }
 
     .muted {
-      color: var(--gray);
+      color: var(--cinza);
       font-size: 13px;
     }
 
@@ -143,61 +155,71 @@
     .panel,
     .card {
       padding: 18px;
-      border: 1px solid var(--border);
+      border: 1px solid var(--borda);
       border-radius: 9px;
-      background: var(--black2);
+      background: var(--preto-2);
+    }
+
+    .panel + .panel {
+      margin-top: 15px;
     }
 
     .cards {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 15px;
-      margin-bottom: 18px;
+      margin-bottom: 20px;
     }
 
-    .metric {
-      color: var(--gray);
-      font-size: 12px;
+    .metric-label {
+      color: var(--cinza);
+      font-size: 11px;
+      letter-spacing: .5px;
       text-transform: uppercase;
     }
 
     .metric-value {
-      margin-top: 9px;
+      margin-top: 10px;
       font-size: 26px;
       font-weight: bold;
     }
 
     .green {
-      color: var(--green);
+      color: var(--verde);
     }
 
     .red {
-      color: var(--red);
+      color: var(--vermelho);
     }
 
     .yellow {
-      color: var(--yellow);
+      color: var(--amarelo);
     }
 
     .blue {
-      color: var(--blue);
+      color: var(--azul);
     }
 
-    .orange {
-      color: var(--orange);
+    .purple {
+      color: var(--roxo);
     }
 
-    .form-grid {
+    .grid-2,
+    .grid-3,
+    .grid-4 {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
     }
 
-    .form-grid.two {
+    .grid-2 {
       grid-template-columns: repeat(2, 1fr);
     }
 
-    .form-grid.four {
+    .grid-3 {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .grid-4 {
       grid-template-columns: repeat(4, 1fr);
     }
 
@@ -212,7 +234,7 @@
     }
 
     label {
-      color: #d0d0d0;
+      color: #d4d4d4;
       font-size: 12px;
     }
 
@@ -222,16 +244,16 @@
       width: 100%;
       padding: 10px;
       outline: none;
-      border: 1px solid var(--border);
+      border: 1px solid var(--borda);
       border-radius: 5px;
-      background: #0a0a0a;
+      background: #0b0b0b;
       color: white;
     }
 
     input:focus,
     select:focus,
     textarea:focus {
-      border-color: var(--red);
+      border-color: var(--vermelho);
     }
 
     textarea {
@@ -239,18 +261,23 @@
       resize: vertical;
     }
 
+    input[type="color"] {
+      height: 40px;
+      padding: 3px;
+    }
+
     .actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 9px;
       margin-top: 15px;
     }
 
     .button {
       padding: 10px 14px;
-      border: 1px solid var(--border);
+      border: 1px solid var(--borda);
       border-radius: 6px;
-      background: var(--black3);
+      background: var(--preto-3);
       color: white;
     }
 
@@ -259,18 +286,18 @@
     }
 
     .button.primary {
-      border-color: var(--red);
-      background: var(--red);
-    }
-
-    .button.danger {
-      background: #4c0b0f;
-      border-color: #87121a;
+      border-color: var(--vermelho);
+      background: var(--vermelho);
     }
 
     .button.success {
-      background: #075f3b;
-      border-color: #138457;
+      border-color: #19724e;
+      background: #095e3c;
+    }
+
+    .button.danger {
+      border-color: #8f151c;
+      background: #4d0c11;
     }
 
     .button.small {
@@ -291,27 +318,27 @@
       max-width: 320px;
     }
 
-    .table-wrap {
+    .table-container {
       overflow-x: auto;
     }
 
     table {
       width: 100%;
-      min-width: 850px;
+      min-width: 900px;
       border-collapse: collapse;
     }
 
     th,
     td {
       padding: 11px 9px;
-      border-bottom: 1px solid var(--border);
+      border-bottom: 1px solid var(--borda);
       text-align: left;
       vertical-align: middle;
       font-size: 13px;
     }
 
     th {
-      color: var(--gray);
+      color: var(--cinza);
       font-size: 11px;
       text-transform: uppercase;
     }
@@ -325,7 +352,9 @@
     }
 
     .badge {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
       padding: 4px 8px;
       border-radius: 20px;
       font-size: 11px;
@@ -333,54 +362,54 @@
     }
 
     .badge-a {
-      background: #551016;
-      color: #ff858c;
+      background: #551017;
+      color: #ff848b;
     }
 
     .badge-b {
       background: #55430b;
-      color: #f5d76f;
+      color: #f6d469;
     }
 
     .badge-c {
-      background: #153c58;
-      color: #80bdff;
+      background: #123e5d;
+      color: #79bbff;
     }
 
-    .badge-green {
-      background: #084e32;
-      color: #76e3ad;
+    .badge-active {
+      background: #075b3b;
+      color: #7df0bd;
     }
 
-    .badge-red {
-      background: #551016;
-      color: #ff858c;
+    .badge-inactive {
+      background: #571018;
+      color: #ff969c;
     }
 
-    .badge-yellow {
-      background: #55430b;
-      color: #f5d76f;
+    .badge-warning {
+      background: #564207;
+      color: #ffdd67;
     }
 
-    .supplier-list {
+    .chips {
       display: flex;
       flex-wrap: wrap;
       gap: 6px;
     }
 
-    .supplier-chip {
+    .chip {
       display: inline-flex;
       align-items: center;
       gap: 5px;
       padding: 5px 8px;
       border: 1px solid #444;
       border-radius: 20px;
-      background: #272727;
+      background: #282828;
       font-size: 11px;
       white-space: nowrap;
     }
 
-    .supplier-chip.inactive {
+    .chip.inactive {
       border-color: #2c2c2c;
       background: #171717;
       color: #777;
@@ -402,7 +431,7 @@
 
     .list-item {
       padding: 11px;
-      border: 1px solid var(--border);
+      border: 1px solid var(--borda);
       border-radius: 6px;
       background: #101010;
     }
@@ -413,72 +442,73 @@
     }
 
     .empty {
-      padding: 24px 10px;
-      color: var(--gray);
+      padding: 23px 10px;
+      color: var(--cinza);
       text-align: center;
       font-size: 13px;
     }
 
     .alert {
       margin-bottom: 15px;
-      padding: 12px;
-      border-left: 4px solid var(--yellow);
+      padding: 13px;
+      border-left: 4px solid var(--amarelo);
       border-radius: 5px;
-      background: #211b08;
-      color: #f2d77a;
+      background: #261f08;
+      color: #f4d97b;
       font-size: 13px;
     }
 
-    .alert.danger {
-      border-left-color: var(--red);
-      background: #290b0e;
-      color: #ffadb1;
+    .alert.red-alert {
+      border-left-color: var(--vermelho);
+      background: #2a0a0d;
+      color: #ffafb4;
     }
 
-    .alert.success {
-      border-left-color: var(--green);
-      background: #083322;
-      color: #8ae8bb;
+    .alert.green-alert {
+      border-left-color: var(--verde);
+      background: #082b1d;
+      color: #89e5b9;
     }
 
     .progress {
       height: 12px;
-      margin-top: 10px;
       overflow: hidden;
       border-radius: 20px;
-      background: #303030;
+      background: #292929;
     }
 
     .progress-bar {
       height: 100%;
       min-width: 0;
       border-radius: 20px;
-      background: var(--red);
+      background: linear-gradient(90deg, var(--vermelho), #ff4851);
     }
 
-    .dashboard-grid {
+    .supplier-products {
+      padding-left: 17px;
+      color: var(--cinza);
+      font-size: 12px;
+    }
+
+    .sale-line {
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 15px;
+      grid-template-columns: 180px 1fr 95px 120px 42px;
+      align-items: end;
+      gap: 8px;
+      margin-bottom: 9px;
     }
 
-    .profile-head {
-      display: flex;
-      justify-content: space-between;
-      gap: 15px;
-      margin-bottom: 18px;
-    }
-
-    .profile-grid {
-      display: grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 15px;
+    .line-total {
+      padding-bottom: 10px;
+      color: var(--verde);
+      font-size: 13px;
+      font-weight: bold;
     }
 
     .modal {
       position: fixed;
+      z-index: 30;
       inset: 0;
-      z-index: 20;
       display: none;
       align-items: center;
       justify-content: center;
@@ -486,25 +516,25 @@
       background: rgba(0, 0, 0, .8);
     }
 
-    .modal.show {
+    .modal.open {
       display: flex;
     }
 
-    .modal-box {
-      width: min(1000px, 100%);
-      max-height: 93vh;
+    .modal-content {
+      width: min(1050px, 100%);
+      max-height: 92vh;
       overflow-y: auto;
-      padding: 20px;
+      padding: 21px;
       border: 1px solid #444;
-      border-top: 3px solid var(--red);
+      border-top: 3px solid var(--vermelho);
       border-radius: 9px;
-      background: var(--black2);
+      background: var(--preto-2);
     }
 
-    .modal-title {
+    .modal-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       margin-bottom: 18px;
     }
 
@@ -512,51 +542,59 @@
       border: 0;
       background: transparent;
       color: #aaa;
-      font-size: 24px;
+      font-size: 25px;
     }
 
-    .sale-line {
+    .profile-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 15px;
+      margin-bottom: 18px;
+    }
+
+    .profile-columns {
       display: grid;
-      grid-template-columns: 1fr 100px 150px 160px 35px;
-      gap: 8px;
-      align-items: end;
-      margin-bottom: 8px;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 15px;
     }
 
-    @media (max-width: 1100px) {
+    @media (max-width: 1150px) {
       .cards {
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .dashboard-grid,
-      .profile-grid {
+      .grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .profile-columns {
         grid-template-columns: 1fr;
       }
 
-      .form-grid,
-      .form-grid.four {
-        grid-template-columns: repeat(2, 1fr);
+      .sale-line {
+        grid-template-columns: 150px 1fr 80px 110px 38px;
       }
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 750px) {
       .sidebar {
-        width: 64px;
+        width: 65px;
         padding: 15px 7px;
       }
 
-      .brand {
-        margin: 0 0 28px;
+      .logo {
+        margin: 0 0 27px;
         font-size: 0;
         text-align: center;
       }
 
-      .brand::before {
+      .logo::before {
         content: "G";
         font-size: 24px;
       }
 
-      .brand small,
+      .logo small,
       .nav-button span {
         display: none;
       }
@@ -564,18 +602,18 @@
       .nav-button {
         padding: 12px 5px;
         text-align: center;
-        font-size: 18px;
+        font-size: 17px;
       }
 
       .main {
-        width: calc(100% - 64px);
-        margin-left: 64px;
-        padding: 15px;
+        width: calc(100% - 65px);
+        margin-left: 65px;
+        padding: 16px;
       }
 
-      .form-grid,
-      .form-grid.two,
-      .form-grid.four {
+      .grid-2,
+      .grid-3,
+      .grid-4 {
         grid-template-columns: 1fr;
       }
 
@@ -584,25 +622,38 @@
         gap: 8px;
       }
 
+      .card,
+      .panel {
+        padding: 13px;
+      }
+
       .metric-value {
-        font-size: 20px;
+        font-size: 21px;
       }
 
       .sale-line {
-        grid-template-columns: 1fr 75px 115px 125px 32px;
+        grid-template-columns: 1fr 75px 100px 35px;
       }
 
-      h1 {
-        font-size: 22px;
+      .sale-line .supplier-field {
+        grid-column: 1 / -1;
+      }
+
+      .sale-line .product-field {
+        grid-column: 1 / -1;
+      }
+
+      .profile-header {
+        flex-direction: column;
       }
     }
   </style>
 </head>
 
 <body>
-  <div class="app">
+  <div class="layout">
     <aside class="sidebar">
-      <div class="brand">
+      <div class="logo">
         GESTÃO
         <small>representação comercial</small>
       </div>
@@ -611,15 +662,14 @@
       <button class="nav-button" data-page="clientes">♙ <span>Clientes</span></button>
       <button class="nav-button" data-page="produtos">▤ <span>Produtos</span></button>
       <button class="nav-button" data-page="fornecedores">◉ <span>Fornecedores</span></button>
-      <button class="nav-button" data-page="vendas">▣ <span>Vendas</span></button>
       <button class="nav-button" data-page="abc">▥ <span>Curva ABC</span></button>
     </aside>
 
     <main class="main">
       <div class="topbar">
         <div>
-          <h1 id="pageTitle">Dashboard</h1>
-          <div class="muted">Acompanhamento comercial e oportunidades de vendas</div>
+          <h1 id="page-title">Dashboard</h1>
+          <div class="muted">Controle comercial, metas e oportunidades de vendas</div>
         </div>
 
         <button class="button primary" onclick="openSaleModal()">+ Nova venda</button>
@@ -627,100 +677,100 @@
 
       <!-- DASHBOARD -->
       <section class="page active" id="page-dashboard">
-        <div id="dashboardAlerts"></div>
+        <div id="dashboard-alerts"></div>
 
-        <div class="panel" style="margin-bottom:18px">
+        <div class="panel">
           <div class="toolbar">
             <div>
               <h2>Meta de vendas</h2>
               <div class="muted">
-                Cadastre a meta mensal e acompanhe automaticamente a meta diária.
+                Informe a meta mensal e a meta diária desejada.
               </div>
             </div>
 
-            <button class="button small" onclick="openGoalModal()">Editar meta</button>
+            <button class="button small" onclick="openSettingsModal()">
+              Configurar meta
+            </button>
           </div>
 
-          <div class="cards" style="margin-bottom:0">
-            <div>
-              <div class="metric">Meta mensal</div>
-              <div class="metric-value" id="goalMonthly">R$ 0,00</div>
+          <div class="cards">
+            <div class="card">
+              <div class="metric-label">Meta mensal</div>
+              <div class="metric-value" id="goal-month">R$ 0,00</div>
             </div>
 
-            <div>
-              <div class="metric">Meta diária</div>
-              <div class="metric-value blue" id="goalDaily">R$ 0,00</div>
+            <div class="card">
+              <div class="metric-label">Vendido no mês</div>
+              <div class="metric-value green" id="goal-sold">R$ 0,00</div>
             </div>
 
-            <div>
-              <div class="metric">Vendido no mês</div>
-              <div class="metric-value green" id="monthRevenue">R$ 0,00</div>
+            <div class="card">
+              <div class="metric-label">Falta vender</div>
+              <div class="metric-value red" id="goal-missing">R$ 0,00</div>
             </div>
 
-            <div>
-              <div class="metric">Falta vender</div>
-              <div class="metric-value red" id="remainingGoal">R$ 0,00</div>
+            <div class="card">
+              <div class="metric-label">Necessário por dia</div>
+              <div class="metric-value yellow" id="goal-needed-day">R$ 0,00</div>
             </div>
           </div>
 
           <div class="progress">
-            <div class="progress-bar" id="goalProgress"></div>
+            <div class="progress-bar" id="goal-progress"></div>
           </div>
 
-          <div class="muted" style="margin-top:8px">
-            <span id="goalPercentage">0%</span> da meta atingida.
-            Meta diária considerando os dias restantes:
-            <strong id="remainingDailyGoal">R$ 0,00</strong>
+          <div class="muted" id="goal-summary" style="margin-top:9px"></div>
+        </div>
+
+        <div class="cards" style="margin-top:15px">
+          <div class="card">
+            <div class="metric-label">Clientes cadastrados</div>
+            <div class="metric-value" id="metric-clients">0</div>
+          </div>
+
+          <div class="card">
+            <div class="metric-label">Produtos cadastrados</div>
+            <div class="metric-value" id="metric-products">0</div>
+          </div>
+
+          <div class="card">
+            <div class="metric-label">Vendas realizadas</div>
+            <div class="metric-value" id="metric-sales">0</div>
+          </div>
+
+          <div class="card">
+            <div class="metric-label">Faturamento geral</div>
+            <div class="metric-value green" id="metric-revenue">R$ 0,00</div>
           </div>
         </div>
 
-        <div class="cards">
-          <div class="card">
-            <div class="metric">Clientes cadastrados</div>
-            <div class="metric-value" id="metricClients">0</div>
-          </div>
-
-          <div class="card">
-            <div class="metric">Produtos cadastrados</div>
-            <div class="metric-value" id="metricProducts">0</div>
-          </div>
-
-          <div class="card">
-            <div class="metric">Vendas no mês</div>
-            <div class="metric-value" id="metricSales">0</div>
-          </div>
-
-          <div class="card">
-            <div class="metric">Faturamento geral</div>
-            <div class="metric-value green" id="metricRevenue">R$ 0,00</div>
-          </div>
-        </div>
-
-        <div class="dashboard-grid">
+        <div class="grid-2">
           <div class="panel">
             <h2>Aniversariantes</h2>
             <div class="muted" style="margin-bottom:12px">
               Clientes que fazem aniversário neste mês.
             </div>
-            <div id="birthdays"></div>
+            <div id="birthdays-list"></div>
           </div>
 
           <div class="panel">
-            <h2>Oportunidades comerciais</h2>
+            <h2>Oportunidades de expansão</h2>
             <div class="muted" style="margin-bottom:12px">
-              Clientes inativos e clientes com possibilidade de expansão.
+              Clientes com possibilidade de comprar mais produtos.
             </div>
-            <div id="opportunities"></div>
+            <div id="expansion-list"></div>
           </div>
+        </div>
 
+        <div class="grid-2" style="margin-top:15px">
           <div class="panel">
             <h2>Clientes inativos</h2>
-            <div id="inactiveClients"></div>
+            <div id="inactive-list"></div>
           </div>
 
           <div class="panel">
-            <h2>Produtos sem vendas</h2>
-            <div id="unusedProducts"></div>
+            <h2>Produtos sem pedidos</h2>
+            <div id="unused-products"></div>
           </div>
         </div>
       </section>
@@ -730,36 +780,36 @@
         <div class="panel">
           <h2>Cadastrar cliente</h2>
 
-          <form id="clientForm">
-            <div class="form-grid">
+          <form id="client-form">
+            <div class="grid-3">
               <div class="field">
                 <label>Nome completo *</label>
-                <input id="clientName" required>
+                <input id="client-name" required>
               </div>
 
               <div class="field">
                 <label>Telefone / WhatsApp</label>
-                <input id="clientPhone">
+                <input id="client-phone">
               </div>
 
               <div class="field">
                 <label>E-mail</label>
-                <input id="clientEmail" type="email">
+                <input id="client-email" type="email">
               </div>
 
               <div class="field">
                 <label>Data de nascimento</label>
-                <input id="clientBirth" type="date">
+                <input id="client-birth" type="date">
               </div>
 
               <div class="field">
                 <label>Cidade</label>
-                <input id="clientCity">
+                <input id="client-city">
               </div>
 
               <div class="field">
                 <label>Observações</label>
-                <input id="clientNotes">
+                <input id="client-notes">
               </div>
             </div>
 
@@ -769,13 +819,13 @@
           </form>
         </div>
 
-        <div class="panel" style="margin-top:15px">
+        <div class="panel">
           <div class="toolbar">
             <h2>Clientes cadastrados</h2>
-            <input id="clientSearch" placeholder="Buscar cliente..." oninput="renderClients()">
+            <input id="client-search" placeholder="Buscar cliente..." oninput="renderClients()">
           </div>
 
-          <div class="table-wrap">
+          <div class="table-container">
             <table>
               <thead>
                 <tr>
@@ -784,11 +834,11 @@
                   <th>Última compra</th>
                   <th>Status</th>
                   <th>Pedidos</th>
+                  <th>Faturamento</th>
                   <th>Ações</th>
                 </tr>
               </thead>
-
-              <tbody id="clientsTable"></tbody>
+              <tbody id="clients-table"></tbody>
             </table>
           </div>
         </div>
@@ -799,36 +849,41 @@
         <div class="panel">
           <h2>Cadastrar produto</h2>
 
-          <form id="productForm">
-            <div class="form-grid">
+          <form id="product-form">
+            <div class="grid-3">
               <div class="field">
                 <label>SKU *</label>
-                <input id="productSku" placeholder="Ex.: FORN-001-A" required>
+                <input id="product-sku" required placeholder="Ex.: ABC-001">
               </div>
 
               <div class="field">
                 <label>Nome do produto *</label>
-                <input id="productName" required>
+                <input id="product-name" required>
               </div>
 
               <div class="field">
                 <label>Fornecedor *</label>
-                <select id="productSupplier" required></select>
+                <select id="product-supplier" required></select>
               </div>
 
               <div class="field">
                 <label>Preço de venda *</label>
-                <input id="productPrice" type="number" min="0" step="0.01" required>
+                <input id="product-price" type="number" min="0" step="0.01" required>
               </div>
 
               <div class="field">
                 <label>Categoria</label>
-                <input id="productCategory">
+                <input id="product-category">
               </div>
 
               <div class="field">
+                <label>Prazo de garantia em dias</label>
+                <input id="product-warranty" type="number" min="0" value="0">
+              </div>
+
+              <div class="field full">
                 <label>Observações</label>
-                <input id="productNotes">
+                <textarea id="product-notes"></textarea>
               </div>
             </div>
 
@@ -838,13 +893,13 @@
           </form>
         </div>
 
-        <div class="panel" style="margin-top:15px">
+        <div class="panel">
           <div class="toolbar">
-            <h2>Produtos por fornecedor</h2>
-            <input id="productSearch" placeholder="Buscar por SKU, produto ou fornecedor..." oninput="renderProducts()">
+            <h2>Produtos cadastrados</h2>
+            <input id="product-search" placeholder="Buscar por SKU ou nome..." oninput="renderProducts()">
           </div>
 
-          <div class="table-wrap">
+          <div class="table-container">
             <table>
               <thead>
                 <tr>
@@ -853,12 +908,11 @@
                   <th>Fornecedor</th>
                   <th>Categoria</th>
                   <th>Preço</th>
-                  <th>Qtd. vendida</th>
+                  <th>Vendidos</th>
                   <th>Ações</th>
                 </tr>
               </thead>
-
-              <tbody id="productsTable"></tbody>
+              <tbody id="products-table"></tbody>
             </table>
           </div>
         </div>
@@ -869,21 +923,21 @@
         <div class="panel">
           <h2>Cadastrar fornecedor</h2>
 
-          <form id="supplierForm">
-            <div class="form-grid">
+          <form id="supplier-form">
+            <div class="grid-3">
               <div class="field">
                 <label>Nome do fornecedor *</label>
-                <input id="supplierName" required>
+                <input id="supplier-name" required>
               </div>
 
               <div class="field">
                 <label>Contato</label>
-                <input id="supplierContact">
+                <input id="supplier-contact">
               </div>
 
               <div class="field">
-                <label>Cor de identificação</label>
-                <input id="supplierColor" type="color" value="#e50914">
+                <label>Cor do fornecedor</label>
+                <input id="supplier-color" type="color" value="#e50914">
               </div>
             </div>
 
@@ -893,67 +947,37 @@
           </form>
         </div>
 
-        <div class="panel" style="margin-top:15px">
-          <h2>Fornecedores e seus produtos</h2>
+        <div class="panel">
+          <h2>Fornecedores cadastrados</h2>
 
-          <div class="table-wrap">
+          <div class="table-container">
             <table>
               <thead>
                 <tr>
                   <th>Fornecedor</th>
                   <th>Contato</th>
-                  <th>Produtos cadastrados</th>
-                  <th>SKUs</th>
+                  <th>Produtos vinculados</th>
                   <th>Ações</th>
                 </tr>
               </thead>
-
-              <tbody id="suppliersTable"></tbody>
+              <tbody id="suppliers-table"></tbody>
             </table>
           </div>
         </div>
       </section>
 
-      <!-- VENDAS -->
-      <section class="page" id="page-vendas">
-        <div class="panel">
-          <div class="toolbar">
-            <h2>Histórico de vendas</h2>
-            <button class="button primary" onclick="openSaleModal()">+ Nova venda</button>
-          </div>
-
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>Data</th>
-                  <th>Cliente</th>
-                  <th>Fornecedores</th>
-                  <th>Itens</th>
-                  <th>Vendedor</th>
-                  <th>Total</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-
-              <tbody id="salesTable"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- ABC -->
+      <!-- CURVA ABC -->
       <section class="page" id="page-abc">
         <div class="panel">
           <div class="toolbar">
             <div>
-              <h2>Curva ABC de clientes</h2>
+              <h2>Curva ABC de produtos</h2>
               <div class="muted">
-                A classificação é calculada pelo faturamento acumulado.
+                Classificação por faturamento acumulado: A = 60%, B = 30%, C = 10%.
               </div>
             </div>
 
-            <select id="abcPeriod" onchange="renderABC()">
+            <select id="abc-period" onchange="renderABC()">
               <option value="all">Todo o período</option>
               <option value="365">Últimos 365 dias</option>
               <option value="90">Últimos 90 dias</option>
@@ -961,113 +985,126 @@
             </select>
           </div>
 
-          <div class="table-wrap">
+          <div class="alert">
+            Os produtos são ordenados do maior para o menor faturamento.
+            A classificação é calculada pelo percentual acumulado do faturamento,
+            e não pela quantidade de produtos.
+          </div>
+
+          <div class="table-container">
+            <table>
+              <thead>
+                <tr>
+                  <th>Posição</th>
+                  <th>Produto</th>
+                  <th>Fornecedor</th>
+                  <th>Curva</th>
+                  <th>Quantidade</th>
+                  <th>Faturamento</th>
+                  <th>% individual</th>
+                  <th>% acumulado</th>
+                  <th>Clientes</th>
+                </tr>
+              </thead>
+              <tbody id="abc-products-table"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Curva ABC de clientes</h2>
+          <div class="muted" style="margin-bottom:14px">
+            Clique no cliente para acessar o perfil, histórico, fornecedores,
+            sugestões e oportunidades de expansão.
+          </div>
+
+          <div class="table-container">
             <table>
               <thead>
                 <tr>
                   <th>Cliente</th>
-                  <th>Classe</th>
+                  <th>Curva</th>
                   <th>Pedidos</th>
                   <th>Itens</th>
                   <th>Faturamento</th>
-                  <th>Participação</th>
+                  <th>% individual</th>
+                  <th>% acumulado</th>
                   <th>Última compra</th>
-                  <th>Ações</th>
+                  <th>Ação</th>
                 </tr>
               </thead>
-
-              <tbody id="abcClientsTable"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="panel" style="margin-top:15px">
-          <h2>Curva ABC de produtos</h2>
-
-          <div class="table-wrap">
-            <table>
-              <thead>
-                <tr>
-                  <th>SKU</th>
-                  <th>Produto</th>
-                  <th>Fornecedor</th>
-                  <th>Classe</th>
-                  <th>Quantidade</th>
-                  <th>Faturamento</th>
-                  <th>Clientes</th>
-                </tr>
-              </thead>
-
-              <tbody id="abcProductsTable"></tbody>
+              <tbody id="abc-clients-table"></tbody>
             </table>
           </div>
         </div>
       </section>
 
-      <!-- PERFIL -->
+      <!-- PERFIL DO CLIENTE -->
       <section class="page" id="page-profile">
-        <div id="profileContent"></div>
+        <div id="client-profile"></div>
       </section>
     </main>
   </div>
 
-  <!-- MODAL META -->
-  <div class="modal" id="goalModal">
-    <div class="modal-box">
-      <div class="modal-title">
-        <h2>Meta de vendas</h2>
-        <button class="close" onclick="closeModal('goalModal')">×</button>
+  <!-- MODAL DE CONFIGURAÇÃO DE META -->
+  <div class="modal" id="settings-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Configurar meta de vendas</h2>
+        <button class="close" onclick="closeModal('settings-modal')">×</button>
       </div>
 
-      <form id="goalForm">
-        <div class="form-grid two">
+      <form id="settings-form">
+        <div class="grid-2">
           <div class="field">
-            <label>Mês de referência *</label>
-            <input id="goalMonth" type="month" required>
+            <label>Meta mensal de vendas *</label>
+            <input id="monthly-goal" type="number" min="0" step="0.01" required>
           </div>
 
           <div class="field">
-            <label>Meta mensal *</label>
-            <input id="goalValue" type="number" min="0" step="0.01" required>
+            <label>Meta diária desejada *</label>
+            <input id="daily-goal" type="number" min="0" step="0.01" required>
           </div>
         </div>
 
         <div class="actions">
           <button class="button primary">Salvar meta</button>
-          <button type="button" class="button" onclick="closeModal('goalModal')">Cancelar</button>
+          <button type="button" class="button" onclick="closeModal('settings-modal')">
+            Cancelar
+          </button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- MODAL VENDA -->
-  <div class="modal" id="saleModal">
-    <div class="modal-box">
-      <div class="modal-title">
+  <!-- MODAL DE VENDA -->
+  <div class="modal" id="sale-modal">
+    <div class="modal-content">
+      <div class="modal-header">
         <h2>Nova venda</h2>
-        <button class="close" onclick="closeModal('saleModal')">×</button>
+        <button class="close" onclick="closeModal('sale-modal')">×</button>
       </div>
 
-      <form id="saleForm">
-        <div class="form-grid four">
+      <form id="sale-form">
+        <div class="grid-4">
           <div class="field">
             <label>Cliente *</label>
-            <select id="saleClient" required></select>
+            <select id="sale-client" required></select>
           </div>
 
           <div class="field">
             <label>Data *</label>
-            <input id="saleDate" type="date" required>
+            <input id="sale-date" type="date" required>
           </div>
 
           <div class="field">
             <label>Vendedor</label>
-            <input id="saleSeller">
+            <input id="sale-seller">
           </div>
 
           <div class="field">
             <label>Canal</label>
-            <select id="saleChannel">
+            <select id="sale-channel">
               <option>Presencial</option>
               <option>WhatsApp</option>
               <option>Telefone</option>
@@ -1080,70 +1117,75 @@
         <h3 style="margin-top:20px">Itens da venda</h3>
 
         <div class="alert">
-          Selecione o fornecedor primeiro. Depois, o sistema exibirá somente os produtos daquele fornecedor, com seus respectivos SKUs.
+          Para cada item, selecione primeiro o fornecedor.
+          Depois, aparecerão somente os produtos daquele fornecedor.
+          O SKU é exibido automaticamente.
         </div>
 
-        <div id="saleLines"></div>
+        <div id="sale-lines"></div>
 
         <button type="button" class="button small" onclick="addSaleLine()">
           + Adicionar item
         </button>
 
         <div class="field" style="margin-top:15px">
-          <label>Observações</label>
-          <textarea id="saleNotes"></textarea>
+          <label>Observações do pedido</label>
+          <textarea id="sale-notes"></textarea>
         </div>
 
         <div style="margin-top:15px;text-align:right;font-size:19px">
           Total:
-          <strong class="green" id="saleTotal">R$ 0,00</strong>
+          <strong class="green" id="sale-total">R$ 0,00</strong>
         </div>
 
         <div class="actions">
           <button class="button primary">Salvar venda</button>
-          <button type="button" class="button" onclick="closeModal('saleModal')">Cancelar</button>
+          <button type="button" class="button" onclick="closeModal('sale-modal')">
+            Cancelar
+          </button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- MODAL PEDIDO -->
-  <div class="modal" id="orderModal">
-    <div class="modal-box">
-      <div class="modal-title">
-        <h2>Detalhes da venda</h2>
-        <button class="close" onclick="closeModal('orderModal')">×</button>
+  <!-- MODAL DE PEDIDO -->
+  <div class="modal" id="order-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Detalhes do pedido</h2>
+        <button class="close" onclick="closeModal('order-modal')">×</button>
       </div>
 
-      <div id="orderContent"></div>
+      <div id="order-details"></div>
     </div>
   </div>
 
   <script>
-    const STORAGE_KEY = "gestao_comercial_meta_sku_v1";
+    const STORAGE_KEY = "gestao_comercial_completo_abc_60_30_10";
 
-    let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+    let database = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+      settings: {
+        monthlyGoal: 0,
+        dailyGoal: 0
+      },
       clients: [],
       suppliers: [],
       products: [],
       sales: [],
-      goals: []
+      attachments: [],
+      lowerReasons: []
     };
 
-    function saveDB() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+    function saveDatabase() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(database));
     }
 
-    function uid(prefix) {
-      return prefix + "_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+    function id(prefix) {
+      return prefix + "_" + Date.now().toString(36) + Math.random().toString(36).substring(2, 8);
     }
 
     function today() {
-      return new Date().toISOString().slice(0, 10);
-    }
-
-    function currentMonth() {
-      return today().slice(0, 7);
+      return new Date().toISOString().substring(0, 10);
     }
 
     function money(value) {
@@ -1158,33 +1200,43 @@
 
       const parts = String(value).split("-");
 
-      if (parts.length !== 3) return value;
+      if (parts.length !== 3) {
+        return value;
+      }
 
       return parts[2] + "/" + parts[1] + "/" + parts[0];
     }
 
     function escapeHTML(value) {
-      return String(value ?? "").replace(/[&<>"']/g, function(char) {
-        return {
+      return String(value ?? "").replace(/[&<>"']/g, function(character) {
+        const replacements = {
           "&": "&",
           "<": "<",
           ">": ">",
           '"': "&quot;",
           "'": "&#039;"
-        }[char];
+        };
+
+        return replacements[character];
       });
     }
 
-    function getClient(id) {
-      return db.clients.find(item => item.id === id);
+    function getClient(clientId) {
+      return database.clients.find(function(client) {
+        return client.id === clientId;
+      });
     }
 
-    function getSupplier(id) {
-      return db.suppliers.find(item => item.id === id);
+    function getSupplier(supplierId) {
+      return database.suppliers.find(function(supplier) {
+        return supplier.id === supplierId;
+      });
     }
 
-    function getProduct(id) {
-      return db.products.find(item => item.id === id);
+    function getProduct(productId) {
+      return database.products.find(function(product) {
+        return product.id === productId;
+      });
     }
 
     function getSaleTotal(sale) {
@@ -1193,76 +1245,104 @@
       }, 0);
     }
 
-    function salesOfMonth(month) {
-      return db.sales.filter(sale => String(sale.date).slice(0, 7) === month);
+    function getClientSales(clientId, salesList) {
+      const source = salesList || database.sales;
+
+      return source.filter(function(sale) {
+        return sale.clientId === clientId;
+      });
     }
 
-    function getClientSales(clientId, source) {
-      return (source || db.sales).filter(sale => sale.clientId === clientId);
+    function getProductQuantity(productId, salesList) {
+      const source = salesList || database.sales;
+
+      return source.reduce(function(total, sale) {
+        return total + (sale.items || []).reduce(function(itemTotal, item) {
+          if (item.productId === productId) {
+            return itemTotal + Number(item.quantity || 0);
+          }
+
+          return itemTotal;
+        }, 0);
+      }, 0);
     }
 
-    function getClientStats(clientId, source) {
-      const sales = getClientSales(clientId, source);
+    function getProductRevenue(productId, salesList) {
+      const source = salesList || database.sales;
+
+      return source.reduce(function(total, sale) {
+        return total + (sale.items || []).reduce(function(itemTotal, item) {
+          if (item.productId === productId) {
+            return itemTotal + Number(item.quantity || 0) * Number(item.price || 0);
+          }
+
+          return itemTotal;
+        }, 0);
+      }, 0);
+    }
+
+    function getProductClients(productId, salesList) {
+      const source = salesList || database.sales;
+      const clientIds = [];
+
+      source.forEach(function(sale) {
+        const hasProduct = (sale.items || []).some(function(item) {
+          return item.productId === productId;
+        });
+
+        if (hasProduct && !clientIds.includes(sale.clientId)) {
+          clientIds.push(sale.clientId);
+        }
+      });
+
+      return clientIds.length;
+    }
+
+    function getClientStats(clientId, salesList) {
+      const sales = getClientSales(clientId, salesList);
       const quantities = {};
-      let revenue = 0;
-      let items = 0;
+      let totalRevenue = 0;
+      let totalItems = 0;
 
       sales.forEach(function(sale) {
-        revenue += getSaleTotal(sale);
+        totalRevenue += getSaleTotal(sale);
 
         (sale.items || []).forEach(function(item) {
           quantities[item.productId] = (quantities[item.productId] || 0) + Number(item.quantity || 0);
-          items += Number(item.quantity || 0);
+          totalItems += Number(item.quantity || 0);
         });
       });
 
       const dates = sales
-        .map(sale => sale.date)
+        .map(function(sale) {
+          return sale.date;
+        })
         .filter(Boolean)
         .sort()
         .reverse();
 
       return {
-        sales,
-        quantities,
-        revenue,
-        items,
+        sales: sales,
+        quantities: quantities,
+        revenue: totalRevenue,
+        items: totalItems,
         lastSale: dates[0] || ""
       };
     }
 
-    function getProductQuantity(productId, source) {
-      return (source || db.sales).reduce(function(total, sale) {
-        return total + (sale.items || []).reduce(function(sum, item) {
-          return sum + (item.productId === productId ? Number(item.quantity || 0) : 0);
-        }, 0);
-      }, 0);
-    }
-
-    function getProductRevenue(productId, source) {
-      return (source || db.sales).reduce(function(total, sale) {
-        return total + (sale.items || []).reduce(function(sum, item) {
-          return sum + (
-            item.productId === productId
-              ? Number(item.quantity || 0) * Number(item.price || 0)
-              : 0
-          );
-        }, 0);
-      }, 0);
-    }
-
-    function daysWithoutPurchase(client) {
+    function getDaysWithoutPurchase(client) {
       const stats = getClientStats(client.id);
 
-      if (!stats.lastSale) return Infinity;
+      if (!stats.lastSale) {
+        return Infinity;
+      }
 
-      const last = new Date(stats.lastSale + "T12:00:00");
-
-      return Math.floor((new Date() - last) / 86400000);
+      const lastSale = new Date(stats.lastSale + "T12:00:00");
+      return Math.floor((new Date() - lastSale) / 86400000);
     }
 
-    function clientStatus(client) {
-      const days = daysWithoutPurchase(client);
+    function getClientStatus(client) {
+      const days = getDaysWithoutPurchase(client);
 
       if (days === Infinity) return "Nunca comprou";
       if (days > 45) return "Mais de 45 dias";
@@ -1272,40 +1352,63 @@
       return "Ativo";
     }
 
-    function supplierChip(supplier, active) {
+    function getMonthSales() {
+      const month = today().substring(0, 7);
+
+      return database.sales.filter(function(sale) {
+        return String(sale.date).substring(0, 7) === month;
+      });
+    }
+
+    function getRemainingDaysInMonth() {
+      const current = new Date();
+      const year = current.getFullYear();
+      const month = current.getMonth();
+
+      return new Date(year, month + 1, 0).getDate() - current.getDate() + 1;
+    }
+
+    function getSupplierChip(supplier, active) {
       if (!supplier) return "";
 
       return `
-        <span class="supplier-chip ${active === false ? "inactive" : ""}">
-          <span class="dot" style="background:${active === false ? "#555" : supplier.color}"></span>
+        <span class="chip ${active === false ? "inactive" : ""}">
+          <span
+            class="dot"
+            style="background:${active === false ? "#555" : supplier.color}">
+          </span>
           ${escapeHTML(supplier.name)}
         </span>
       `;
     }
 
-    function abcBadge(letter) {
-      return `<span class="badge badge-${letter.toLowerCase()}">Classe ${letter}</span>`;
+    function getABCBadge(curve) {
+      return `
+        <span class="badge badge-${String(curve).toLowerCase()}">
+          Curva ${curve}
+        </span>
+      `;
     }
 
     function showPage(page) {
-      document.querySelectorAll(".page").forEach(element => {
-        element.classList.remove("active");
+      document.querySelectorAll(".page").forEach(function(section) {
+        section.classList.remove("active");
       });
 
-      document.querySelectorAll(".nav-button").forEach(element => {
-        element.classList.remove("active");
+      document.querySelectorAll(".nav-button").forEach(function(button) {
+        button.classList.remove("active");
       });
 
-      const section = document.getElementById("page-" + page);
+      const target = document.getElementById("page-" + page);
 
-      if (section) {
-        section.classList.add("active");
+      if (target) {
+        target.classList.add("active");
       }
 
-      const nav = document.querySelector(`[data-page="${page}"]`);
+      const navButton = document.querySelector('[data-page="' + page + '"]');
 
-      if (nav) {
-        nav.classList.add("active");
+      if (navButton) {
+        navButton.classList.add("active");
       }
 
       const titles = {
@@ -1313,15 +1416,14 @@
         clientes: "Clientes",
         produtos: "Produtos",
         fornecedores: "Fornecedores",
-        vendas: "Vendas",
         abc: "Curva ABC",
         profile: "Perfil do cliente"
       };
 
-      document.getElementById("pageTitle").textContent = titles[page] || "Gestão";
+      document.getElementById("page-title").textContent = titles[page] || "Gestão";
     }
 
-    document.querySelectorAll(".nav-button").forEach(button => {
+    document.querySelectorAll(".nav-button").forEach(function(button) {
       button.addEventListener("click", function() {
         showPage(button.dataset.page);
         renderAll();
@@ -1333,304 +1435,280 @@
       renderClients();
       renderProducts();
       renderSuppliers();
-      renderSales();
       renderABC();
       updateSelects();
     }
 
-    function getCurrentGoal() {
-      return db.goals.find(goal => goal.month === currentMonth()) || {
-        month: currentMonth(),
-        value: 0
-      };
-    }
-
-    function daysInCurrentMonth() {
-      const date = new Date();
-      return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
-    }
-
-    function currentDayOfMonth() {
-      return new Date().getDate();
-    }
-
-    function renderGoal() {
-      const goal = getCurrentGoal();
-      const monthSales = salesOfMonth(currentMonth());
-      const realized = monthSales.reduce((sum, sale) => sum + getSaleTotal(sale), 0);
-      const monthlyGoal = Number(goal.value || 0);
-      const remaining = Math.max(monthlyGoal - realized, 0);
-      const daysLeft = Math.max(daysInCurrentMonth() - currentDayOfMonth() + 1, 1);
-      const dailyGoal = monthlyGoal / daysInCurrentMonth();
-      const remainingDaily = remaining / daysLeft;
-      const percentage = monthlyGoal > 0 ? realized / monthlyGoal * 100 : 0;
-
-      document.getElementById("goalMonthly").textContent = money(monthlyGoal);
-      document.getElementById("goalDaily").textContent = money(dailyGoal);
-      document.getElementById("monthRevenue").textContent = money(realized);
-      document.getElementById("remainingGoal").textContent = money(remaining);
-      document.getElementById("remainingDailyGoal").textContent = money(remainingDaily);
-      document.getElementById("goalPercentage").textContent = percentage.toFixed(1) + "%";
-      document.getElementById("goalProgress").style.width = Math.min(percentage, 100) + "%";
-    }
-
     function renderDashboard() {
-      renderGoal();
+      const totalRevenue = database.sales.reduce(function(total, sale) {
+        return total + getSaleTotal(sale);
+      }, 0);
 
-      const totalRevenue = db.sales.reduce((sum, sale) => sum + getSaleTotal(sale), 0);
-      const monthSales = salesOfMonth(currentMonth());
+      const monthSales = getMonthSales();
+      const monthRevenue = monthSales.reduce(function(total, sale) {
+        return total + getSaleTotal(sale);
+      }, 0);
 
-      document.getElementById("metricClients").textContent = db.clients.length;
-      document.getElementById("metricProducts").textContent = db.products.length;
-      document.getElementById("metricSales").textContent = monthSales.length;
-      document.getElementById("metricRevenue").textContent = money(totalRevenue);
+      const monthlyGoal = Number(database.settings.monthlyGoal || 0);
+      const dailyGoal = Number(database.settings.dailyGoal || 0);
+      const missing = Math.max(monthlyGoal - monthRevenue, 0);
+      const remainingDays = getRemainingDaysInMonth();
+      const neededPerDay = missing / Math.max(remainingDays, 1);
+      const progress = monthlyGoal > 0
+        ? Math.min((monthRevenue / monthlyGoal) * 100, 100)
+        : 0;
 
-      const birthdays = db.clients.filter(function(client) {
-        return client.birth && client.birth.slice(5, 7) === today().slice(5, 7);
-      }).sort(function(a, b) {
-        return a.birth.slice(8, 10).localeCompare(b.birth.slice(8, 10));
-      });
+      document.getElementById("goal-month").textContent = money(monthlyGoal);
+      document.getElementById("goal-sold").textContent = money(monthRevenue);
+      document.getElementById("goal-missing").textContent = money(missing);
+      document.getElementById("goal-needed-day").textContent = money(neededPerDay);
+      document.getElementById("goal-progress").style.width = progress + "%";
 
-      document.getElementById("birthdays").innerHTML = birthdays.length
-        ? `<div class="list">${birthdays.map(client => `
-            <div class="list-item">
-              <strong>${escapeHTML(client.name)}</strong>
-              <div class="muted">
-                Aniversário: ${dateBR(client.birth).slice(0, 5)}
-                ${client.phone ? " · " + escapeHTML(client.phone) : ""}
-              </div>
-              <div class="actions">
-                <button class="button small primary" onclick="openClientProfile('${client.id}')">
-                  Acompanhar cliente
-                </button>
-              </div>
-            </div>
-          `).join("")}</div>`
-        : `<div class="empty">Nenhum aniversariante neste mês.</div>`;
+      document.getElementById("goal-summary").textContent =
+        "Meta diária configurada: " + money(dailyGoal) +
+        " · " + remainingDays +
+        " dia(s) restante(s) no mês · " +
+        progress.toFixed(1) + "% da meta mensal atingida.";
 
-      const inactive = db.clients.filter(client => {
-        const days = daysWithoutPurchase(client);
-        return days === Infinity || days > 15;
-      }).sort(function(a, b) {
-        const da = daysWithoutPurchase(a);
-        const dbb = daysWithoutPurchase(b);
+      document.getElementById("metric-clients").textContent = database.clients.length;
+      document.getElementById("metric-products").textContent = database.products.length;
+      document.getElementById("metric-sales").textContent = database.sales.length;
+      document.getElementById("metric-revenue").textContent = money(totalRevenue);
 
-        if (da === Infinity) return -1;
-        if (dbb === Infinity) return 1;
+      renderBirthdays();
+      renderInactiveClients();
+      renderExpansionOpportunities();
+      renderUnusedProducts();
 
-        return dbb - da;
-      });
+      const alerts = [];
 
-      document.getElementById("inactiveClients").innerHTML = inactive.length
-        ? `<div class="list">${inactive.slice(0, 12).map(client => {
-            const days = daysWithoutPurchase(client);
+      if (database.settings.monthlyGoal <= 0) {
+        alerts.push(`
+          <div class="alert">
+            A meta de vendas ainda não foi configurada.
+            Clique em <strong>Configurar meta</strong> para informar os valores.
+          </div>
+        `);
+      }
+
+      const warranties = getWarrantyPendencies();
+
+      if (warranties.length) {
+        alerts.push(`
+          <div class="alert red-alert">
+            Existem <strong>${warranties.length}</strong> garantia(s) ativa(s)
+            aguardando acompanhamento.
+          </div>
+        `);
+      }
+
+      document.getElementById("dashboard-alerts").innerHTML = alerts.join("");
+    }
+
+    function renderBirthdays() {
+      const currentMonth = today().substring(5, 7);
+
+      const birthdays = database.clients
+        .filter(function(client) {
+          return client.birth && client.birth.substring(5, 7) === currentMonth;
+        })
+        .sort(function(a, b) {
+          return a.birth.substring(8, 10).localeCompare(b.birth.substring(8, 10));
+        });
+
+      document.getElementById("birthdays-list").innerHTML = birthdays.length
+        ? birthdays.map(function(client) {
+            const day = client.birth.substring(8, 10);
 
             return `
-              <div class="list-item">
+              <div
+                class="list-item"
+                style="cursor:pointer"
+                onclick="openClientProfile('${client.id}')">
+
                 <strong>${escapeHTML(client.name)}</strong>
+
                 <div class="muted">
-                  ${days === Infinity ? "Nunca comprou" : days + " dias sem comprar"}
+                  Aniversário: dia ${day}
+                  ${client.phone ? " · " + escapeHTML(client.phone) : ""}
                 </div>
+
                 <div class="actions">
-                  <button class="button small" onclick="openClientProfile('${client.id}')">
-                    Abrir cliente
-                  </button>
-                  <button class="button small primary" onclick="openSaleModal('${client.id}')">
-                    Nova venda
+                  <button
+                    class="button small success"
+                    onclick="event.stopPropagation();sendBirthdayMessage('${client.id}')">
+                    Preparar WhatsApp
                   </button>
                 </div>
               </div>
             `;
-          }).join("")}</div>`
+          }).join("")
+        : `<div class="empty">Nenhum aniversariante neste mês.</div>`;
+    }
+
+    function renderInactiveClients() {
+      const inactive = database.clients
+        .map(function(client) {
+          return {
+            client: client,
+            days: getDaysWithoutPurchase(client),
+            stats: getClientStats(client.id)
+          };
+        })
+        .filter(function(item) {
+          return item.days === Infinity || item.days > 15;
+        })
+        .sort(function(a, b) {
+          if (a.days === Infinity) return -1;
+          if (b.days === Infinity) return 1;
+          return b.days - a.days;
+        });
+
+      document.getElementById("inactive-list").innerHTML = inactive.length
+        ? inactive.map(function(item) {
+            return `
+              <div
+                class="list-item"
+                style="cursor:pointer"
+                onclick="openClientProfile('${item.client.id}')">
+
+                <strong>${escapeHTML(item.client.name)}</strong>
+
+                <div class="muted">
+                  ${
+                    item.days === Infinity
+                      ? "Nunca comprou"
+                      : item.days + " dia(s) sem comprar"
+                  }
+                  · Último faturamento: ${money(item.stats.revenue)}
+                </div>
+              </div>
+            `;
+          }).join("")
         : `<div class="empty">Nenhum cliente inativo.</div>`;
+    }
 
-      const opportunities = getExpansionOpportunities();
+    function renderExpansionOpportunities() {
+      const opportunities = database.clients
+        .map(function(client) {
+          const stats = getClientStats(client.id);
+          const suggestions = getSuggestions(client.id).slice(0, 3);
+          const lower = getLowerPurchases(client.id).slice(0, 2);
+          const days = getDaysWithoutPurchase(client);
 
-      document.getElementById("opportunities").innerHTML = opportunities.length
-        ? `<div class="list">${opportunities.slice(0, 12).map(item => `
-            <div class="list-item">
-              <strong>${escapeHTML(item.client.name)}</strong>
-              <div class="muted">
-                ${item.type === "inactive"
-                  ? "Recuperação de cliente inativo"
-                  : "Possibilidade de venda expandida"}
+          return {
+            client: client,
+            stats: stats,
+            suggestions: suggestions,
+            lower: lower,
+            days: days
+          };
+        })
+        .filter(function(item) {
+          return item.suggestions.length > 0 || item.lower.length > 0;
+        })
+        .sort(function(a, b) {
+          const aScore = a.suggestions.length + a.lower.length;
+          const bScore = b.suggestions.length + b.lower.length;
+
+          return bScore - aScore;
+        })
+        .slice(0, 10);
+
+      document.getElementById("expansion-list").innerHTML = opportunities.length
+        ? opportunities.map(function(item) {
+            const products = item.suggestions
+              .map(function(suggestion) {
+                return suggestion.product.name;
+              })
+              .join(", ");
+
+            const lower = item.lower
+              .map(function(itemLower) {
+                return itemLower.product.name;
+              })
+              .join(", ");
+
+            return `
+              <div
+                class="list-item"
+                style="cursor:pointer"
+                onclick="openClientProfile('${item.client.id}')">
+
+                <strong>${escapeHTML(item.client.name)}</strong>
+
+                <div class="muted">
+                  ${item.stats.sales.length} pedido(s) ·
+                  ${money(item.stats.revenue)} comprados
+                </div>
+
+                ${
+                  products
+                    ? `
+                      <div class="muted" style="margin-top:6px">
+                        Sugestões: ${escapeHTML(products)}
+                      </div>
+                    `
+                    : ""
+                }
+
+                ${
+                  lower
+                    ? `
+                      <div class="muted" style="margin-top:4px">
+                        Abaixo da média: ${escapeHTML(lower)}
+                      </div>
+                    `
+                    : ""
+                }
               </div>
-              <div class="${item.type === "inactive" ? "red" : "orange"}" style="margin-top:5px">
-                ${escapeHTML(item.reason)}
-              </div>
-              <div class="actions">
-                <button class="button small" onclick="openClientProfile('${item.client.id}')">
-                  Ver análise
-                </button>
-                <button class="button small primary" onclick="openSaleModal('${item.client.id}')">
-                  Lançar venda
-                </button>
-              </div>
-            </div>
-          `).join("")}</div>`
+            `;
+          }).join("")
         : `<div class="empty">Nenhuma oportunidade identificada.</div>`;
+    }
 
-      const unused = db.products.filter(product => getProductQuantity(product.id) === 0);
+    function renderUnusedProducts() {
+      const unused = database.products.filter(function(product) {
+        return getProductQuantity(product.id) === 0;
+      });
 
-      document.getElementById("unusedProducts").innerHTML = unused.length
-        ? `<div class="list">${unused.map(product => {
+      document.getElementById("unused-products").innerHTML = unused.length
+        ? unused.map(function(product) {
             const supplier = getSupplier(product.supplierId);
 
             return `
               <div class="list-item">
                 <strong>${escapeHTML(product.name)}</strong>
                 <div class="muted">
-                  SKU: ${escapeHTML(product.sku)}
-                  · ${supplier ? escapeHTML(supplier.name) : "Sem fornecedor"}
+                  SKU: ${escapeHTML(product.sku)} ·
+                  Fornecedor: ${supplier ? escapeHTML(supplier.name) : "—"}
                 </div>
               </div>
             `;
-          }).join("")}</div>`
-        : `<div class="empty">Todos os produtos possuem vendas.</div>`;
-
-      const alerts = [];
-
-      if (birthdays.length) {
-        alerts.push(`
-          <div class="alert">
-            Existem <strong>${birthdays.length}</strong> aniversariante(s) neste mês.
-            Acompanhe os clientes na seção de aniversariantes.
-          </div>
-        `);
-      }
-
-      if (inactive.length) {
-        alerts.push(`
-          <div class="alert danger">
-            Existem <strong>${inactive.length}</strong> oportunidade(s) de recuperação de clientes inativos.
-          </div>
-        `);
-      }
-
-      if (getCurrentGoal().value > 0) {
-        const goal = getCurrentGoal();
-        const realized = monthSales.reduce((sum, sale) => sum + getSaleTotal(sale), 0);
-        const percentage = realized / Number(goal.value) * 100;
-
-        if (percentage >= 100) {
-          alerts.push(`
-            <div class="alert success">
-              A meta mensal foi atingida. Parabéns!
-            </div>
-          `);
-        }
-      }
-
-      document.getElementById("dashboardAlerts").innerHTML = alerts.join("");
+          }).join("")
+        : `<div class="empty">Todos os produtos possuem pedidos.</div>`;
     }
-
-    function getExpansionOpportunities() {
-      const opportunities = [];
-
-      db.clients.forEach(function(client) {
-        const stats = getClientStats(client.id);
-        const days = daysWithoutPurchase(client);
-
-        if (days === Infinity || days > 15) {
-          opportunities.push({
-            client,
-            type: "inactive",
-            reason: days === Infinity
-              ? "Cliente cadastrado sem nenhuma compra."
-              : `${days} dias desde a última compra.`
-          });
-
-          return;
-        }
-
-        const purchasedIds = Object.keys(stats.quantities);
-
-        const suggestions = db.products.filter(product => {
-          return !purchasedIds.includes(product.id) &&
-            getProductQuantity(product.id) > 0;
-        });
-
-        if (suggestions.length) {
-          opportunities.push({
-            client,
-            type: "expanded",
-            reason: `${suggestions.length} produto(s) da base ainda não comprado(s) por este cliente.`
-          });
-        }
-      });
-
-      return opportunities;
-    }
-
-    function openGoalModal() {
-      const goal = getCurrentGoal();
-
-      document.getElementById("goalMonth").value = goal.month;
-      document.getElementById("goalValue").value = goal.value || "";
-      document.getElementById("goalModal").classList.add("show");
-    }
-
-    document.getElementById("goalForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-
-      const month = document.getElementById("goalMonth").value;
-      const value = Number(document.getElementById("goalValue").value || 0);
-
-      const existing = db.goals.find(goal => goal.month === month);
-
-      if (existing) {
-        existing.value = value;
-      } else {
-        db.goals.push({
-          id: uid("goal"),
-          month,
-          value
-        });
-      }
-
-      saveDB();
-      closeModal("goalModal");
-      renderAll();
-
-      alert("Meta salva com sucesso.");
-    });
-
-    document.getElementById("clientForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-
-      db.clients.push({
-        id: uid("cli"),
-        name: document.getElementById("clientName").value.trim(),
-        phone: document.getElementById("clientPhone").value.trim(),
-        email: document.getElementById("clientEmail").value.trim(),
-        birth: document.getElementById("clientBirth").value,
-        city: document.getElementById("clientCity").value.trim(),
-        notes: document.getElementById("clientNotes").value.trim(),
-        createdAt: today()
-      });
-
-      saveDB();
-      event.target.reset();
-      renderAll();
-
-      alert("Cliente salvo com sucesso.");
-    });
 
     function renderClients() {
-      const search = (document.getElementById("clientSearch")?.value || "").toLowerCase();
+      const search = (document.getElementById("client-search")?.value || "").toLowerCase();
 
-      const clients = db.clients.filter(client => {
+      const clients = database.clients.filter(function(client) {
         return client.name.toLowerCase().includes(search) ||
-          (client.phone || "").toLowerCase().includes(search);
+          (client.phone || "").toLowerCase().includes(search) ||
+          (client.email || "").toLowerCase().includes(search);
       });
 
-      document.getElementById("clientsTable").innerHTML = clients.length
-        ? clients.map(client => {
+      document.getElementById("clients-table").innerHTML = clients.length
+        ? clients.map(function(client) {
             const stats = getClientStats(client.id);
-            const status = clientStatus(client);
+            const status = getClientStatus(client);
+            const statusClass = status === "Ativo" ? "badge-active" : "badge-inactive";
 
             return `
-              <tr class="clickable" onclick="openClientProfile('${client.id}')">
+              <tr
+                class="clickable"
+                onclick="openClientProfile('${client.id}')">
+
                 <td>
                   <strong>${escapeHTML(client.name)}</strong>
                   <br>
@@ -1646,509 +1724,581 @@
                 <td>${dateBR(stats.lastSale)}</td>
 
                 <td>
-                  <span class="badge ${status === "Ativo" ? "badge-green" : "badge-red"}">
+                  <span class="badge ${statusClass}">
                     ${status}
                   </span>
                 </td>
 
                 <td>${stats.sales.length}</td>
+                <td class="green">${money(stats.revenue)}</td>
 
                 <td>
-                  <button class="button small" onclick="event.stopPropagation();openClientProfile('${client.id}')">
+                  <button
+                    class="button small"
+                    onclick="event.stopPropagation();openClientProfile('${client.id}')">
                     Abrir
                   </button>
 
-                  <button class="button small danger" onclick="event.stopPropagation();deleteClient('${client.id}')">
+                  <button
+                    class="button small danger"
+                    onclick="event.stopPropagation();deleteClient('${client.id}')">
                     Excluir
                   </button>
                 </td>
               </tr>
             `;
           }).join("")
-        : `<tr><td colspan="6" class="empty">Nenhum cliente cadastrado.</td></tr>`;
+        : `
+          <tr>
+            <td colspan="7" class="empty">Nenhum cliente encontrado.</td>
+          </tr>
+        `;
     }
 
-    function deleteClient(id) {
-      const client = getClient(id);
-
-      if (!client || !confirm("Excluir o cliente " + client.name + "?")) return;
-
-      db.clients = db.clients.filter(item => item.id !== id);
-      db.sales = db.sales.filter(sale => sale.clientId !== id);
-
-      saveDB();
-      renderAll();
-    }
-
-    document.getElementById("supplierForm").addEventListener("submit", function(event) {
+    document.getElementById("client-form").addEventListener("submit", function(event) {
       event.preventDefault();
 
-      db.suppliers.push({
-        id: uid("sup"),
-        name: document.getElementById("supplierName").value.trim(),
-        contact: document.getElementById("supplierContact").value.trim(),
-        color: document.getElementById("supplierColor").value
+      database.clients.push({
+        id: id("client"),
+        name: document.getElementById("client-name").value.trim(),
+        phone: document.getElementById("client-phone").value.trim(),
+        email: document.getElementById("client-email").value.trim(),
+        birth: document.getElementById("client-birth").value,
+        city: document.getElementById("client-city").value.trim(),
+        notes: document.getElementById("client-notes").value.trim(),
+        createdAt: today()
       });
 
-      saveDB();
+      saveDatabase();
       event.target.reset();
-      document.getElementById("supplierColor").value = "#e50914";
       renderAll();
 
-      alert("Fornecedor salvo com sucesso.");
+      alert("Cliente cadastrado com sucesso.");
     });
 
+    function deleteClient(clientId) {
+      const client = getClient(clientId);
+
+      if (!client) return;
+
+      if (!confirm("Excluir " + client.name + " e todo o histórico de vendas?")) {
+        return;
+      }
+
+      database.clients = database.clients.filter(function(item) {
+        return item.id !== clientId;
+      });
+
+      database.sales = database.sales.filter(function(sale) {
+        return sale.clientId !== clientId;
+      });
+
+      database.attachments = database.attachments.filter(function(file) {
+        return file.clientId !== clientId;
+      });
+
+      database.lowerReasons = database.lowerReasons.filter(function(item) {
+        return item.clientId !== clientId;
+      });
+
+      saveDatabase();
+      renderAll();
+    }
+
     function renderSuppliers() {
-      document.getElementById("suppliersTable").innerHTML = db.suppliers.length
-        ? db.suppliers.map(supplier => {
-            const products = db.products.filter(product => product.supplierId === supplier.id);
+      document.getElementById("suppliers-table").innerHTML = database.suppliers.length
+        ? database.suppliers.map(function(supplier) {
+            const products = database.products.filter(function(product) {
+              return product.supplierId === supplier.id;
+            });
 
             return `
               <tr>
                 <td>
-                  ${supplierChip(supplier, true)}
+                  ${getSupplierChip(supplier, true)}
+                  <div class="muted">${escapeHTML(supplier.contact || "Sem contato")}</div>
                 </td>
 
                 <td>${escapeHTML(supplier.contact || "—")}</td>
 
                 <td>
-                  ${
-                    products.length
-                      ? products.map(product => `
-                          <span class="badge badge-c">
-                            ${escapeHTML(product.name)}
-                          </span>
-                        `).join(" ")
-                      : `<span class="muted">Nenhum produto</span>`
-                  }
+                  <div class="supplier-products">
+                    ${
+                      products.length
+                        ? products.map(function(product) {
+                            return `
+                              <div>
+                                ${escapeHTML(product.sku)} —
+                                ${escapeHTML(product.name)}
+                              </div>
+                            `;
+                          }).join("")
+                        : "Nenhum produto vinculado"
+                    }
+                  </div>
                 </td>
 
                 <td>
-                  ${
-                    products.length
-                      ? products.map(product => `
-                          <span class="badge badge-b">${escapeHTML(product.sku)}</span>
-                        `).join(" ")
-                      : "—"
-                  }
-                </td>
-
-                <td>
-                  <button class="button small danger" onclick="deleteSupplier('${supplier.id}')">
+                  <button
+                    class="button small danger"
+                    onclick="deleteSupplier('${supplier.id}')">
                     Excluir
                   </button>
                 </td>
               </tr>
             `;
           }).join("")
-        : `<tr><td colspan="5" class="empty">Nenhum fornecedor cadastrado.</td></tr>`;
+        : `
+          <tr>
+            <td colspan="4" class="empty">Nenhum fornecedor cadastrado.</td>
+          </tr>
+        `;
     }
 
-    function deleteSupplier(id) {
-      if (db.products.some(product => product.supplierId === id)) {
-        alert("Este fornecedor possui produtos vinculados e não pode ser excluído.");
+    document.getElementById("supplier-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      database.suppliers.push({
+        id: id("supplier"),
+        name: document.getElementById("supplier-name").value.trim(),
+        contact: document.getElementById("supplier-contact").value.trim(),
+        color: document.getElementById("supplier-color").value
+      });
+
+      saveDatabase();
+      event.target.reset();
+      document.getElementById("supplier-color").value = "#e50914";
+      renderAll();
+
+      alert("Fornecedor cadastrado com sucesso.");
+    });
+
+    function deleteSupplier(supplierId) {
+      const hasProducts = database.products.some(function(product) {
+        return product.supplierId === supplierId;
+      });
+
+      if (hasProducts) {
+        alert("Não é possível excluir um fornecedor que possui produtos vinculados.");
         return;
       }
 
-      db.suppliers = db.suppliers.filter(supplier => supplier.id !== id);
-      saveDB();
+      database.suppliers = database.suppliers.filter(function(supplier) {
+        return supplier.id !== supplierId;
+      });
+
+      saveDatabase();
       renderAll();
     }
 
-    document.getElementById("productForm").addEventListener("submit", function(event) {
+    document.getElementById("product-form").addEventListener("submit", function(event) {
       event.preventDefault();
 
-      const sku = document.getElementById("productSku").value.trim().toUpperCase();
+      const sku = document.getElementById("product-sku").value.trim().toUpperCase();
 
-      if (db.products.some(product => product.sku.toUpperCase() === sku)) {
-        alert("Este SKU já está cadastrado. Informe um SKU único.");
+      const skuExists = database.products.some(function(product) {
+        return product.sku.toUpperCase() === sku;
+      });
+
+      if (skuExists) {
+        alert("Esse SKU já está cadastrado. Informe outro SKU.");
         return;
       }
 
-      db.products.push({
-        id: uid("prod"),
-        sku,
-        name: document.getElementById("productName").value.trim(),
-        supplierId: document.getElementById("productSupplier").value,
-        price: Number(document.getElementById("productPrice").value || 0),
-        category: document.getElementById("productCategory").value.trim(),
-        notes: document.getElementById("productNotes").value.trim()
+      const supplierId = document.getElementById("product-supplier").value;
+
+      if (!supplierId) {
+        alert("Selecione o fornecedor do produto.");
+        return;
+      }
+
+      database.products.push({
+        id: id("product"),
+        sku: sku,
+        name: document.getElementById("product-name").value.trim(),
+        supplierId: supplierId,
+        price: Number(document.getElementById("product-price").value || 0),
+        category: document.getElementById("product-category").value.trim(),
+        warrantyDays: Number(document.getElementById("product-warranty").value || 0),
+        notes: document.getElementById("product-notes").value.trim()
       });
 
-      saveDB();
+      saveDatabase();
       event.target.reset();
       renderAll();
 
-      alert("Produto salvo com sucesso.");
+      alert("Produto cadastrado com sucesso.");
     });
 
     function renderProducts() {
-      const search = (document.getElementById("productSearch")?.value || "").toLowerCase();
+      const search = (document.getElementById("product-search")?.value || "").toLowerCase();
 
-      const products = db.products.filter(product => {
-        const supplier = getSupplier(product.supplierId);
-
+      const products = database.products.filter(function(product) {
         return product.sku.toLowerCase().includes(search) ||
           product.name.toLowerCase().includes(search) ||
-          (supplier?.name || "").toLowerCase().includes(search);
+          (product.category || "").toLowerCase().includes(search);
       });
 
-      document.getElementById("productsTable").innerHTML = products.length
-        ? products.map(product => {
+      document.getElementById("products-table").innerHTML = products.length
+        ? products.map(function(product) {
             const supplier = getSupplier(product.supplierId);
 
             return `
               <tr>
                 <td><strong>${escapeHTML(product.sku)}</strong></td>
-                <td>${escapeHTML(product.name)}</td>
-                <td>${supplier ? supplierChip(supplier, true) : "—"}</td>
+
+                <td>
+                  <strong>${escapeHTML(product.name)}</strong>
+                  <br>
+                  <span class="muted">
+                    Garantia: ${product.warrantyDays || 0} dia(s)
+                  </span>
+                </td>
+
+                <td>${supplier ? getSupplierChip(supplier, true) : "—"}</td>
                 <td>${escapeHTML(product.category || "—")}</td>
                 <td>${money(product.price)}</td>
                 <td>${getProductQuantity(product.id)}</td>
+
                 <td>
-                  <button class="button small danger" onclick="deleteProduct('${product.id}')">
+                  <button
+                    class="button small danger"
+                    onclick="deleteProduct('${product.id}')">
                     Excluir
                   </button>
                 </td>
               </tr>
             `;
           }).join("")
-        : `<tr><td colspan="7" class="empty">Nenhum produto cadastrado.</td></tr>`;
+        : `
+          <tr>
+            <td colspan="7" class="empty">Nenhum produto encontrado.</td>
+          </tr>
+        `;
     }
 
-    function deleteProduct(id) {
-      const used = db.sales.some(sale => {
-        return (sale.items || []).some(item => item.productId === id);
+    function deleteProduct(productId) {
+      const hasSales = database.sales.some(function(sale) {
+        return (sale.items || []).some(function(item) {
+          return item.productId === productId;
+        });
       });
 
-      if (used) {
-        alert("Este produto possui histórico de vendas e não pode ser excluído.");
+      if (hasSales) {
+        alert("Esse produto possui histórico de vendas e não pode ser excluído.");
         return;
       }
 
-      db.products = db.products.filter(product => product.id !== id);
-      saveDB();
+      database.products = database.products.filter(function(product) {
+        return product.id !== productId;
+      });
+
+      saveDatabase();
       renderAll();
     }
 
     function updateSelects() {
-      const supplierSelect = document.getElementById("productSupplier");
-      const oldSupplier = supplierSelect.value;
+      const supplierSelect = document.getElementById("product-supplier");
 
-      supplierSelect.innerHTML =
-        `<option value="">Selecione...</option>` +
-        db.suppliers.map(supplier => `
-          <option value="${supplier.id}">
-            ${escapeHTML(supplier.name)}
-          </option>
-        `).join("");
+      if (supplierSelect) {
+        const currentSupplier = supplierSelect.value;
 
-      if (oldSupplier) supplierSelect.value = oldSupplier;
-
-      const clientSelect = document.getElementById("saleClient");
-      const oldClient = clientSelect.value;
-
-      clientSelect.innerHTML =
-        `<option value="">Selecione...</option>` +
-        db.clients.map(client => `
-          <option value="${client.id}">
-            ${escapeHTML(client.name)}
-          </option>
-        `).join("");
-
-      if (oldClient) clientSelect.value = oldClient;
-    }
-
-    function openSaleModal(clientId) {
-      updateSelects();
-
-      document.getElementById("saleDate").value = today();
-      document.getElementById("saleClient").value = clientId || "";
-      document.getElementById("saleSeller").value = "";
-      document.getElementById("saleNotes").value = "";
-      document.getElementById("saleLines").innerHTML = "";
-
-      addSaleLine();
-
-      document.getElementById("saleModal").classList.add("show");
-    }
-
-    function addSaleLine() {
-      const line = document.createElement("div");
-
-      line.className = "sale-line";
-
-      line.innerHTML = `
-        <div class="field">
-          <label>Fornecedor</label>
-          <select class="sale-supplier" onchange="filterSaleProducts(this)">
-            <option value="">Selecione...</option>
-            ${db.suppliers.map(supplier => `
+        supplierSelect.innerHTML =
+          `<option value="">Selecione...</option>` +
+          database.suppliers.map(function(supplier) {
+            return `
               <option value="${supplier.id}">
                 ${escapeHTML(supplier.name)}
               </option>
-            `).join("")}
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Produto / SKU</label>
-          <select class="sale-product" onchange="updateSaleLineTotal(this)" disabled>
-            <option value="">Selecione o fornecedor</option>
-          </select>
-        </div>
-
-        <div class="field">
-          <label>Quantidade</label>
-          <input class="sale-quantity" type="number" min="1" value="1" oninput="updateSaleTotal()">
-        </div>
-
-        <div class="mini-total muted">R$ 0,00</div>
-
-        <button type="button" class="button small danger" onclick="this.parentElement.remove();updateSaleTotal()">
-          ×
-        </button>
-      `;
-
-      document.getElementById("saleLines").appendChild(line);
-    }
-
-    function filterSaleProducts(supplierSelect) {
-      const line = supplierSelect.closest(".sale-line");
-      const productSelect = line.querySelector(".sale-product");
-      const supplierId = supplierSelect.value;
-
-      productSelect.innerHTML = supplierId
-        ? `<option value="">Selecione...</option>` + db.products
-            .filter(product => product.supplierId === supplierId)
-            .map(product => `
-              <option value="${product.id}">
-                ${escapeHTML(product.sku)} - ${escapeHTML(product.name)} - ${money(product.price)}
-              </option>
-            `).join("")
-        : `<option value="">Selecione o fornecedor</option>`;
-
-      productSelect.disabled = !supplierId;
-      updateSaleTotal();
-    }
-
-    function updateSaleLineTotal(productSelect) {
-      updateSaleTotal();
-    }
-
-    function updateSaleTotal() {
-      let total = 0;
-
-      document.querySelectorAll(".sale-line").forEach(line => {
-        const product = getProduct(line.querySelector(".sale-product")?.value);
-        const quantity = Number(line.querySelector(".sale-quantity")?.value || 0);
-        const lineTotal = product ? product.price * quantity : 0;
-
-        total += lineTotal;
-
-        const display = line.querySelector(".mini-total");
-
-        if (display) {
-          display.textContent = money(lineTotal);
-        }
-      });
-
-      document.getElementById("saleTotal").textContent = money(total);
-    }
-
-    document.getElementById("saleForm").addEventListener("submit", function(event) {
-      event.preventDefault();
-
-      const items = [];
-
-      document.querySelectorAll(".sale-line").forEach(line => {
-        const supplierId = line.querySelector(".sale-supplier").value;
-        const productId = line.querySelector(".sale-product").value;
-        const quantity = Number(line.querySelector(".sale-quantity").value || 0);
-        const product = getProduct(productId);
-
-        if (supplierId && product && quantity > 0) {
-          items.push({
-            supplierId,
-            productId,
-            quantity,
-            price: product.price
-          });
-        }
-      });
-
-      if (!document.getElementById("saleClient").value) {
-        alert("Selecione o cliente.");
-        return;
-      }
-
-      if (!items.length) {
-        alert("Adicione pelo menos um item com fornecedor e produto.");
-        return;
-      }
-
-      db.sales.push({
-        id: uid("sale"),
-        clientId: document.getElementById("saleClient").value,
-        date: document.getElementById("saleDate").value,
-        seller: document.getElementById("saleSeller").value.trim(),
-        channel: document.getElementById("saleChannel").value,
-        notes: document.getElementById("saleNotes").value.trim(),
-        items
-      });
-
-      saveDB();
-      closeModal("saleModal");
-      renderAll();
-
-      alert("Venda lançada com sucesso.");
-    });
-
-    function renderSales() {
-      const rows = db.sales.slice().sort((a, b) => b.date.localeCompare(a.date));
-
-      document.getElementById("salesTable").innerHTML = rows.length
-        ? rows.map(sale => {
-            const client = getClient(sale.clientId);
-            const supplierIds = [...new Set((sale.items || []).map(item => item.supplierId))];
-
-            return `
-              <tr>
-                <td>${dateBR(sale.date)}</td>
-                <td>${escapeHTML(client?.name || "Cliente removido")}</td>
-                <td>
-                  <div class="supplier-list">
-                    ${supplierIds.map(id => supplierChip(getSupplier(id), true)).join("")}
-                  </div>
-                </td>
-                <td>${(sale.items || []).length}</td>
-                <td>${escapeHTML(sale.seller || "—")}</td>
-                <td class="green">${money(getSaleTotal(sale))}</td>
-                <td>
-                  <button class="button small" onclick="openOrder('${sale.id}')">
-                    Ver venda
-                  </button>
-                </td>
-              </tr>
             `;
-          }).join("")
-        : `<tr><td colspan="7" class="empty">Nenhuma venda cadastrada.</td></tr>`;
-    }
+          }).join("");
 
-    function getABCClass(rows, index) {
-      const total = rows.reduce((sum, row) => sum + row.revenue, 0);
-
-      if (total <= 0) {
-        return index === 0 ? "A" : index === 1 ? "B" : "C";
+        if (currentSupplier) {
+          supplierSelect.value = currentSupplier;
+        }
       }
 
-      const accumulated = rows
-        .slice(0, index + 1)
-        .reduce((sum, row) => sum + row.revenue, 0);
+      const clientSelect = document.getElementById("sale-client");
 
-      const percentage = accumulated / total * 100;
+      if (clientSelect) {
+        const currentClient = clientSelect.value;
 
-      if (percentage <= 80) return "A";
-      if (percentage <= 95) return "B";
+        clientSelect.innerHTML =
+          `<option value="">Selecione...</option>` +
+          database.clients.map(function(client) {
+            return `
+              <option value="${client.id}">
+                ${escapeHTML(client.name)}
+              </option>
+            `;
+          }).join("");
 
-      return "C";
+        if (currentClient) {
+          clientSelect.value = currentClient;
+        }
+      }
     }
 
-    function getABCSource() {
-      const period = document.getElementById("abcPeriod")?.value || "all";
+    function getSalesByPeriod() {
+      const period = document.getElementById("abc-period")?.value || "all";
 
-      if (period === "all") return db.sales;
+      if (period === "all") {
+        return database.sales;
+      }
 
       const limit = new Date();
       limit.setDate(limit.getDate() - Number(period));
 
-      return db.sales.filter(sale => {
+      return database.sales.filter(function(sale) {
         return new Date(sale.date + "T12:00:00") >= limit;
       });
     }
 
-    function renderABC() {
-      const source = getABCSource();
+    /*
+      CURVA ABC CORRETA:
 
-      const clients = db.clients.map(client => {
-        const stats = getClientStats(client.id, source);
+      Curva A: até 60% do faturamento acumulado.
+      Curva B: acima de 60% até 90% acumulado.
+      Curva C: acima de 90% até 100% acumulado.
+
+      O produto que ultrapassa o limite entra na curva correspondente
+      ao percentual acumulado após a inclusão dele.
+    */
+    function getCurveByAccumulated(accumulatedPercentage) {
+      if (accumulatedPercentage <= 60) {
+        return "A";
+      }
+
+      if (accumulatedPercentage <= 90) {
+        return "B";
+      }
+
+      return "C";
+    }
+
+    function calculateABC(rows) {
+      const sortedRows = rows
+        .slice()
+        .sort(function(a, b) {
+          return b.revenue - a.revenue;
+        });
+
+      const total = sortedRows.reduce(function(sum, row) {
+        return sum + Number(row.revenue || 0);
+      }, 0);
+
+      let accumulated = 0;
+
+      return sortedRows.map(function(row, index) {
+        const individualPercentage = total > 0
+          ? Number(row.revenue || 0) / total * 100
+          : 0;
+
+        accumulated += individualPercentage;
 
         return {
-          client,
-          revenue: stats.revenue,
-          stats
+          row: row,
+          index: index + 1,
+          individualPercentage: individualPercentage,
+          accumulatedPercentage: accumulated,
+          curve: getCurveByAccumulated(accumulated)
         };
-      }).sort((a, b) => b.revenue - a.revenue);
+      });
+    }
 
-      const total = clients.reduce((sum, row) => sum + row.revenue, 0);
+    function renderABC() {
+      const sales = getSalesByPeriod();
 
-      document.getElementById("abcClientsTable").innerHTML = clients.length
-        ? clients.map((row, index) => {
-            const participation = total > 0 ? row.revenue / total * 100 : 0;
+      const productRows = database.products.map(function(product) {
+        return {
+          product: product,
+          revenue: getProductRevenue(product.id, sales),
+          quantity: getProductQuantity(product.id, sales),
+          clients: getProductClients(product.id, sales)
+        };
+      });
+
+      const productABC = calculateABC(productRows);
+
+      document.getElementById("abc-products-table").innerHTML = productABC.length
+        ? productABC.map(function(item) {
+            const product = item.row.product;
+            const supplier = getSupplier(product.supplierId);
 
             return `
-              <tr class="clickable" onclick="openClientProfile('${row.client.id}')">
-                <td><strong>${escapeHTML(row.client.name)}</strong></td>
-                <td>${abcBadge(getABCClass(clients, index))}</td>
-                <td>${row.stats.sales.length}</td>
-                <td>${row.stats.items}</td>
-                <td class="green">${money(row.revenue)}</td>
-                <td>${participation.toFixed(2)}%</td>
-                <td>${dateBR(row.stats.lastSale)}</td>
+              <tr>
+                <td>${item.index}</td>
+
                 <td>
-                  <button class="button small" onclick="event.stopPropagation();openClientProfile('${row.client.id}')">
-                    Ver análise
+                  <strong>${escapeHTML(product.name)}</strong>
+                  <br>
+                  <span class="muted">SKU: ${escapeHTML(product.sku)}</span>
+                </td>
+
+                <td>${supplier ? getSupplierChip(supplier, true) : "—"}</td>
+                <td>${getABCBadge(item.curve)}</td>
+                <td>${item.row.quantity}</td>
+                <td class="green">${money(item.row.revenue)}</td>
+                <td>${item.individualPercentage.toFixed(2)}%</td>
+                <td>${item.accumulatedPercentage.toFixed(2)}%</td>
+                <td>${item.row.clients}</td>
+              </tr>
+            `;
+          }).join("")
+        : `
+          <tr>
+            <td colspan="9" class="empty">
+              Cadastre produtos e vendas para visualizar a Curva ABC.
+            </td>
+          </tr>
+        `;
+
+      const clientRows = database.clients.map(function(client) {
+        const stats = getClientStats(client.id, sales);
+
+        return {
+          client: client,
+          revenue: stats.revenue,
+          stats: stats
+        };
+      });
+
+      const clientABC = calculateABC(clientRows);
+
+      document.getElementById("abc-clients-table").innerHTML = clientABC.length
+        ? clientABC.map(function(item) {
+            const client = item.row.client;
+
+            return `
+              <tr
+                class="clickable"
+                onclick="openClientProfile('${client.id}')">
+
+                <td>
+                  <strong>${escapeHTML(client.name)}</strong>
+                  <br>
+                  <span class="muted">Abrir análise individual</span>
+                </td>
+
+                <td>${getABCBadge(item.curve)}</td>
+                <td>${item.row.stats.sales.length}</td>
+                <td>${item.row.stats.items}</td>
+                <td class="green">${money(item.row.revenue)}</td>
+                <td>${item.individualPercentage.toFixed(2)}%</td>
+                <td>${item.accumulatedPercentage.toFixed(2)}%</td>
+                <td>${dateBR(item.row.stats.lastSale)}</td>
+
+                <td>
+                  <button
+                    class="button small primary"
+                    onclick="event.stopPropagation();openClientProfile('${client.id}')">
+                    Ver perfil
                   </button>
                 </td>
               </tr>
             `;
           }).join("")
-        : `<tr><td colspan="8" class="empty">Ainda não há dados suficientes.</td></tr>`;
-
-      const products = db.products.map(product => {
-        const revenue = getProductRevenue(product.id, source);
-
-        const clientsBought = source.filter(sale => {
-          return (sale.items || []).some(item => item.productId === product.id);
-        }).map(sale => sale.clientId);
-
-        return {
-          product,
-          revenue,
-          quantity: getProductQuantity(product.id, source),
-          clients: [...new Set(clientsBought)]
-        };
-      }).sort((a, b) => b.revenue - a.revenue);
-
-      document.getElementById("abcProductsTable").innerHTML = products.length
-        ? products.map((row, index) => {
-            const supplier = getSupplier(row.product.supplierId);
-
-            return `
-              <tr>
-                <td><strong>${escapeHTML(row.product.sku)}</strong></td>
-                <td>${escapeHTML(row.product.name)}</td>
-                <td>${supplier ? supplierChip(supplier, true) : "—"}</td>
-                <td>${abcBadge(getABCClass(products, index))}</td>
-                <td>${row.quantity}</td>
-                <td class="green">${money(row.revenue)}</td>
-                <td>${row.clients.length}</td>
-              </tr>
-            `;
-          }).join("")
-        : `<tr><td colspan="7" class="empty">Nenhum produto cadastrado.</td></tr>`;
+        : `
+          <tr>
+            <td colspan="9" class="empty">
+              Cadastre clientes e vendas para visualizar a Curva ABC.
+            </td>
+          </tr>
+        `;
     }
 
     function getSuggestions(clientId) {
-      const stats = getClientStats(clientId);
-      const purchased = Object.keys(stats.quantities);
+      const clientStats = getClientStats(clientId);
+      const purchasedIds = Object.keys(clientStats.quantities);
 
-      return db.products
-        .filter(product => {
-          return !purchased.includes(product.id) &&
-            getProductQuantity(product.id) > 0;
+      const products = database.products.map(function(product) {
+        const productRows = database.products.map(function(item) {
+          return {
+            product: item,
+            revenue: getProductRevenue(item.id)
+          };
+        });
+
+        const abc = calculateABC(productRows).find(function(item) {
+          return item.row.product.id === product.id;
+        });
+
+        return {
+          product: product,
+          curve: abc ? abc.curve : "C",
+          revenue: getProductRevenue(product.id),
+          quantity: getProductQuantity(product.id),
+          supplier: getSupplier(product.supplierId)
+        };
+      });
+
+      return products
+        .filter(function(item) {
+          return !purchasedIds.includes(item.product.id);
         })
-        .sort((a, b) => getProductRevenue(b.id) - getProductRevenue(a.id));
+        .sort(function(a, b) {
+          const curveOrder = {
+            A: 1,
+            B: 2,
+            C: 3
+          };
+
+          if (curveOrder[a.curve] !== curveOrder[b.curve]) {
+            return curveOrder[a.curve] - curveOrder[b.curve];
+          }
+
+          return b.revenue - a.revenue;
+        });
+    }
+
+    function getLowerPurchases(clientId) {
+      const clientStats = getClientStats(clientId);
+      const result = [];
+
+      database.products.forEach(function(product) {
+        const clientQuantity = Number(clientStats.quantities[product.id] || 0);
+
+        if (clientQuantity <= 0) {
+          return;
+        }
+
+        let totalQuantity = 0;
+        let buyers = 0;
+
+        database.clients.forEach(function(client) {
+          const stats = getClientStats(client.id);
+          const quantity = Number(stats.quantities[product.id] || 0);
+
+          if (quantity > 0) {
+            totalQuantity += quantity;
+            buyers++;
+          }
+        });
+
+        if (!buyers) {
+          return;
+        }
+
+        const average = totalQuantity / buyers;
+
+        if (clientQuantity < average) {
+          const reason = database.lowerReasons.find(function(item) {
+            return item.clientId === clientId &&
+              item.productId === product.id;
+          });
+
+          result.push({
+            product: product,
+            clientQuantity: clientQuantity,
+            average: average,
+            reason: reason ? reason.reason : ""
+          });
+        }
+      });
+
+      return result.sort(function(a, b) {
+        return (b.average - b.clientQuantity) - (a.average - a.clientQuantity);
+      });
     }
 
     function openClientProfile(clientId) {
@@ -2158,21 +2308,118 @@
 
       const stats = getClientStats(clientId);
       const suggestions = getSuggestions(clientId);
-      const boughtProductIds = Object.keys(stats.quantities);
-      const boughtSupplierIds = boughtProductIds
-        .map(productId => getProduct(productId)?.supplierId)
-        .filter(Boolean);
+      const lowerPurchases = getLowerPurchases(clientId);
+      const purchasedProducts = Object.keys(stats.quantities);
+      const purchasedSuppliers = [];
 
-      const orders = stats.sales.slice().sort((a, b) => b.date.localeCompare(a.date));
+      purchasedProducts.forEach(function(productId) {
+        const product = getProduct(productId);
 
-      document.getElementById("profileContent").innerHTML = `
-        <div class="profile-head">
+        if (product && !purchasedSuppliers.includes(product.supplierId)) {
+          purchasedSuppliers.push(product.supplierId);
+        }
+      });
+
+      const suppliersHTML = database.suppliers.length
+        ? database.suppliers.map(function(supplier) {
+            return getSupplierChip(
+              supplier,
+              purchasedSuppliers.includes(supplier.id)
+            );
+          }).join("")
+        : `<span class="muted">Nenhum fornecedor cadastrado.</span>`;
+
+      const ordersHTML = stats.sales.length
+        ? stats.sales
+            .slice()
+            .sort(function(a, b) {
+              return b.date.localeCompare(a.date);
+            })
+            .map(function(sale) {
+              return `
+                <div class="list-item">
+                  <strong>
+                    Pedido de ${dateBR(sale.date)} —
+                    ${money(getSaleTotal(sale))}
+                  </strong>
+
+                  <div class="muted">
+                    ${sale.items.length} item(ns) ·
+                    ${escapeHTML(sale.channel || "Canal não informado")} ·
+                    Fornecedores:
+                    ${getSaleSuppliers(sale)}
+                  </div>
+
+                  <div class="actions">
+                    <button
+                      class="button small"
+                      onclick="openOrder('${sale.id}')">
+                      Ver pedido
+                    </button>
+
+                    <button
+                      class="button small primary"
+                      onclick="downloadOrderPDF('${sale.id}')">
+                      Baixar PDF
+                    </button>
+                  </div>
+                </div>
+              `;
+            }).join("")
+        : `<div class="empty">Este cliente ainda não possui pedidos.</div>`;
+
+      const suggestionsHTML = suggestions.length
+        ? suggestions.slice(0, 15).map(function(item) {
+            return `
+              <div class="list-item">
+                <strong>${escapeHTML(item.product.name)}</strong>
+
+                <div class="muted">
+                  SKU: ${escapeHTML(item.product.sku)} ·
+                  ${getABCBadge(item.curve)}
+                  · ${item.supplier ? escapeHTML(item.supplier.name) : "Sem fornecedor"}
+                </div>
+              </div>
+            `;
+          }).join("")
+        : `<div class="empty">Nenhuma sugestão disponível.</div>`;
+
+      const lowerHTML = lowerPurchases.length
+        ? lowerPurchases.map(function(item) {
+            return `
+              <div class="list-item">
+                <strong>${escapeHTML(item.product.name)}</strong>
+
+                <div class="muted">
+                  Cliente comprou:
+                  <strong>${item.clientQuantity}</strong> ·
+                  Média dos clientes:
+                  <strong>${item.average.toFixed(1)}</strong>
+                </div>
+
+                <div class="field" style="margin-top:9px">
+                  <label>Motivo da compra menor</label>
+
+                  <input
+                    value="${escapeHTML(item.reason)}"
+                    placeholder="Ex.: preço, baixa procura, preferência..."
+                    onchange="saveLowerReason('${client.id}','${item.product.id}',this.value)">
+                </div>
+              </div>
+            `;
+          }).join("")
+        : `<div class="empty">Nenhum produto abaixo da média.</div>`;
+
+      document.getElementById("client-profile").innerHTML = `
+        <div class="profile-header">
           <div>
-            <button class="button small" onclick="showPage('clientes');renderAll()">
+            <button
+              class="button small"
+              onclick="showPage('clientes');renderAll()">
               ← Voltar
             </button>
 
-            <h2 style="margin-top:15px">${escapeHTML(client.name)}</h2>
+            <h2 style="margin-top:14px">${escapeHTML(client.name)}</h2>
 
             <div class="muted">
               ${escapeHTML(client.phone || "Sem telefone")} ·
@@ -2181,118 +2428,96 @@
             </div>
           </div>
 
-          <button class="button primary" onclick="openSaleModal('${client.id}')">
-            + Nova venda
-          </button>
+          <div class="actions" style="margin-top:0">
+            <button
+              class="button primary"
+              onclick="openSaleModal('${client.id}')">
+              + Nova venda
+            </button>
+
+            <button
+              class="button"
+              onclick="document.getElementById('attachment-input').click()">
+              Anexar arquivo
+            </button>
+
+            <input
+              id="attachment-input"
+              type="file"
+              hidden
+              onchange="saveAttachment('${client.id}', this.files[0])">
+          </div>
         </div>
 
         <div class="cards">
           <div class="card">
-            <div class="metric">Pedidos</div>
+            <div class="metric-label">Pedidos</div>
             <div class="metric-value">${stats.sales.length}</div>
           </div>
 
           <div class="card">
-            <div class="metric">Itens comprados</div>
+            <div class="metric-label">Itens comprados</div>
             <div class="metric-value">${stats.items}</div>
           </div>
 
           <div class="card">
-            <div class="metric">Faturamento</div>
+            <div class="metric-label">Faturamento</div>
             <div class="metric-value green">${money(stats.revenue)}</div>
           </div>
 
           <div class="card">
-            <div class="metric">Status</div>
-            <div class="metric-value" style="font-size:18px">${clientStatus(client)}</div>
+            <div class="metric-label">Status</div>
+            <div class="metric-value" style="font-size:17px">
+              ${getClientStatus(client)}
+            </div>
           </div>
         </div>
 
-        <div class="profile-grid">
+        <div class="profile-columns">
           <div>
             <div class="panel">
-              <h2>Fornecedores comprados</h2>
+              <h2>Fornecedores do cliente</h2>
 
-              <div class="supplier-list">
-                ${
-                  db.suppliers.length
-                    ? db.suppliers.map(supplier => {
-                        return supplierChip(
-                          supplier,
-                          boughtSupplierIds.includes(supplier.id)
-                        );
-                      }).join("")
-                    : `<span class="muted">Nenhum fornecedor cadastrado.</span>`
-                }
+              <div class="chips">
+                ${suppliersHTML}
+              </div>
+
+              <div class="muted" style="margin-top:12px">
+                Colorido: fornecedor já comprado.
+                Cinza: fornecedor ainda não comprado.
               </div>
             </div>
 
-            <div class="panel" style="margin-top:15px">
+            <div class="panel">
               <h2>Histórico de pedidos</h2>
+              <div class="list">${ordersHTML}</div>
+            </div>
 
-              ${
-                orders.length
-                  ? `<div class="list">${orders.map(sale => `
-                      <div class="list-item">
-                        <strong>${dateBR(sale.date)} · ${money(getSaleTotal(sale))}</strong>
-                        <div class="muted">
-                          ${(sale.items || []).length} item(ns) ·
-                          ${escapeHTML(sale.seller || "Vendedor não informado")}
-                        </div>
-                        <div class="actions">
-                          <button class="button small" onclick="openOrder('${sale.id}')">
-                            Ver detalhes
-                          </button>
-                        </div>
-                      </div>
-                    `).join("")}</div>`
-                  : `<div class="empty">Este cliente ainda não possui pedidos.</div>`
-              }
+            <div class="panel">
+              <h2>Anexos</h2>
+              ${renderAttachments(client.id)}
             </div>
           </div>
 
           <div>
             <div class="panel">
-              <h2>Oportunidade de venda expandida</h2>
+              <h2>Oportunidades de expansão</h2>
 
               <div class="muted" style="margin-bottom:12px">
-                Produtos vendidos para outros clientes, mas ainda não comprados por este cliente.
+                Produtos que o cliente ainda não comprou, priorizados pela Curva ABC.
               </div>
 
-              ${
-                suggestions.length
-                  ? `<div class="list">${suggestions.slice(0, 15).map(product => {
-                      const supplier = getSupplier(product.supplierId);
-
-                      return `
-                        <div class="list-item">
-                          <strong>${escapeHTML(product.name)}</strong>
-                          <div class="muted">
-                            SKU: ${escapeHTML(product.sku)} ·
-                            ${supplier ? escapeHTML(supplier.name) : "Sem fornecedor"} ·
-                            ${getProductQuantity(product.id)} unidade(s) vendida(s) na base
-                          </div>
-                        </div>
-                      `;
-                    }).join("")}</div>`
-                  : `<div class="empty">Nenhum produto novo identificado.</div>`
-              }
+              <div class="list">${suggestionsHTML}</div>
             </div>
 
-            <div class="panel" style="margin-top:15px">
-              <h2>Próxima ação recomendada</h2>
+            <div class="panel">
+              <h2>Compras abaixo da média</h2>
 
-              <div class="alert ${daysWithoutPurchase(client) > 15 || daysWithoutPurchase(client) === Infinity ? "danger" : "success"}">
-                ${
-                  daysWithoutPurchase(client) === Infinity
-                    ? "Realizar o primeiro contato comercial e apresentar produtos de maior saída."
-                    : daysWithoutPurchase(client) > 15
-                      ? "Entrar em contato para recuperar o cliente e entender o motivo da ausência."
-                      : suggestions.length
-                        ? "Apresentar produtos complementares que o cliente ainda não comprou."
-                        : "Cliente ativo. Manter relacionamento e acompanhar novas oportunidades."
-                }
+              <div class="muted" style="margin-bottom:12px">
+                Identifique por que o cliente comprou menos que os demais clientes.
               </div>
+
+              <div class="list">${lowerHTML}</div>
             </div>
           </div>
         </div>
@@ -2301,53 +2526,386 @@
       showPage("profile");
     }
 
+    function getSaleSuppliers(sale) {
+      const suppliers = [];
+
+      sale.items.forEach(function(item) {
+        const product = getProduct(item.productId);
+
+        if (!product) return;
+
+        const supplier = getSupplier(product.supplierId);
+
+        if (supplier && !suppliers.includes(supplier.name)) {
+          suppliers.push(supplier.name);
+        }
+      });
+
+      return suppliers.map(escapeHTML).join(", ") || "—";
+    }
+
+    function saveLowerReason(clientId, productId, reason) {
+      const existing = database.lowerReasons.find(function(item) {
+        return item.clientId === clientId &&
+          item.productId === productId;
+      });
+
+      if (existing) {
+        existing.reason = reason;
+      } else {
+        database.lowerReasons.push({
+          id: id("reason"),
+          clientId: clientId,
+          productId: productId,
+          reason: reason
+        });
+      }
+
+      saveDatabase();
+    }
+
+    function renderAttachments(clientId) {
+      const files = database.attachments.filter(function(file) {
+        return file.clientId === clientId;
+      });
+
+      if (!files.length) {
+        return `<div class="empty">Nenhum anexo cadastrado.</div>`;
+      }
+
+      return `
+        <div class="list">
+          ${files.map(function(file) {
+            return `
+              <div class="list-item">
+                <strong>${escapeHTML(file.name)}</strong>
+
+                <div class="muted">
+                  Adicionado em ${dateBR(file.date)}
+                </div>
+
+                <div class="actions">
+                  <a
+                    class="button small"
+                    href="${file.data}"
+                    download="${escapeHTML(file.name)}">
+                    Baixar
+                  </a>
+
+                  <button
+                    class="button small danger"
+                    onclick="deleteAttachment('${file.id}','${clientId}')">
+                    Excluir
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join("")}
+        </div>
+      `;
+    }
+
+    function saveAttachment(clientId, file) {
+      if (!file) return;
+
+      const reader = new FileReader();
+
+      reader.onload = function() {
+        database.attachments.push({
+          id: id("file"),
+          clientId: clientId,
+          name: file.name,
+          type: file.type,
+          size: file.size,
+          data: reader.result,
+          date: today()
+        });
+
+        saveDatabase();
+        openClientProfile(clientId);
+      };
+
+      reader.readAsDataURL(file);
+    }
+
+    function deleteAttachment(fileId, clientId) {
+      if (!confirm("Excluir este anexo?")) {
+        return;
+      }
+
+      database.attachments = database.attachments.filter(function(file) {
+        return file.id !== fileId;
+      });
+
+      saveDatabase();
+      openClientProfile(clientId);
+    }
+
+    function getWarrantyPendencies() {
+      const pendencies = [];
+
+      database.sales.forEach(function(sale) {
+        sale.items.forEach(function(item) {
+          if (!item.warrantyActive) return;
+
+          const product = getProduct(item.productId);
+          const client = getClient(sale.clientId);
+
+          if (product && client) {
+            pendencies.push({
+              client: client,
+              product: product,
+              sale: sale
+            });
+          }
+        });
+      });
+
+      return pendencies;
+    }
+
+    function openSaleModal(clientId) {
+      updateSelects();
+
+      document.getElementById("sale-client").value = clientId || "";
+      document.getElementById("sale-date").value = today();
+      document.getElementById("sale-seller").value = "";
+      document.getElementById("sale-notes").value = "";
+      document.getElementById("sale-lines").innerHTML = "";
+
+      addSaleLine();
+
+      document.getElementById("sale-modal").classList.add("open");
+    }
+
+    function addSaleLine() {
+      const line = document.createElement("div");
+
+      line.className = "sale-line";
+
+      line.innerHTML = `
+        <div class="field supplier-field">
+          <label>Fornecedor *</label>
+
+          <select class="sale-supplier" onchange="updateLineProducts(this)">
+            <option value="">Selecione...</option>
+
+            ${database.suppliers.map(function(supplier) {
+              return `
+                <option value="${supplier.id}">
+                  ${escapeHTML(supplier.name)}
+                </option>
+              `;
+            }).join("")}
+          </select>
+        </div>
+
+        <div class="field product-field">
+          <label>Produto / SKU *</label>
+
+          <select class="sale-product" onchange="updateSaleTotal()" disabled>
+            <option value="">Selecione o fornecedor primeiro...</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label>Quantidade</label>
+
+          <input
+            class="sale-quantity"
+            type="number"
+            min="1"
+            value="1"
+            oninput="updateSaleTotal()">
+        </div>
+
+        <div class="line-total">R$ 0,00</div>
+
+        <button
+          type="button"
+          class="button small danger"
+          onclick="this.parentElement.remove();updateSaleTotal()">
+          ×
+        </button>
+      `;
+
+      document.getElementById("sale-lines").appendChild(line);
+      updateSaleTotal();
+    }
+
+    function updateLineProducts(supplierSelect) {
+      const line = supplierSelect.closest(".sale-line");
+      const productSelect = line.querySelector(".sale-product");
+      const supplierId = supplierSelect.value;
+
+      const products = database.products.filter(function(product) {
+        return product.supplierId === supplierId;
+      });
+
+      productSelect.disabled = !supplierId;
+
+      productSelect.innerHTML = supplierId
+        ? `
+          <option value="">Selecione o produto...</option>
+          ${products.map(function(product) {
+            return `
+              <option value="${product.id}">
+                ${escapeHTML(product.sku)} — ${escapeHTML(product.name)}
+                (${money(product.price)})
+              </option>
+            `;
+          }).join("")}
+        `
+        : `<option value="">Selecione o fornecedor primeiro...</option>`;
+
+      updateSaleTotal();
+    }
+
+    function updateSaleTotal() {
+      let total = 0;
+
+      document.querySelectorAll(".sale-line").forEach(function(line) {
+        const product = getProduct(line.querySelector(".sale-product")?.value);
+        const quantity = Number(line.querySelector(".sale-quantity")?.value || 0);
+        const lineTotal = product ? product.price * quantity : 0;
+
+        total += lineTotal;
+
+        const display = line.querySelector(".line-total");
+
+        if (display) {
+          display.textContent = money(lineTotal);
+        }
+      });
+
+      document.getElementById("sale-total").textContent = money(total);
+    }
+
+    document.getElementById("sale-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const clientId = document.getElementById("sale-client").value;
+      const items = [];
+
+      document.querySelectorAll(".sale-line").forEach(function(line) {
+        const supplierId = line.querySelector(".sale-supplier").value;
+        const productId = line.querySelector(".sale-product").value;
+        const quantity = Number(line.querySelector(".sale-quantity").value || 0);
+        const product = getProduct(productId);
+
+        if (!supplierId || !product || quantity <= 0) {
+          return;
+        }
+
+        if (product.supplierId !== supplierId) {
+          alert("O fornecedor selecionado não corresponde ao produto.");
+          return;
+        }
+
+        items.push({
+          productId: product.id,
+          supplierId: supplierId,
+          sku: product.sku,
+          quantity: quantity,
+          price: product.price,
+          warrantyActive: false,
+          warrantyStart: "",
+          warrantyEnd: ""
+        });
+      });
+
+      if (!clientId) {
+        alert("Selecione o cliente.");
+        return;
+      }
+
+      if (!items.length) {
+        alert("Adicione pelo menos um item válido.");
+        return;
+      }
+
+      database.sales.push({
+        id: id("sale"),
+        clientId: clientId,
+        date: document.getElementById("sale-date").value,
+        seller: document.getElementById("sale-seller").value.trim(),
+        channel: document.getElementById("sale-channel").value,
+        notes: document.getElementById("sale-notes").value.trim(),
+        items: items
+      });
+
+      saveDatabase();
+      closeModal("sale-modal");
+      renderAll();
+
+      alert("Venda registrada com sucesso.");
+    });
+
     function openOrder(saleId) {
-      const sale = db.sales.find(item => item.id === saleId);
+      const sale = database.sales.find(function(item) {
+        return item.id === saleId;
+      });
 
       if (!sale) return;
 
       const client = getClient(sale.clientId);
 
-      document.getElementById("orderContent").innerHTML = `
-        <div class="card" style="margin-bottom:15px">
+      const rows = sale.items.map(function(item) {
+        const product = getProduct(item.productId);
+        const supplier = getSupplier(item.supplierId);
+
+        return `
+          <tr>
+            <td>
+              <strong>${escapeHTML(product?.name || "Produto removido")}</strong>
+              <br>
+              <span class="muted">SKU: ${escapeHTML(item.sku || product?.sku || "—")}</span>
+            </td>
+
+            <td>${supplier ? getSupplierChip(supplier, true) : "—"}</td>
+            <td>${item.quantity}</td>
+            <td>${money(item.price)}</td>
+            <td class="green">${money(item.quantity * item.price)}</td>
+            <td>
+              ${
+                item.warrantyActive
+                  ? `<span class="badge badge-active">Ativa</span>`
+                  : `<span class="badge badge-inactive">Inativa</span>`
+              }
+            </td>
+          </tr>
+        `;
+      }).join("");
+
+      document.getElementById("order-details").innerHTML = `
+        <div class="card">
           <strong>${escapeHTML(client?.name || "Cliente removido")}</strong>
+
           <div class="muted">
+            ${escapeHTML(client?.phone || "")} ·
+            ${escapeHTML(client?.email || "")}
+          </div>
+
+          <div class="muted" style="margin-top:7px">
             Data: ${dateBR(sale.date)} ·
             Vendedor: ${escapeHTML(sale.seller || "—")} ·
             Canal: ${escapeHTML(sale.channel || "—")}
           </div>
         </div>
 
-        <div class="table-wrap">
+        <div class="table-container" style="margin-top:15px">
           <table>
             <thead>
               <tr>
-                <th>Fornecedor</th>
-                <th>SKU</th>
                 <th>Produto</th>
+                <th>Fornecedor</th>
                 <th>Quantidade</th>
-                <th>Unitário</th>
+                <th>Preço</th>
                 <th>Total</th>
+                <th>Garantia</th>
               </tr>
             </thead>
-
-            <tbody>
-              ${(sale.items || []).map(item => {
-                const product = getProduct(item.productId);
-                const supplier = getSupplier(item.supplierId);
-
-                return `
-                  <tr>
-                    <td>${supplier ? supplierChip(supplier, true) : "—"}</td>
-                    <td>${escapeHTML(product?.sku || "—")}</td>
-                    <td>${escapeHTML(product?.name || "Produto removido")}</td>
-                    <td>${item.quantity}</td>
-                    <td>${money(item.price)}</td>
-                    <td class="green">${money(item.quantity * item.price)}</td>
-                  </tr>
-                `;
-              }).join("")}
-            </tbody>
+            <tbody>${rows}</tbody>
           </table>
         </div>
 
@@ -2368,19 +2926,171 @@
             `
             : ""
         }
+
+        <div class="actions">
+          <button
+            class="button primary"
+            onclick="downloadOrderPDF('${sale.id}')">
+            Baixar pedido em PDF
+          </button>
+
+          <button
+            class="button"
+            onclick="closeModal('order-modal')">
+            Fechar
+          </button>
+        </div>
       `;
 
-      document.getElementById("orderModal").classList.add("show");
+      document.getElementById("order-modal").classList.add("open");
     }
 
-    function closeModal(id) {
-      document.getElementById(id).classList.remove("show");
+    function downloadOrderPDF(saleId) {
+      const sale = database.sales.find(function(item) {
+        return item.id === saleId;
+      });
+
+      if (!sale) return;
+
+      const client = getClient(sale.clientId);
+      const PDF = window.jspdf?.jsPDF;
+
+      if (!PDF) {
+        alert("A biblioteca de PDF não foi carregada. Verifique a conexão.");
+        return;
+      }
+
+      const documentPDF = new PDF();
+      let y = 20;
+
+      documentPDF.setFillColor(229, 9, 20);
+      documentPDF.rect(0, 0, 210, 10, "F");
+
+      documentPDF.setTextColor(0, 0, 0);
+      documentPDF.setFontSize(18);
+      documentPDF.text("PEDIDO COMERCIAL", 15, y);
+
+      y += 10;
+      documentPDF.setFontSize(10);
+
+      documentPDF.text("Cliente: " + (client?.name || "—"), 15, y);
+      y += 6;
+
+      documentPDF.text("Telefone: " + (client?.phone || "—"), 15, y);
+      y += 6;
+
+      documentPDF.text("Data: " + dateBR(sale.date), 15, y);
+      y += 6;
+
+      documentPDF.text(
+        "Vendedor: " + (sale.seller || "—") +
+        " | Canal: " + (sale.channel || "—"),
+        15,
+        y
+      );
+
+      y += 12;
+
+      documentPDF.setFillColor(40, 40, 40);
+      documentPDF.setTextColor(255, 255, 255);
+      documentPDF.rect(15, y - 5, 180, 8, "F");
+
+      documentPDF.text("Produto / SKU", 18, y);
+      documentPDF.text("Fornecedor", 95, y);
+      documentPDF.text("Qtd.", 135, y);
+      documentPDF.text("Total", 173, y);
+
+      y += 9;
+      documentPDF.setTextColor(0, 0, 0);
+      documentPDF.setFontSize(9);
+
+      sale.items.forEach(function(item) {
+        const product = getProduct(item.productId);
+        const supplier = getSupplier(item.supplierId);
+        const productText = (product?.name || "Produto removido") +
+          " / " +
+          (item.sku || "—");
+
+        documentPDF.text(productText.substring(0, 42), 18, y);
+        documentPDF.text((supplier?.name || "—").substring(0, 22), 95, y);
+        documentPDF.text(String(item.quantity), 137, y);
+        documentPDF.text(money(item.quantity * item.price), 173, y);
+
+        y += 7;
+
+        if (y > 270) {
+          documentPDF.addPage();
+          y = 20;
+        }
+      });
+
+      y += 8;
+      documentPDF.setFontSize(13);
+      documentPDF.text("TOTAL: " + money(getSaleTotal(sale)), 145, y);
+
+      if (sale.notes) {
+        y += 12;
+        documentPDF.setFontSize(10);
+        documentPDF.text("Observações:", 15, y);
+        y += 6;
+
+        const notes = documentPDF.splitTextToSize(sale.notes, 175);
+        documentPDF.text(notes, 15, y);
+      }
+
+      const filename = (client?.name || "cliente")
+        .replace(/[^a-z0-9]/gi, "-")
+        .toLowerCase();
+
+      documentPDF.save("pedido-" + filename + "-" + sale.date + ".pdf");
     }
 
-    document.querySelectorAll(".modal").forEach(modal => {
+    document.getElementById("settings-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      database.settings.monthlyGoal = Number(document.getElementById("monthly-goal").value || 0);
+      database.settings.dailyGoal = Number(document.getElementById("daily-goal").value || 0);
+
+      saveDatabase();
+      closeModal("settings-modal");
+      renderDashboard();
+
+      alert("Meta atualizada com sucesso.");
+    });
+
+    function openSettingsModal() {
+      document.getElementById("monthly-goal").value = database.settings.monthlyGoal || "";
+      document.getElementById("daily-goal").value = database.settings.dailyGoal || "";
+      document.getElementById("settings-modal").classList.add("open");
+    }
+
+    function sendBirthdayMessage(clientId) {
+      const client = getClient(clientId);
+
+      if (!client) return;
+
+      if (!client.phone) {
+        alert("Esse cliente não possui telefone cadastrado.");
+        return;
+      }
+
+      const cleanPhone = client.phone.replace(/\D/g, "");
+
+      const message = encodeURIComponent(
+        "Olá, " + client.name + "! Desejamos um feliz aniversário, muita saúde e sucesso!"
+      );
+
+      window.open("https://wa.me/55" + cleanPhone + "?text=" + message, "_blank");
+    }
+
+    function closeModal(modalId) {
+      document.getElementById(modalId).classList.remove("open");
+    }
+
+    document.querySelectorAll(".modal").forEach(function(modal) {
       modal.addEventListener("click", function(event) {
         if (event.target === modal) {
-          modal.classList.remove("show");
+          modal.classList.remove("open");
         }
       });
     });
