@@ -1,28 +1,32 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestão Comercial</title>
 
   <style>
     :root {
-      --primary: #1d4ed8;
-      --primary-dark: #1e3a8a;
-      --background: #f3f6fb;
-      --card: #ffffff;
-      --text: #1f2937;
-      --muted: #6b7280;
-      --border: #e5e7eb;
-      --success: #15803d;
-      --success-bg: #dcfce7;
-      --warning: #b45309;
-      --warning-bg: #fef3c7;
-      --danger: #b91c1c;
+      --black: #0b0b0b;
+      --black-2: #151515;
+      --black-3: #202020;
+      --red: #c8102e;
+      --red-dark: #8e0b20;
+      --red-light: #fee2e2;
+      --white: #ffffff;
+      --gray-50: #f8f8f8;
+      --gray-100: #f1f1f1;
+      --gray-200: #dddddd;
+      --gray-400: #999999;
+      --gray-600: #666666;
+      --green: #15803d;
+      --green-bg: #dcfce7;
+      --yellow: #a16207;
+      --yellow-bg: #fef3c7;
+      --blue: #1d4ed8;
+      --blue-bg: #dbeafe;
       --danger-bg: #fee2e2;
-      --info-bg: #dbeafe;
-      --gray-bg: #f3f4f6;
-      --shadow: 0 4px 15px rgba(15, 23, 42, 0.08);
+      --shadow: 0 5px 18px rgba(0, 0, 0, .09);
     }
 
     * {
@@ -33,8 +37,9 @@
     }
 
     body {
-      background: var(--background);
-      color: var(--text);
+      min-height: 100vh;
+      color: #222;
+      background: #f3f3f3;
     }
 
     button,
@@ -55,41 +60,49 @@
 
     .sidebar {
       width: 245px;
-      background: var(--primary-dark);
-      color: white;
-      padding: 22px 14px;
+      min-height: 100vh;
       position: fixed;
-      inset: 0 auto 0 0;
-      z-index: 5;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 10;
+      padding: 22px 14px;
+      color: var(--white);
+      background: var(--black);
+      border-right: 3px solid var(--red);
     }
 
     .brand {
+      padding: 5px 10px 22px;
+      margin-bottom: 18px;
+      border-bottom: 1px solid #333;
       font-size: 21px;
       font-weight: bold;
-      padding: 0 12px 24px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-      margin-bottom: 18px;
+    }
+
+    .brand span {
+      color: var(--red);
     }
 
     .menu {
-      display: flex;
-      flex-direction: column;
+      display: grid;
       gap: 7px;
     }
 
     .menu button {
-      border: 0;
-      color: white;
-      background: transparent;
-      text-align: left;
       padding: 12px;
-      border-radius: 8px;
-      transition: 0.2s;
+      color: #ddd;
+      text-align: left;
+      background: transparent;
+      border: 0;
+      border-radius: 7px;
+      transition: .2s;
     }
 
     .menu button:hover,
     .menu button.active {
-      background: rgba(255, 255, 255, 0.16);
+      color: white;
+      background: var(--red);
     }
 
     .content {
@@ -102,7 +115,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 20px;
+      gap: 15px;
       margin-bottom: 24px;
     }
 
@@ -111,9 +124,9 @@
     }
 
     .date {
-      color: var(--muted);
+      margin-top: 6px;
+      color: var(--gray-600);
       font-size: 14px;
-      margin-top: 5px;
     }
 
     .view {
@@ -127,48 +140,51 @@
     .cards {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 16px;
-      margin-bottom: 22px;
+      gap: 15px;
+      margin-bottom: 20px;
     }
 
     .card,
     .form-card,
-    .table-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 12px;
+    .table-card,
+    .analysis-card {
+      background: white;
+      border: 1px solid #e2e2e2;
+      border-radius: 10px;
       box-shadow: var(--shadow);
     }
 
     .card {
-      padding: 19px;
+      padding: 18px;
+      border-top: 4px solid var(--red);
     }
 
     .form-card,
-    .table-card {
+    .table-card,
+    .analysis-card {
       padding: 20px;
       margin-bottom: 20px;
     }
 
     .indicator-title {
-      color: var(--muted);
-      font-size: 14px;
-      margin-bottom: 9px;
+      margin-bottom: 8px;
+      color: var(--gray-600);
+      font-size: 13px;
     }
 
     .indicator-value {
-      font-size: 27px;
+      font-size: 26px;
       font-weight: bold;
     }
 
     .section-title {
-      font-size: 21px;
       margin-bottom: 15px;
+      font-size: 20px;
     }
 
     .sub-title {
+      margin: 18px 0 12px;
       font-size: 17px;
-      margin: 20px 0 12px;
     }
 
     .grid-2 {
@@ -177,14 +193,20 @@
       gap: 18px;
     }
 
-    form {
+    .grid-3 {
       display: grid;
-      gap: 13px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
     }
 
     .form-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
+      gap: 13px;
+    }
+
+    form {
+      display: grid;
       gap: 13px;
     }
 
@@ -199,7 +221,7 @@
     }
 
     label {
-      color: #374151;
+      color: #444;
       font-size: 13px;
       font-weight: bold;
     }
@@ -209,17 +231,18 @@
     textarea {
       width: 100%;
       padding: 10px 11px;
-      border: 1px solid #d1d5db;
-      border-radius: 7px;
-      outline: none;
+      color: #222;
       background: white;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      outline: none;
     }
 
     input:focus,
     select:focus,
     textarea:focus {
-      border-color: var(--primary);
-      box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
+      border-color: var(--red);
+      box-shadow: 0 0 0 3px rgba(200, 16, 46, .13);
     }
 
     textarea {
@@ -228,45 +251,45 @@
     }
 
     .btn {
-      border: 0;
-      border-radius: 7px;
       padding: 10px 15px;
+      color: white;
       font-weight: bold;
-      transition: 0.2s;
+      border: 0;
+      border-radius: 6px;
     }
 
     .btn-primary {
-      color: white;
-      background: var(--primary);
+      background: var(--red);
     }
 
     .btn-primary:hover {
-      background: #1e40af;
+      background: var(--red-dark);
+    }
+
+    .btn-dark {
+      background: var(--black);
     }
 
     .btn-success {
-      color: white;
-      background: var(--success);
+      background: var(--green);
     }
 
     .btn-warning {
-      color: white;
-      background: var(--warning);
+      background: #b45309;
     }
 
     .btn-danger {
-      color: white;
-      background: var(--danger);
+      background: #991b1b;
     }
 
     .btn-outline {
-      color: var(--primary);
-      border: 1px solid var(--primary);
+      color: var(--red);
       background: white;
+      border: 1px solid var(--red);
     }
 
     .btn-small {
-      padding: 7px 10px;
+      padding: 7px 9px;
       font-size: 12px;
     }
 
@@ -277,7 +300,7 @@
     }
 
     .search {
-      margin-bottom: 15px;
+      margin-bottom: 14px;
     }
 
     .table-wrapper {
@@ -286,23 +309,29 @@
 
     table {
       width: 100%;
-      min-width: 700px;
+      min-width: 720px;
       border-collapse: collapse;
     }
 
     th,
     td {
-      border-bottom: 1px solid var(--border);
-      padding: 12px 9px;
+      padding: 11px 8px;
       text-align: left;
-      font-size: 14px;
       vertical-align: top;
+      border-bottom: 1px solid #e5e5e5;
+      font-size: 14px;
     }
 
     th {
-      color: var(--muted);
-      font-size: 12px;
+      color: var(--gray-600);
+      font-size: 11px;
       text-transform: uppercase;
+    }
+
+    .empty {
+      padding: 18px 0;
+      color: var(--gray-600);
+      font-size: 14px;
     }
 
     .badge {
@@ -310,46 +339,46 @@
       align-items: center;
       padding: 5px 8px;
       border-radius: 999px;
-      font-size: 12px;
+      font-size: 11px;
       font-weight: bold;
       white-space: nowrap;
     }
 
+    .badge-red {
+      color: #991b1b;
+      background: var(--red-light);
+    }
+
     .badge-green {
-      color: var(--success);
-      background: var(--success-bg);
+      color: var(--green);
+      background: var(--green-bg);
     }
 
     .badge-yellow {
-      color: var(--warning);
-      background: var(--warning-bg);
-    }
-
-    .badge-red {
-      color: var(--danger);
-      background: var(--danger-bg);
+      color: var(--yellow);
+      background: var(--yellow-bg);
     }
 
     .badge-blue {
-      color: var(--primary);
-      background: var(--info-bg);
+      color: var(--blue);
+      background: var(--blue-bg);
     }
 
     .badge-gray {
-      color: #4b5563;
-      background: var(--gray-bg);
+      color: #555;
+      background: #e8e8e8;
     }
 
     .alert-list {
       display: grid;
-      gap: 10px;
+      gap: 9px;
     }
 
     .alert-item {
-      padding: 13px;
-      border-left: 5px solid var(--warning);
-      border-radius: 6px;
-      background: var(--warning-bg);
+      padding: 12px;
+      border-left: 5px solid var(--red);
+      border-radius: 5px;
+      background: var(--red-light);
     }
 
     .alert-item strong {
@@ -357,73 +386,100 @@
       margin-bottom: 5px;
     }
 
-    .empty {
-      padding: 18px 0;
-      color: var(--muted);
-      font-size: 14px;
+    .supplier-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 15px;
+    }
+
+    .supplier-color {
+      width: 18px;
+      height: 18px;
+      display: inline-block;
+      vertical-align: middle;
+      border-radius: 50%;
+      border: 2px solid white;
+      box-shadow: 0 0 0 1px #aaa;
+    }
+
+    .supplier-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 9px 12px;
+      color: white;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: bold;
+      transition: .2s;
+    }
+
+    .supplier-pill.inactive {
+      color: #777 !important;
+      background: #e2e2e2 !important;
+      border: 1px solid #c7c7c7;
+    }
+
+    .inactive-box {
+      padding: 15px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      background: #fafafa;
+    }
+
+    .inactive-box h3 {
+      margin-bottom: 12px;
+      font-size: 16px;
     }
 
     .timeline {
       position: relative;
       display: grid;
-      gap: 14px;
+      gap: 13px;
       padding-left: 20px;
     }
 
     .timeline::before {
       content: "";
       position: absolute;
-      left: 5px;
       top: 0;
       bottom: 0;
+      left: 5px;
       width: 2px;
-      background: #bfdbfe;
+      background: var(--red);
     }
 
     .timeline-item {
       position: relative;
       padding: 12px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: #f8fafc;
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-radius: 7px;
     }
 
     .timeline-item::before {
       content: "";
       position: absolute;
+      top: 16px;
       left: -20px;
-      top: 17px;
       width: 10px;
       height: 10px;
+      background: var(--red);
       border: 3px solid white;
       border-radius: 50%;
-      background: var(--primary);
-      box-shadow: 0 0 0 1px var(--primary);
-    }
-
-    .abc-bar {
-      min-width: 120px;
-      height: 9px;
-      overflow: hidden;
-      border-radius: 20px;
-      background: #dbeafe;
-    }
-
-    .abc-bar span {
-      display: block;
-      height: 100%;
-      background: var(--primary);
+      box-shadow: 0 0 0 1px var(--red);
     }
 
     .modal {
       display: none;
       position: fixed;
       inset: 0;
-      z-index: 20;
+      z-index: 30;
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background: rgba(15, 23, 42, 0.62);
+      background: rgba(0, 0, 0, .7);
     }
 
     .modal.open {
@@ -431,41 +487,48 @@
     }
 
     .modal-content {
-      width: min(1050px, 100%);
+      width: min(1100px, 100%);
       max-height: 94vh;
       overflow-y: auto;
-      padding: 23px;
-      border-radius: 12px;
+      padding: 22px;
       background: white;
+      border-radius: 10px;
     }
 
     .modal-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 12px;
+      gap: 15px;
       margin-bottom: 18px;
     }
 
     .close {
-      border: 0;
-      color: var(--muted);
+      color: #555;
       background: transparent;
-      font-size: 27px;
+      border: 0;
+      font-size: 28px;
     }
 
     .profile-header {
       display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 12px;
-      margin-bottom: 18px;
+      margin-bottom: 17px;
     }
 
     .profile-info {
       padding: 14px;
-      border-radius: 8px;
-      background: #f8fafc;
-      border: 1px solid var(--border);
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-radius: 7px;
+    }
+
+    .profile-info strong {
+      display: block;
+      margin-bottom: 6px;
+      color: var(--gray-600);
+      font-size: 12px;
     }
 
     .product-sale-row {
@@ -475,30 +538,33 @@
       gap: 8px;
       margin-bottom: 8px;
       padding: 9px;
-      border-radius: 7px;
-      background: #f8fafc;
-      border: 1px solid var(--border);
+      background: #fafafa;
+      border: 1px solid #ddd;
+      border-radius: 6px;
     }
 
-    .status-active {
-      color: var(--success);
-      font-weight: bold;
+    .product-sale-row label {
+      font-weight: normal;
     }
 
-    .status-inactive {
-      color: var(--muted);
+    .color-input {
+      width: 60px;
+      height: 40px;
+      padding: 2px;
     }
 
-    .analysis-box {
-      padding: 15px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: #f8fafc;
+    .bar {
+      width: 130px;
+      height: 8px;
+      overflow: hidden;
+      background: #ddd;
+      border-radius: 10px;
     }
 
-    .analysis-box ul {
-      padding-left: 20px;
-      line-height: 1.9;
+    .bar span {
+      display: block;
+      height: 100%;
+      background: var(--red);
     }
 
     @media (max-width: 1100px) {
@@ -506,12 +572,8 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .grid-2 {
-        grid-template-columns: 1fr;
-      }
-
-      .profile-header {
-        grid-template-columns: 1fr;
+      .grid-3 {
+        grid-template-columns: 1fr 1fr;
       }
     }
 
@@ -523,17 +585,16 @@
       .sidebar {
         position: relative;
         width: 100%;
-        height: auto;
+        min-height: auto;
       }
 
       .content {
         width: 100%;
         margin-left: 0;
-        padding: 18px;
+        padding: 17px;
       }
 
       .menu {
-        display: grid;
         grid-template-columns: repeat(2, 1fr);
       }
 
@@ -546,7 +607,10 @@
       }
 
       .cards,
-      .form-grid {
+      .grid-2,
+      .grid-3,
+      .form-grid,
+      .profile-header {
         grid-template-columns: 1fr;
       }
 
@@ -560,7 +624,7 @@
 <body>
   <div class="layout">
     <aside class="sidebar">
-      <div class="brand">Gestão Comercial</div>
+      <div class="brand">Gestão <span>Comercial</span></div>
 
       <nav class="menu">
         <button class="menu-btn active" data-view="dashboard">Dashboard</button>
@@ -579,7 +643,7 @@
         </div>
 
         <div class="actions">
-          <button class="btn btn-success" onclick="carregarDadosFicticios()">
+          <button class="btn btn-dark" onclick="carregarDadosFicticios()">
             Carregar dados fictícios
           </button>
 
@@ -594,45 +658,69 @@
         <div class="cards">
           <div class="card">
             <div class="indicator-title">Clientes cadastrados</div>
-            <div class="indicator-value" id="indicator-clientes">0</div>
+            <div class="indicator-value" id="total-clientes">0</div>
           </div>
 
           <div class="card">
             <div class="indicator-title">Produtos cadastrados</div>
-            <div class="indicator-value" id="indicator-produtos">0</div>
+            <div class="indicator-value" id="total-produtos">0</div>
           </div>
 
           <div class="card">
             <div class="indicator-title">Vendas realizadas</div>
-            <div class="indicator-value" id="indicator-vendas">0</div>
+            <div class="indicator-value" id="total-vendas">0</div>
           </div>
 
           <div class="card">
             <div class="indicator-title">Faturamento</div>
-            <div class="indicator-value" id="indicator-faturamento">
-              R$ 0,00
-            </div>
+            <div class="indicator-value" id="total-faturamento">R$ 0,00</div>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="inactive-box">
+            <h3>Mais de 15 dias inativos</h3>
+            <strong id="inativos-15" style="font-size:26px;color:#b45309;">0</strong>
+          </div>
+
+          <div class="inactive-box">
+            <h3>Mais de 30 dias inativos</h3>
+            <strong id="inativos-30" style="font-size:26px;color:#c2410c;">0</strong>
+          </div>
+
+          <div class="inactive-box">
+            <h3>Mais de 45 dias inativos</h3>
+            <strong id="inativos-45" style="font-size:26px;color:#991b1b;">0</strong>
           </div>
         </div>
 
         <div class="grid-2">
           <div class="table-card">
-            <h2 class="section-title">Pendências de garantia</h2>
-            <div id="warranty-alerts" class="alert-list"></div>
+            <h2 class="section-title">Clientes inativos</h2>
+
+            <div class="actions" style="margin-bottom:13px;">
+              <button class="btn btn-warning btn-small" onclick="filtrarInativos(15)">
+                Mais de 15 dias
+              </button>
+              <button class="btn btn-warning btn-small" onclick="filtrarInativos(30)">
+                Mais de 30 dias
+              </button>
+              <button class="btn btn-danger btn-small" onclick="filtrarInativos(45)">
+                Mais de 45 dias
+              </button>
+            </div>
+
+            <div id="inactive-customers"></div>
           </div>
 
           <div class="table-card">
-            <h2 class="section-title">Aniversários de hoje</h2>
-            <div id="birthday-alerts" class="alert-list"></div>
+            <h2 class="section-title">Pendências de garantia</h2>
+            <div id="warranty-alerts"></div>
           </div>
         </div>
 
         <div class="table-card">
-          <h2 class="section-title">Curva ABC geral dos produtos</h2>
-          <p class="empty">
-            A classificação considera o faturamento acumulado dos produtos.
-            A = até 80%, B = até 95% e C = restante.
-          </p>
+          <h2 class="section-title">Produtos mais e menos pedidos</h2>
 
           <div class="table-wrapper">
             <table>
@@ -640,20 +728,21 @@
                 <tr>
                   <th>ABC</th>
                   <th>Produto</th>
-                  <th>Quantidade pedida</th>
+                  <th>Fornecedor</th>
+                  <th>Quantidade</th>
                   <th>Faturamento</th>
                   <th>Participação</th>
-                  <th>Status de demanda</th>
+                  <th>Status</th>
                 </tr>
               </thead>
 
-              <tbody id="abc-products-table"></tbody>
+              <tbody id="products-dashboard-table"></tbody>
             </table>
           </div>
         </div>
 
         <div class="table-card">
-          <h2 class="section-title">Curva ABC geral dos clientes</h2>
+          <h2 class="section-title">Curva ABC dos clientes</h2>
 
           <div class="table-wrapper">
             <table>
@@ -661,41 +750,16 @@
                 <tr>
                   <th>ABC</th>
                   <th>Cliente</th>
+                  <th>Última compra</th>
                   <th>Pedidos</th>
-                  <th>Produtos pedidos</th>
+                  <th>Produtos</th>
                   <th>Faturamento</th>
                   <th>Participação</th>
                 </tr>
               </thead>
 
-              <tbody id="abc-clients-table"></tbody>
+              <tbody id="clients-abc-table"></tbody>
             </table>
-          </div>
-        </div>
-
-        <div class="grid-2">
-          <div class="table-card">
-            <h2 class="section-title">Produtos menos pedidos</h2>
-
-            <div class="table-wrapper">
-              <table>
-                <thead>
-                  <tr>
-                    <th>Produto</th>
-                    <th>Quantidade</th>
-                    <th>Clientes</th>
-                    <th>Indicador</th>
-                  </tr>
-                </thead>
-
-                <tbody id="low-demand-table"></tbody>
-              </table>
-            </div>
-          </div>
-
-          <div class="table-card">
-            <h2 class="section-title">Análises gerais</h2>
-            <div id="general-analysis" class="analysis-box"></div>
           </div>
         </div>
       </section>
@@ -709,22 +773,22 @@
             <div class="form-grid">
               <div class="form-group">
                 <label>Nome do cliente</label>
-                <input id="client-name" required />
+                <input id="client-name" required>
               </div>
 
               <div class="form-group">
                 <label>Telefone</label>
-                <input id="client-phone" placeholder="Ex.: 88999999999" />
+                <input id="client-phone">
               </div>
 
               <div class="form-group">
-                <label>Data de aniversário</label>
-                <input id="client-birthday" type="date" />
+                <label>Aniversário</label>
+                <input id="client-birthday" type="date">
               </div>
 
               <div class="form-group">
                 <label>Empresa, cidade ou região</label>
-                <input id="client-company" />
+                <input id="client-company">
               </div>
 
               <div class="form-group full">
@@ -733,9 +797,7 @@
               </div>
             </div>
 
-            <button class="btn btn-primary">
-              Cadastrar cliente
-            </button>
+            <button class="btn btn-primary">Cadastrar cliente</button>
           </form>
         </div>
 
@@ -746,17 +808,17 @@
             id="client-search"
             class="search"
             placeholder="Pesquisar cliente..."
-          />
+          >
 
           <div class="table-wrapper">
             <table>
               <thead>
                 <tr>
-                  <th>Nome</th>
+                  <th>Cliente</th>
                   <th>Telefone</th>
                   <th>Aniversário</th>
-                  <th>Empresa/cidade</th>
-                  <th>Pedidos</th>
+                  <th>Última compra</th>
+                  <th>Inatividade</th>
                   <th>Ações</th>
                 </tr>
               </thead>
@@ -775,53 +837,45 @@
           <form id="product-form">
             <div class="form-grid">
               <div class="form-group">
-                <label>Nome da peça</label>
-                <input id="product-name" required />
+                <label>Nome do produto</label>
+                <input id="product-name" required>
               </div>
 
               <div class="form-group">
                 <label>Fornecedor</label>
                 <select id="product-supplier">
-                  <option value="">Selecione o fornecedor</option>
+                  <option value="">Selecione</option>
                 </select>
               </div>
 
               <div class="form-group">
                 <label>Categoria</label>
-                <input id="product-category" />
+                <input id="product-category">
               </div>
 
               <div class="form-group">
                 <label>Preço unitário</label>
-                <input
-                  id="product-price"
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  required
-                />
+                <input id="product-price" type="number" min="0" step="0.01" required>
               </div>
             </div>
 
-            <button class="btn btn-primary">
-              Cadastrar produto
-            </button>
+            <button class="btn btn-primary">Cadastrar produto</button>
           </form>
         </div>
 
         <div class="table-card">
-          <h2 class="section-title">Painel de produtos</h2>
+          <h2 class="section-title">Produtos cadastrados</h2>
 
           <div class="table-wrapper">
             <table>
               <thead>
                 <tr>
-                  <th>Código interno</th>
+                  <th>Código</th>
                   <th>Produto</th>
                   <th>Fornecedor</th>
                   <th>Categoria</th>
                   <th>Preço</th>
-                  <th>Quantidade pedida</th>
+                  <th>Quantidade vendida</th>
                   <th>Ações</th>
                 </tr>
               </thead>
@@ -841,28 +895,26 @@
             <div class="form-grid">
               <div class="form-group">
                 <label>Nome do fornecedor</label>
-                <input id="supplier-name" required />
+                <input id="supplier-name" required>
               </div>
 
               <div class="form-group">
                 <label>Telefone</label>
-                <input id="supplier-phone" />
+                <input id="supplier-phone">
               </div>
 
               <div class="form-group">
-                <label>CNPJ ou CPF</label>
-                <input id="supplier-document" />
+                <label>CNPJ ou documento</label>
+                <input id="supplier-document">
               </div>
 
               <div class="form-group">
-                <label>Observações</label>
-                <input id="supplier-notes" />
+                <label>Cor do fornecedor</label>
+                <input id="supplier-color" class="color-input" type="color" value="#c8102e">
               </div>
             </div>
 
-            <button class="btn btn-primary">
-              Cadastrar fornecedor
-            </button>
+            <button class="btn btn-primary">Cadastrar fornecedor</button>
           </form>
         </div>
 
@@ -873,6 +925,7 @@
             <table>
               <thead>
                 <tr>
+                  <th>Cor</th>
                   <th>Fornecedor</th>
                   <th>Telefone</th>
                   <th>Documento</th>
@@ -904,23 +957,17 @@
 
               <div class="form-group">
                 <label>Descrição</label>
-                <input id="finance-description" required />
+                <input id="finance-description" required>
               </div>
 
               <div class="form-group">
                 <label>Valor</label>
-                <input
-                  id="finance-value"
-                  type="number"
-                  min="0"
-                  step="0.01"
-                  required
-                />
+                <input id="finance-value" type="number" min="0" step="0.01" required>
               </div>
 
               <div class="form-group">
                 <label>Vencimento</label>
-                <input id="finance-due-date" type="date" required />
+                <input id="finance-due-date" type="date" required>
               </div>
 
               <div class="form-group">
@@ -932,14 +979,12 @@
               </div>
             </div>
 
-            <button class="btn btn-primary">
-              Salvar lançamento
-            </button>
+            <button class="btn btn-primary">Salvar lançamento</button>
           </form>
         </div>
 
         <div class="table-card">
-          <h2 class="section-title">Contas a pagar e receber</h2>
+          <h2 class="section-title">Contas financeiras</h2>
 
           <div class="table-wrapper">
             <table>
@@ -950,7 +995,7 @@
                   <th>Valor</th>
                   <th>Vencimento</th>
                   <th>Status</th>
-                  <th>Ações</th>
+                  <th>Ação</th>
                 </tr>
               </thead>
 
@@ -972,18 +1017,15 @@
     <div class="modal-content">
       <div class="modal-header">
         <h2 id="client-modal-title">Perfil do cliente</h2>
-
-        <button class="close" onclick="fecharModalCliente()">
-          &times;
-        </button>
+        <button class="close" onclick="fecharPerfil()">&times;</button>
       </div>
 
-      <div id="client-profile-content"></div>
+      <div id="client-profile"></div>
     </div>
   </div>
 
   <script>
-    const STORAGE_KEY = "gestao_comercial_corrigido_v1";
+    const STORAGE_KEY = "gestao_comercial_preto_vermelho_v2";
 
     let banco = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
       clientes: [],
@@ -993,13 +1035,14 @@
       financeiro: []
     };
 
-    let clienteAbertoId = null;
+    let clienteAtualId = null;
+    let filtroInatividadeAtual = 15;
 
     function salvar() {
       localStorage.setItem(STORAGE_KEY, JSON.stringify(banco));
     }
 
-    function id(prefixo) {
+    function gerarId(prefixo) {
       return prefixo + "_" + Date.now() + "_" +
         Math.random().toString(36).substring(2, 8);
     }
@@ -1011,27 +1054,8 @@
       });
     }
 
-    function dataAtual() {
-      const agora = new Date();
-      const dois = numero => String(numero).padStart(2, "0");
-
-      return `${agora.getFullYear()}-${dois(agora.getMonth() + 1)}-${dois(agora.getDate())}`;
-    }
-
-    function dataFormatada(data) {
-      if (!data) return "-";
-
-      return new Date(data + "T00:00:00").toLocaleDateString("pt-BR");
-    }
-
-    function dataHoraFormatada(data) {
-      if (!data) return "-";
-
-      return new Date(data).toLocaleString("pt-BR");
-    }
-
-    function htmlSeguro(texto) {
-      return String(texto || "")
+    function escapeHtml(valor) {
+      return String(valor || "")
         .replaceAll("&", "&")
         .replaceAll("<", "<")
         .replaceAll(">", ">")
@@ -1039,60 +1063,108 @@
         .replaceAll("'", "&#039;");
     }
 
-    function obterCliente(clienteId) {
-      return banco.clientes.find(cliente => cliente.id === clienteId);
+    function hojeISO() {
+      const data = new Date();
+      const dois = numero => String(numero).padStart(2, "0");
+
+      return data.getFullYear() + "-" +
+        dois(data.getMonth() + 1) + "-" +
+        dois(data.getDate());
     }
 
-    function obterProduto(produtoId) {
-      return banco.produtos.find(produto => produto.id === produtoId);
+    function formatarData(data) {
+      if (!data) return "-";
+
+      return new Date(data + "T00:00:00")
+        .toLocaleDateString("pt-BR");
     }
 
-    function obterFornecedor(fornecedorId) {
-      return banco.fornecedores.find(
-        fornecedor => fornecedor.id === fornecedorId
-      );
+    function formatarDataHora(data) {
+      if (!data) return "-";
+
+      return new Date(data).toLocaleString("pt-BR");
+    }
+
+    function obterCliente(id) {
+      return banco.clientes.find(cliente => cliente.id === id);
+    }
+
+    function obterProduto(id) {
+      return banco.produtos.find(produto => produto.id === id);
+    }
+
+    function obterFornecedor(id) {
+      return banco.fornecedores.find(fornecedor => fornecedor.id === id);
     }
 
     function gerarCodigoProduto() {
-      const maiorCodigo = banco.produtos.reduce((maior, produto) => {
+      let maior = 0;
+
+      banco.produtos.forEach(produto => {
         const numero = parseInt(
-          String(produto.codigoInterno || "").replace(/\D/g, ""),
+          String(produto.codigo || "").replace(/\D/g, ""),
           10
         );
 
-        return Number.isFinite(numero) && numero > maior ? numero : maior;
-      }, 0);
+        if (numero > maior) maior = numero;
+      });
 
-      return `P-${String(maiorCodigo + 1).padStart(5, "0")}`;
+      return "P-" + String(maior + 1).padStart(5, "0");
     }
 
-    function adicionarTimeline(clienteId, tipo, descricao, dados = {}) {
-      const cliente = obterCliente(clienteId);
+    function vendasDoCliente(clienteId) {
+      return banco.vendas.filter(
+        venda => venda.clienteId === clienteId
+      );
+    }
 
-      if (!cliente) return;
+    function ultimaCompra(clienteId) {
+      const vendas = vendasDoCliente(clienteId);
 
-      if (!cliente.timeline) {
-        cliente.timeline = [];
+      if (!vendas.length) return null;
+
+      return vendas
+        .map(venda => venda.data)
+        .sort()
+        .reverse()[0];
+    }
+
+    function diasInativo(clienteId) {
+      const ultima = ultimaCompra(clienteId);
+
+      if (!ultima) return null;
+
+      const dataUltima = new Date(ultima + "T00:00:00");
+      const hoje = new Date(hojeISO() + "T00:00:00");
+
+      return Math.floor(
+        (hoje - dataUltima) / (1000 * 60 * 60 * 24)
+      );
+    }
+
+    function textoInatividade(clienteId) {
+      const dias = diasInativo(clienteId);
+
+      if (dias === null) {
+        return '<span class="badge badge-red">Nunca comprou</span>';
       }
 
-      cliente.timeline.unshift({
-        id: id("timeline"),
-        data: new Date().toISOString(),
-        tipo,
-        descricao,
-        dados
-      });
+      if (dias > 45) {
+        return `<span class="badge badge-red">${dias} dias</span>`;
+      }
+
+      if (dias > 30) {
+        return `<span class="badge badge-yellow">${dias} dias</span>`;
+      }
+
+      if (dias > 15) {
+        return `<span class="badge badge-blue">${dias} dias</span>`;
+      }
+
+      return `<span class="badge badge-green">${dias} dias</span>`;
     }
 
-    function mostrarAviso(mensagem) {
-      alert(mensagem);
-    }
-
-    function quantidadePedidosCliente(clienteId) {
-      return banco.vendas.filter(venda => venda.clienteId === clienteId).length;
-    }
-
-    function quantidadeProdutoGeral(produtoId) {
+    function quantidadeProduto(produtoId) {
       return banco.vendas.reduce((total, venda) => {
         const item = venda.itens.find(
           itemVenda => itemVenda.produtoId === produtoId
@@ -1103,9 +1175,7 @@
     }
 
     function quantidadeProdutoCliente(clienteId, produtoId) {
-      return banco.vendas.reduce((total, venda) => {
-        if (venda.clienteId !== clienteId) return total;
-
+      return vendasDoCliente(clienteId).reduce((total, venda) => {
         const item = venda.itens.find(
           itemVenda => itemVenda.produtoId === produtoId
         );
@@ -1114,62 +1184,92 @@
       }, 0);
     }
 
-    function clientesQuePediramProduto(produtoId) {
-      return new Set(
-        banco.vendas
-          .filter(venda =>
-            venda.itens.some(item => item.produtoId === produtoId)
-          )
-          .map(venda => venda.clienteId)
-      ).size;
-    }
-
     function totalVenda(venda) {
       return venda.itens.reduce((total, item) => {
         const produto = obterProduto(item.produtoId);
 
-        return total + (
-          Number(item.quantidade) * Number(produto?.preco || 0)
-        );
+        return total +
+          Number(item.quantidade) * Number(produto?.preco || 0);
       }, 0);
     }
 
-    function faturamentoGeral() {
+    function faturamentoTotal() {
       return banco.vendas.reduce(
         (total, venda) => total + totalVenda(venda),
         0
       );
     }
 
-    function analiseProdutosGeral() {
-      const produtos = banco.produtos.map(produto => {
-        const quantidade = quantidadeProdutoGeral(produto.id);
-        const faturamento = quantidade * Number(produto.preco || 0);
-        const clientes = clientesQuePediramProduto(produto.id);
+    function ultimaCompraFornecedor(clienteId, fornecedorId) {
+      let datas = [];
+
+      vendasDoCliente(clienteId).forEach(venda => {
+        venda.itens.forEach(item => {
+          const produto = obterProduto(item.produtoId);
+
+          if (produto?.fornecedorId === fornecedorId) {
+            datas.push(venda.data);
+          }
+        });
+      });
+
+      if (!datas.length) return null;
+
+      return datas.sort().reverse()[0];
+    }
+
+    function clienteCompraFornecedor(clienteId, fornecedorId) {
+      return banco.vendas.some(venda => {
+        if (venda.clienteId !== clienteId) return false;
+
+        return venda.itens.some(item => {
+          const produto = obterProduto(item.produtoId);
+          return produto?.fornecedorId === fornecedorId;
+        });
+      });
+    }
+
+    function adicionarTimeline(clienteId, tipo, descricao) {
+      const cliente = obterCliente(clienteId);
+
+      if (!cliente) return;
+
+      if (!cliente.timeline) cliente.timeline = [];
+
+      cliente.timeline.unshift({
+        id: gerarId("timeline"),
+        tipo,
+        descricao,
+        data: new Date().toISOString()
+      });
+    }
+
+    function analiseProdutos() {
+      const lista = banco.produtos.map(produto => {
+        const quantidade = quantidadeProduto(produto.id);
 
         return {
           produto,
           quantidade,
-          faturamento,
-          clientes
+          faturamento: quantidade * Number(produto.preco || 0)
         };
       });
 
-      produtos.sort((a, b) => b.faturamento - a.faturamento);
+      lista.sort((a, b) => b.faturamento - a.faturamento);
 
-      const faturamentoTotal = produtos.reduce(
-        (total, item) => total + item.faturamento,
+      const total = lista.reduce(
+        (soma, item) => soma + item.faturamento,
         0
       );
 
       let acumulado = 0;
 
-      return produtos.map(item => {
-        const participacao = faturamentoTotal
-          ? (item.faturamento / faturamentoTotal) * 100
+      return lista.map(item => {
+        const participacao = total
+          ? item.faturamento / total * 100
           : 0;
 
-        const classe = acumulado < 80
+        const abc = acumulado < 80
           ? "A"
           : acumulado < 95
             ? "B"
@@ -1180,29 +1280,29 @@
         return {
           ...item,
           participacao,
-          classe
+          abc
         };
       });
     }
 
-    function analiseClientesGeral() {
-      const clientes = banco.clientes.map(cliente => {
-        const vendas = banco.vendas.filter(
-          venda => venda.clienteId === cliente.id
-        );
+    function ultimaCompraTexto(clienteId) {
+      const data = ultimaCompra(clienteId);
+      return data ? formatarData(data) : "Nunca comprou";
+    }
 
-        const produtosPedidos = new Set();
+    function analiseClientes() {
+      const lista = banco.clientes.map(cliente => {
+        const vendas = vendasDoCliente(cliente.id);
+        const produtos = new Set();
 
         vendas.forEach(venda => {
-          venda.itens.forEach(item => {
-            produtosPedidos.add(item.produtoId);
-          });
+          venda.itens.forEach(item => produtos.add(item.produtoId));
         });
 
         return {
           cliente,
           pedidos: vendas.length,
-          produtosPedidos: produtosPedidos.size,
+          produtos: produtos.size,
           faturamento: vendas.reduce(
             (total, venda) => total + totalVenda(venda),
             0
@@ -1210,21 +1310,21 @@
         };
       });
 
-      clientes.sort((a, b) => b.faturamento - a.faturamento);
+      lista.sort((a, b) => b.faturamento - a.faturamento);
 
-      const total = clientes.reduce(
-        (soma, cliente) => soma + cliente.faturamento,
+      const total = lista.reduce(
+        (soma, item) => soma + item.faturamento,
         0
       );
 
       let acumulado = 0;
 
-      return clientes.map(item => {
+      return lista.map(item => {
         const participacao = total
-          ? (item.faturamento / total) * 100
+          ? item.faturamento / total * 100
           : 0;
 
-        const classe = acumulado < 80
+        const abc = acumulado < 80
           ? "A"
           : acumulado < 95
             ? "B"
@@ -1235,70 +1335,75 @@
         return {
           ...item,
           participacao,
-          classe
+          abc
         };
       });
     }
 
-    function classeABC(classe) {
-      if (classe === "A") return "badge-green";
-      if (classe === "B") return "badge-yellow";
+    function classeABC(abc) {
+      if (abc === "A") return "badge-green";
+      if (abc === "B") return "badge-yellow";
       return "badge-red";
-    }
-
-    function statusDemanda(item) {
-      if (item.quantidade === 0) {
-        return '<span class="badge badge-red">Nunca pedido</span>';
-      }
-
-      if (item.quantidade <= 5) {
-        return '<span class="badge badge-yellow">Baixa demanda</span>';
-      }
-
-      return '<span class="badge badge-green">Demanda registrada</span>';
     }
 
     function renderizarTudo() {
       renderizarIndicadores();
-      renderizarSelects();
+      renderizarSelectFornecedor();
       renderizarClientes();
       renderizarProdutos();
       renderizarFornecedores();
       renderizarFinanceiro();
+      renderizarDashboardProdutos();
+      renderizarDashboardClientes();
+      renderizarInativos(filtroInatividadeAtual);
       renderizarGarantias();
-      renderizarAniversarios();
-      renderizarABCProdutos();
-      renderizarABCClientes();
-      renderizarProdutosMenosPedidos();
-      renderizarAnaliseGeral();
 
-      if (clienteAbertoId) {
-        abrirPerfilCliente(clienteAbertoId, false);
+      if (clienteAtualId) {
+        abrirPerfilCliente(clienteAtualId, false);
       }
     }
 
     function renderizarIndicadores() {
-      document.getElementById("indicator-clientes").textContent =
+      document.getElementById("total-clientes").textContent =
         banco.clientes.length;
 
-      document.getElementById("indicator-produtos").textContent =
+      document.getElementById("total-produtos").textContent =
         banco.produtos.length;
 
-      document.getElementById("indicator-vendas").textContent =
+      document.getElementById("total-vendas").textContent =
         banco.vendas.length;
 
-      document.getElementById("indicator-faturamento").textContent =
-        moeda(faturamentoGeral());
+      document.getElementById("total-faturamento").textContent =
+        moeda(faturamentoTotal());
+
+      const inativos15 = banco.clientes.filter(cliente => {
+        const dias = diasInativo(cliente.id);
+        return dias === null || dias > 15;
+      }).length;
+
+      const inativos30 = banco.clientes.filter(cliente => {
+        const dias = diasInativo(cliente.id);
+        return dias === null || dias > 30;
+      }).length;
+
+      const inativos45 = banco.clientes.filter(cliente => {
+        const dias = diasInativo(cliente.id);
+        return dias === null || dias > 45;
+      }).length;
+
+      document.getElementById("inativos-15").textContent = inativos15;
+      document.getElementById("inativos-30").textContent = inativos30;
+      document.getElementById("inativos-45").textContent = inativos45;
     }
 
-    function renderizarSelects() {
-      const selectFornecedor = document.getElementById("product-supplier");
+    function renderizarSelectFornecedor() {
+      const select = document.getElementById("product-supplier");
 
-      selectFornecedor.innerHTML =
-        '<option value="">Selecione o fornecedor</option>' +
+      select.innerHTML =
+        '<option value="">Selecione</option>' +
         banco.fornecedores.map(fornecedor => `
           <option value="${fornecedor.id}">
-            ${htmlSeguro(fornecedor.nome)}
+            ${escapeHtml(fornecedor.nome)}
           </option>
         `).join("");
     }
@@ -1328,13 +1433,15 @@
       tabela.innerHTML = clientes.map(cliente => `
         <tr>
           <td>
-            <strong>${htmlSeguro(cliente.nome)}</strong>
+            <strong>${escapeHtml(cliente.nome)}</strong>
+            <br>
+            <small>${escapeHtml(cliente.empresa || "")}</small>
           </td>
 
-          <td>${htmlSeguro(cliente.telefone || "-")}</td>
-          <td>${dataFormatada(cliente.aniversario)}</td>
-          <td>${htmlSeguro(cliente.empresa || "-")}</td>
-          <td>${quantidadePedidosCliente(cliente.id)}</td>
+          <td>${escapeHtml(cliente.telefone || "-")}</td>
+          <td>${formatarData(cliente.aniversario)}</td>
+          <td>${ultimaCompraTexto(cliente.id)}</td>
+          <td>${textoInatividade(cliente.id)}</td>
 
           <td>
             <div class="actions">
@@ -1384,27 +1491,36 @@
         return;
       }
 
-      const analise = analiseProdutosGeral();
-
       tabela.innerHTML = banco.produtos.map(produto => {
         const fornecedor = obterFornecedor(produto.fornecedorId);
-        const item = analise.find(
-          resultado => resultado.produto.id === produto.id
-        );
 
         return `
           <tr>
             <td>
               <span class="badge badge-gray">
-                ${htmlSeguro(produto.codigoInterno)}
+                ${escapeHtml(produto.codigo)}
               </span>
             </td>
 
-            <td><strong>${htmlSeguro(produto.nome)}</strong></td>
-            <td>${htmlSeguro(fornecedor?.nome || "-")}</td>
-            <td>${htmlSeguro(produto.categoria || "-")}</td>
+            <td><strong>${escapeHtml(produto.nome)}</strong></td>
+
+            <td>
+              ${
+                fornecedor
+                  ? `
+                    <span
+                      class="supplier-color"
+                      style="background:${fornecedor.cor || "#c8102e"}"
+                    ></span>
+                    ${escapeHtml(fornecedor.nome)}
+                  `
+                  : "-"
+              }
+            </td>
+
+            <td>${escapeHtml(produto.categoria || "-")}</td>
             <td>${moeda(produto.preco)}</td>
-            <td>${item?.quantidade || 0}</td>
+            <td>${quantidadeProduto(produto.id)}</td>
 
             <td>
               <button
@@ -1425,7 +1541,7 @@
       if (!banco.fornecedores.length) {
         tabela.innerHTML = `
           <tr>
-            <td colspan="5" class="empty">
+            <td colspan="6" class="empty">
               Nenhum fornecedor cadastrado.
             </td>
           </tr>
@@ -1434,16 +1550,23 @@
       }
 
       tabela.innerHTML = banco.fornecedores.map(fornecedor => {
-        const produtos = banco.produtos.filter(
+        const quantidade = banco.produtos.filter(
           produto => produto.fornecedorId === fornecedor.id
         ).length;
 
         return `
           <tr>
-            <td><strong>${htmlSeguro(fornecedor.nome)}</strong></td>
-            <td>${htmlSeguro(fornecedor.telefone || "-")}</td>
-            <td>${htmlSeguro(fornecedor.documento || "-")}</td>
-            <td>${produtos}</td>
+            <td>
+              <span
+                class="supplier-color"
+                style="background:${fornecedor.cor || "#c8102e"}"
+              ></span>
+            </td>
+
+            <td><strong>${escapeHtml(fornecedor.nome)}</strong></td>
+            <td>${escapeHtml(fornecedor.telefone || "-")}</td>
+            <td>${escapeHtml(fornecedor.documento || "-")}</td>
+            <td>${quantidade}</td>
 
             <td>
               <button
@@ -1456,6 +1579,208 @@
           </tr>
         `;
       }).join("");
+    }
+
+    function renderizarDashboardProdutos() {
+      const tabela = document.getElementById("products-dashboard-table");
+      const lista = analiseProdutos();
+
+      if (!lista.length) {
+        tabela.innerHTML = `
+          <tr>
+            <td colspan="7" class="empty">
+              Cadastre produtos para visualizar essa análise.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tabela.innerHTML = lista.map(item => {
+        const fornecedor = obterFornecedor(item.produto.fornecedorId);
+        const status = item.quantidade === 0
+          ? '<span class="badge badge-red">Nunca pedido</span>'
+          : item.quantidade <= 5
+            ? '<span class="badge badge-yellow">Baixa demanda</span>'
+            : '<span class="badge badge-green">Boa demanda</span>';
+
+        return `
+          <tr>
+            <td>
+              <span class="badge ${classeABC(item.abc)}">
+                ${item.abc}
+              </span>
+            </td>
+
+            <td><strong>${escapeHtml(item.produto.nome)}</strong></td>
+
+            <td>
+              ${
+                fornecedor
+                  ? `
+                    <span
+                      class="supplier-color"
+                      style="background:${fornecedor.cor || "#c8102e"}"
+                    ></span>
+                    ${escapeHtml(fornecedor.nome)}
+                  `
+                  : "-"
+              }
+            </td>
+
+            <td>${item.quantidade}</td>
+            <td>${moeda(item.faturamento)}</td>
+            <td>${item.participacao.toFixed(1)}%</td>
+            <td>${status}</td>
+          </tr>
+        `;
+      }).join("");
+    }
+
+    function renderizarDashboardClientes() {
+      const tabela = document.getElementById("clients-abc-table");
+      const lista = analiseClientes();
+
+      if (!lista.length) {
+        tabela.innerHTML = `
+          <tr>
+            <td colspan="7" class="empty">
+              Cadastre clientes e faça vendas para visualizar a curva ABC.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tabela.innerHTML = lista.map(item => `
+        <tr>
+          <td>
+            <span class="badge ${classeABC(item.abc)}">
+              ${item.abc}
+            </span>
+          </td>
+
+          <td>${escapeHtml(item.cliente.nome)}</td>
+          <td>${ultimaCompraTexto(item.cliente.id)}</td>
+          <td>${item.pedidos}</td>
+          <td>${item.produtos}</td>
+          <td>${moeda(item.faturamento)}</td>
+          <td>${item.participacao.toFixed(1)}%</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderizarInativos(diasFiltro) {
+      filtroInatividadeAtual = diasFiltro;
+
+      const caixa = document.getElementById("inactive-customers");
+
+      const clientes = banco.clientes.filter(cliente => {
+        const dias = diasInativo(cliente.id);
+
+        return dias === null || dias > diasFiltro;
+      });
+
+      if (!clientes.length) {
+        caixa.innerHTML = `
+          <div class="empty">
+            Nenhum cliente nessa faixa de inatividade.
+          </div>
+        `;
+        return;
+      }
+
+      caixa.innerHTML = `
+        <div class="table-wrapper">
+          <table>
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Última compra</th>
+                <th>Tempo sem comprar</th>
+                <th>Ação</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              ${clientes.map(cliente => `
+                <tr>
+                  <td><strong>${escapeHtml(cliente.nome)}</strong></td>
+                  <td>${ultimaCompraTexto(cliente.id)}</td>
+                  <td>${textoInatividade(cliente.id)}</td>
+                  <td>
+                    <button
+                      class="btn btn-primary btn-small"
+                      onclick="abrirPerfilCliente('${cliente.id}')"
+                    >
+                      Abrir perfil
+                    </button>
+                  </td>
+                </tr>
+              `).join("")}
+            </tbody>
+          </table>
+        </div>
+      `;
+    }
+
+    function filtrarInativos(dias) {
+      renderizarInativos(dias);
+    }
+
+    function renderizarGarantias() {
+      const caixa = document.getElementById("warranty-alerts");
+      const garantias = [];
+
+      banco.vendas.forEach(venda => {
+        venda.itens.forEach(item => {
+          if (!item.garantiaAtiva) return;
+
+          garantias.push({
+            venda,
+            item,
+            cliente: obterCliente(venda.clienteId),
+            produto: obterProduto(item.produtoId)
+          });
+        });
+      });
+
+      if (!garantias.length) {
+        caixa.innerHTML = `
+          <div class="empty">Nenhuma garantia ativa.</div>
+        `;
+        return;
+      }
+
+      caixa.innerHTML = `
+        <div class="alert-list">
+          ${garantias.map(item => `
+            <div class="alert-item">
+              <strong>${escapeHtml(item.produto?.nome || "Produto")}</strong>
+
+              <div>
+                Cliente:
+                ${escapeHtml(item.cliente?.nome || "-")}
+              </div>
+
+              <div style="margin-top:5px;">
+                Venda: ${formatarData(item.venda.data)}
+              </div>
+
+              <div class="actions" style="margin-top:9px;">
+                <span class="badge badge-green">Garantia ativa</span>
+
+                <button
+                  class="btn btn-success btn-small"
+                  onclick="finalizarGarantia('${item.venda.id}', '${item.item.id}')"
+                >
+                  Finalizar
+                </button>
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      `;
     }
 
     function renderizarFinanceiro() {
@@ -1480,9 +1805,9 @@
               }
             </td>
 
-            <td>${htmlSeguro(item.descricao)}</td>
+            <td>${escapeHtml(item.descricao)}</td>
             <td>${moeda(item.valor)}</td>
-            <td>${dataFormatada(item.vencimento)}</td>
+            <td>${formatarData(item.vencimento)}</td>
 
             <td>
               ${
@@ -1512,466 +1837,201 @@
         .filter(item => item.tipo === "pagar")
         .reduce((total, item) => total + Number(item.valor), 0);
 
-      const resultado = receber - pagar;
-
       document.getElementById("dre-summary").innerHTML = `
-        <div class="cards" style="grid-template-columns:repeat(3,1fr); margin:0;">
+        <div class="grid-3">
           <div class="card">
             <div class="indicator-title">Total a receber</div>
-            <div class="indicator-value" style="color:var(--success);">
+            <div class="indicator-value" style="color:var(--green);">
               ${moeda(receber)}
             </div>
           </div>
 
           <div class="card">
             <div class="indicator-title">Total a pagar</div>
-            <div class="indicator-value" style="color:var(--danger);">
+            <div class="indicator-value" style="color:#991b1b;">
               ${moeda(pagar)}
             </div>
           </div>
 
           <div class="card">
-            <div class="indicator-title">Resultado simplificado</div>
-            <div
-              class="indicator-value"
-              style="color:${resultado >= 0 ? "var(--success)" : "var(--danger)"};"
-            >
-              ${moeda(resultado)}
+            <div class="indicator-title">Resultado</div>
+            <div class="indicator-value">
+              ${moeda(receber - pagar)}
             </div>
           </div>
         </div>
       `;
     }
 
-    function renderizarGarantias() {
-      const caixa = document.getElementById("warranty-alerts");
-      const garantias = [];
+    function fornecedoresDoPerfil(clienteId) {
+      const comprados = new Set();
 
-      banco.vendas.forEach(venda => {
-        const cliente = obterCliente(venda.clienteId);
-
+      vendasDoCliente(clienteId).forEach(venda => {
         venda.itens.forEach(item => {
-          if (!item.garantiaAtiva) return;
-
           const produto = obterProduto(item.produtoId);
 
-          garantias.push({
-            venda,
-            item,
-            cliente,
-            produto
-          });
+          if (produto?.fornecedorId) {
+            comprados.add(produto.fornecedorId);
+          }
         });
       });
 
-      if (!garantias.length) {
-        caixa.innerHTML = `
-          <div class="empty">
-            Nenhuma garantia ativa.
-          </div>
-        `;
-        return;
-      }
-
-      caixa.innerHTML = garantias.map(garantia => `
-        <div class="alert-item">
-          <strong>
-            Pendência: ${htmlSeguro(garantia.produto?.nome || "Produto")}
-          </strong>
-
-          <div>
-            Cliente:
-            ${htmlSeguro(garantia.cliente?.nome || "Cliente")}
-          </div>
-
-          <div style="margin-top:5px; font-size:13px;">
-            Venda realizada em ${dataFormatada(garantia.venda.data)}
-          </div>
-
-          <div class="actions" style="margin-top:9px;">
-            <span class="badge badge-green">Garantia ativa</span>
-
-            <button
-              class="btn btn-success btn-small"
-              onclick="finalizarGarantia('${garantia.venda.id}', '${garantia.item.id}')"
-            >
-              Finalizar garantia
-            </button>
-          </div>
-        </div>
-      `).join("");
+      return banco.fornecedores.map(fornecedor => ({
+        fornecedor,
+        comprado: comprados.has(fornecedor.id)
+      }));
     }
 
-    function renderizarAniversarios() {
-      const caixa = document.getElementById("birthday-alerts");
-      const hoje = new Date();
-
-      const aniversariantes = banco.clientes.filter(cliente => {
-        if (!cliente.aniversario) return false;
-
-        const nascimento = new Date(
-          cliente.aniversario + "T00:00:00"
-        );
-
-        return (
-          nascimento.getDate() === hoje.getDate() &&
-          nascimento.getMonth() === hoje.getMonth()
-        );
-      });
-
-      if (!aniversariantes.length) {
-        caixa.innerHTML = `
-          <div class="empty">
-            Nenhum aniversário hoje.
-          </div>
-        `;
-        return;
-      }
-
-      caixa.innerHTML = aniversariantes.map(cliente => `
-        <div
-          class="alert-item"
-          style="
-            border-left-color:var(--success);
-            background:var(--success-bg);
-          "
-        >
-          <strong>
-            Aniversário de ${htmlSeguro(cliente.nome)}
-          </strong>
-
-          <div>
-            Cliente aniversariante hoje.
-          </div>
-
-          ${
-            cliente.telefone
-              ? `
-                <button
-                  class="btn btn-success btn-small"
-                  style="margin-top:9px;"
-                  onclick="enviarParabens('${cliente.id}')"
-                >
-                  Enviar parabéns
-                </button>
-              `
-              : `
-                <span class="badge badge-gray" style="margin-top:9px;">
-                  Sem telefone cadastrado
-                </span>
-              `
-          }
-        </div>
-      `).join("");
-    }
-
-    function renderizarABCProdutos() {
-      const tabela = document.getElementById("abc-products-table");
-      const analise = analiseProdutosGeral();
-
-      if (!analise.length) {
-        tabela.innerHTML = `
-          <tr>
-            <td colspan="6" class="empty">
-              Cadastre produtos e lance vendas para gerar a análise.
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      tabela.innerHTML = analise.map(item => `
-        <tr>
-          <td>
-            <span class="badge ${classeABC(item.classe)}">
-              ${item.classe}
-            </span>
-          </td>
-
-          <td>
-            <strong>${htmlSeguro(item.produto.nome)}</strong>
-            <br />
-            <small>${htmlSeguro(item.produto.codigoInterno)}</small>
-          </td>
-
-          <td>${item.quantidade}</td>
-          <td>${moeda(item.faturamento)}</td>
-          <td>${item.participacao.toFixed(1)}%</td>
-          <td>${statusDemanda(item)}</td>
-        </tr>
-      `).join("");
-    }
-
-    function renderizarABCClientes() {
-      const tabela = document.getElementById("abc-clients-table");
-      const analise = analiseClientesGeral();
-
-      if (!analise.length) {
-        tabela.innerHTML = `
-          <tr>
-            <td colspan="6" class="empty">
-              Cadastre clientes e lance vendas para gerar a análise.
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      tabela.innerHTML = analise.map(item => `
-        <tr>
-          <td>
-            <span class="badge ${classeABC(item.classe)}">
-              ${item.classe}
-            </span>
-          </td>
-
-          <td>${htmlSeguro(item.cliente.nome)}</td>
-          <td>${item.pedidos}</td>
-          <td>${item.produtosPedidos}</td>
-          <td>${moeda(item.faturamento)}</td>
-          <td>${item.participacao.toFixed(1)}%</td>
-        </tr>
-      `).join("");
-    }
-
-    function renderizarProdutosMenosPedidos() {
-      const tabela = document.getElementById("low-demand-table");
-      const analise = analiseProdutosGeral().sort(
-        (a, b) => a.quantidade - b.quantidade
-      );
-
-      if (!analise.length) {
-        tabela.innerHTML = `
-          <tr>
-            <td colspan="4" class="empty">
-              Nenhum produto cadastrado.
-            </td>
-          </tr>
-        `;
-        return;
-      }
-
-      tabela.innerHTML = analise.map(item => `
-        <tr>
-          <td>${htmlSeguro(item.produto.nome)}</td>
-          <td><strong>${item.quantidade}</strong></td>
-          <td>${item.clientes}</td>
-          <td>${statusDemanda(item)}</td>
-        </tr>
-      `).join("");
-    }
-
-    function renderizarAnaliseGeral() {
-      const caixa = document.getElementById("general-analysis");
-      const analise = analiseProdutosGeral();
-
-      const nuncaPedidos = analise.filter(
-        item => item.quantidade === 0
-      ).length;
-
-      const baixaDemanda = analise.filter(
-        item => item.quantidade > 0 && item.quantidade <= 5
-      ).length;
-
-      const produtosClasseA = analise.filter(
-        item => item.classe === "A"
-      );
-
-      const produtoMaisPedido = [...analise].sort(
-        (a, b) => b.quantidade - a.quantidade
-      )[0];
-
-      const produtoMenosPedido = [...analise].sort(
-        (a, b) => a.quantidade - b.quantidade
-      )[0];
-
-      caixa.innerHTML = `
-        <ul>
-          <li>
-            <strong>Produtos nunca pedidos:</strong>
-            ${nuncaPedidos}.
-          </li>
-
-          <li>
-            <strong>Produtos com baixa demanda:</strong>
-            ${baixaDemanda}.
-          </li>
-
-          <li>
-            <strong>Produtos na curva A:</strong>
-            ${produtosClasseA.length}.
-          </li>
-
-          <li>
-            <strong>Produto mais pedido:</strong>
-            ${
-              produtoMaisPedido
-                ? `${htmlSeguro(produtoMaisPedido.produto.nome)}
-                   (${produtoMaisPedido.quantidade} unidades)`
-                : "Nenhum"
-            }.
-          </li>
-
-          <li>
-            <strong>Produto menos pedido:</strong>
-            ${
-              produtoMenosPedido
-                ? `${htmlSeguro(produtoMenosPedido.produto.nome)}
-                   (${produtoMenosPedido.quantidade} unidades)`
-                : "Nenhum"
-            }.
-          </li>
-        </ul>
-      `;
-    }
-
-    /*
-      ABRE O PERFIL DO CLIENTE.
-
-      É dentro desta tela que a venda é lançada.
-      O painel de produtos continua existindo separadamente
-      na aba "Produtos".
-    */
-    function abrirPerfilCliente(clienteId, abrirModal = true) {
+    function abrirPerfilCliente(clienteId, mostrarModal = true) {
       const cliente = obterCliente(clienteId);
 
       if (!cliente) return;
 
-      clienteAbertoId = clienteId;
+      clienteAtualId = clienteId;
 
-      const vendasCliente = banco.vendas.filter(
-        venda => venda.clienteId === clienteId
-      );
-
-      const analiseGeral = analiseProdutosGeral();
-
-      const produtosComprados = banco.produtos.filter(produto =>
-        vendasCliente.some(venda =>
-          venda.itens.some(item => item.produtoId === produto.id)
-        )
-      );
-
-      const produtosNaoComprados = analiseGeral.filter(item =>
-        item.classe !== "C" &&
-        quantidadeProdutoCliente(clienteId, item.produto.id) === 0
-      );
-
-      const quantidadeTotalGeral = banco.clientes.length || 1;
-
-      const produtosAbaixoDaMedia = analiseGeral.filter(item => {
-        const quantidadeCliente = quantidadeProdutoCliente(
-          clienteId,
-          item.produto.id
-        );
-
-        const mediaPorCliente = item.quantidade / quantidadeTotalGeral;
-
-        return (
-          quantidadeCliente > 0 &&
-          quantidadeCliente < mediaPorCliente
-        );
-      });
-
-      const produtosParaVenda = banco.produtos;
+      const vendas = vendasDoCliente(clienteId);
+      const listaFornecedores = fornecedoresDoPerfil(clienteId);
 
       document.getElementById("client-modal-title").textContent =
-        `Perfil do cliente: ${cliente.nome}`;
+        "Perfil do cliente: " + cliente.nome;
 
-      document.getElementById("client-profile-content").innerHTML = `
+      document.getElementById("client-profile").innerHTML = `
         <div class="profile-header">
           <div class="profile-info">
             <strong>Cliente</strong>
-            <div>${htmlSeguro(cliente.nome)}</div>
+            ${escapeHtml(cliente.nome)}
           </div>
 
           <div class="profile-info">
-            <strong>Telefone</strong>
-            <div>${htmlSeguro(cliente.telefone || "-")}</div>
+            <strong>Última compra</strong>
+            ${ultimaCompraTexto(clienteId)}
           </div>
 
           <div class="profile-info">
-            <strong>Total comprado</strong>
-            <div>
-              ${moeda(
-                vendasCliente.reduce(
-                  (total, venda) => total + totalVenda(venda),
-                  0
-                )
-              )}
-            </div>
+            <strong>Tempo sem comprar</strong>
+            ${textoInatividade(clienteId)}
           </div>
         </div>
 
-        <div class="form-card" style="box-shadow:none; margin-bottom:20px;">
-          <h3 class="sub-title">Lançar venda para este cliente</h3>
+        <div class="table-card" style="box-shadow:none;">
+          <h3 class="sub-title">
+            Fornecedores comprados pelo cliente
+          </h3>
+
+          <p class="empty">
+            Fornecedores coloridos indicam que o cliente já comprou alguma
+            peça. Fornecedores cinza ainda não foram comprados.
+          </p>
+
+          <div class="supplier-legend">
+            ${
+              listaFornecedores.length
+                ? listaFornecedores.map(item => `
+                  <span
+                    class="supplier-pill ${
+                      item.comprado ? "" : "inactive"
+                    }"
+                    style="${
+                      item.comprado
+                        ? `background:${item.fornecedor.cor || "#c8102e"}`
+                        : ""
+                    }"
+                  >
+                    <span
+                      class="supplier-color"
+                      style="background:${
+                        item.comprado
+                          ? item.fornecedor.cor || "#c8102e"
+                          : "#999"
+                      }"
+                    ></span>
+
+                    ${escapeHtml(item.fornecedor.nome)}
+
+                    ${
+                      item.comprado
+                        ? "✓"
+                        : "—"
+                    }
+                  </span>
+                `).join("")
+                : `
+                  <div class="empty">
+                    Cadastre fornecedores para visualizar este painel.
+                  </div>
+                `
+            }
+          </div>
+        </div>
+
+        <div class="form-card" style="box-shadow:none;">
+          <h3 class="sub-title">Nova venda para este cliente</h3>
 
           <form id="sale-form">
             <div class="form-grid">
               <div class="form-group">
                 <label>Vendedor</label>
-                <input id="sale-seller" required />
+                <input id="sale-seller" required>
               </div>
 
               <div class="form-group">
-                <label>Canal da venda</label>
+                <label>Canal</label>
                 <select id="sale-channel">
-                  <option value="Presencial">Presencial</option>
-                  <option value="WhatsApp">WhatsApp</option>
-                  <option value="Telefone">Telefone</option>
-                  <option value="E-mail">E-mail</option>
+                  <option>Presencial</option>
+                  <option>WhatsApp</option>
+                  <option>Telefone</option>
+                  <option>E-mail</option>
                 </select>
               </div>
 
               <div class="form-group full">
-                <label>Observação da venda</label>
-                <input id="sale-notes" />
+                <label>Observações</label>
+                <input id="sale-notes">
               </div>
             </div>
 
             <div class="form-group">
-              <label>Selecione os produtos vendidos</label>
+              <label>Produtos vendidos</label>
 
-              <div id="sale-products-list">
+              <div>
                 ${
-                  produtosParaVenda.length
-                    ? produtosParaVenda.map(produto => `
+                  banco.produtos.length
+                    ? banco.produtos.map(produto => `
                       <div class="product-sale-row">
-                        <label style="font-weight:normal;">
+                        <label>
                           <input
                             type="checkbox"
-                            class="sale-product-check"
+                            class="sale-check"
                             value="${produto.id}"
-                            style="width:auto; margin-right:7px;"
-                          />
-                          ${htmlSeguro(produto.nome)}
-                          <small>
-                            (${htmlSeguro(produto.codigoInterno)})
-                          </small>
+                            style="width:auto;margin-right:7px;"
+                          >
+
+                          ${escapeHtml(produto.nome)}
+                          <small>(${produto.codigo})</small>
                         </label>
 
                         <input
                           type="number"
                           min="1"
                           value="1"
-                          class="sale-product-quantity"
-                          data-product-id="${produto.id}"
-                          placeholder="Quantidade"
-                        />
+                          class="sale-quantity"
+                          data-id="${produto.id}"
+                        >
 
-                        <label style="font-weight:normal;">
+                        <label>
                           <input
                             type="checkbox"
-                            class="sale-product-warranty"
-                            data-product-id="${produto.id}"
-                            style="width:auto; margin-right:5px;"
-                          />
-                          Ativar garantia
+                            class="sale-warranty"
+                            data-id="${produto.id}"
+                            style="width:auto;margin-right:5px;"
+                          >
+                          Garantia
                         </label>
                       </div>
                     `).join("")
                     : `
                       <div class="empty">
-                        Cadastre produtos antes de lançar uma venda.
+                        Cadastre produtos antes de realizar uma venda.
                       </div>
                     `
                 }
@@ -1979,10 +2039,10 @@
             </div>
 
             ${
-              produtosParaVenda.length
+              banco.produtos.length
                 ? `
                   <button class="btn btn-primary">
-                    Salvar venda para ${htmlSeguro(cliente.nome)}
+                    Salvar venda
                   </button>
                 `
                 : ""
@@ -1990,185 +2050,51 @@
           </form>
         </div>
 
-        <div class="grid-2">
-          <div class="table-card" style="box-shadow:none;">
-            <h3 class="sub-title">
-              Curva ABC geral x este cliente
-            </h3>
-
-            <p class="empty">
-              Produtos da curva A e B que este cliente ainda não pediu.
-            </p>
-
-            ${
-              produtosNaoComprados.length
-                ? `
-                  <div class="table-wrapper">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>ABC</th>
-                          <th>Produto</th>
-                          <th>Total geral</th>
-                          <th>Situação</th>
-                        </tr>
-                      </thead>
-
-                      <tbody>
-                        ${produtosNaoComprados.map(item => `
-                          <tr>
-                            <td>
-                              <span class="badge ${classeABC(item.classe)}">
-                                ${item.classe}
-                              </span>
-                            </td>
-
-                            <td>${htmlSeguro(item.produto.nome)}</td>
-                            <td>${item.quantidade}</td>
-                            <td>
-                              <span class="badge badge-red">
-                                Não pediu
-                              </span>
-                            </td>
-                          </tr>
-                        `).join("")}
-                      </tbody>
-                    </table>
-                  </div>
-                `
-                : `
-                  <div class="empty">
-                    Este cliente já pediu todos os produtos relevantes
-                    da curva A e B.
-                  </div>
-                `
-            }
-          </div>
-
-          <div class="table-card" style="box-shadow:none;">
-            <h3 class="sub-title">
-              Produtos abaixo da média geral
-            </h3>
-
-            <p class="empty">
-              Produtos que o cliente já pediu, mas em quantidade inferior
-              à média por cliente.
-            </p>
-
-            ${
-              produtosAbaixoDaMedia.length
-                ? `
-                  <div class="table-wrapper">
-                    <table>
-                      <thead>
-                        <tr>
-                          <th>Produto</th>
-                          <th>Cliente</th>
-                          <th>Média geral</th>
-                          <th>Situação</th>
-                        </tr>
-                      </thead>
-
-                      <tbody>
-                        ${produtosAbaixoDaMedia.map(item => {
-                          const quantidadeCliente =
-                            quantidadeProdutoCliente(
-                              clienteId,
-                              item.produto.id
-                            );
-
-                          const media =
-                            item.quantidade / quantidadeTotalGeral;
-
-                          return `
-                            <tr>
-                              <td>${htmlSeguro(item.produto.nome)}</td>
-                              <td>${quantidadeCliente}</td>
-                              <td>${media.toFixed(1)}</td>
-                              <td>
-                                <span class="badge badge-yellow">
-                                  Abaixo da média
-                                </span>
-                              </td>
-                            </tr>
-                          `;
-                        }).join("")}
-                      </tbody>
-                    </table>
-                  </div>
-                `
-                : `
-                  <div class="empty">
-                    Nenhum produto abaixo da média geral.
-                  </div>
-                `
-            }
-          </div>
-        </div>
-
         <div class="table-card" style="box-shadow:none;">
-          <h3 class="sub-title">
-            Produtos comprados por este cliente
-          </h3>
+          <h3 class="sub-title">Histórico de compras</h3>
 
           <div class="table-wrapper">
             <table>
               <thead>
                 <tr>
-                  <th>Produto</th>
-                  <th>Quantidade total</th>
-                  <th>Garantia ativa</th>
-                  <th>Histórico</th>
+                  <th>Data</th>
+                  <th>Vendedor</th>
+                  <th>Canal</th>
+                  <th>Produtos</th>
+                  <th>Total</th>
                 </tr>
               </thead>
 
               <tbody>
                 ${
-                  produtosComprados.length
-                    ? produtosComprados.map(produto => {
-                      const quantidade =
-                        quantidadeProdutoCliente(
-                          clienteId,
-                          produto.id
-                        );
+                  vendas.length
+                    ? vendas.map(venda => `
+                      <tr>
+                        <td>${formatarData(venda.data)}</td>
+                        <td>${escapeHtml(venda.vendedor)}</td>
+                        <td>${escapeHtml(venda.canal)}</td>
+                        <td>
+                          ${venda.itens.map(item => {
+                            const produto = obterProduto(item.produtoId);
 
-                      const garantiaAtiva =
-                        banco.vendas.some(venda =>
-                          venda.clienteId === clienteId &&
-                          venda.itens.some(item =>
-                            item.produtoId === produto.id &&
-                            item.garantiaAtiva
-                          )
-                        );
-
-                      return `
-                        <tr>
-                          <td>${htmlSeguro(produto.nome)}</td>
-                          <td>${quantidade}</td>
-                          <td>
-                            ${
-                              garantiaAtiva
-                                ? '<span class="badge badge-green">Ativa</span>'
-                                : '<span class="badge badge-gray">Inativa</span>'
-                            }
-                          </td>
-                          <td>
-                            <button
-                              class="btn btn-outline btn-small"
-                              onclick="verHistoricoProdutoCliente(
-                                '${clienteId}',
-                                '${produto.id}'
-                              )"
-                            >
-                              Ver timeline
-                            </button>
-                          </td>
-                        </tr>
-                      `;
-                    }).join("")
+                            return `
+                              ${item.quantidade}x
+                              ${escapeHtml(produto?.nome || "Produto")}
+                              ${
+                                item.garantiaAtiva
+                                  ? '<span class="badge badge-green">Garantia</span>'
+                                  : ""
+                              }
+                              <br>
+                            `;
+                          }).join("")}
+                        </td>
+                        <td>${moeda(totalVenda(venda))}</td>
+                      </tr>
+                    `).join("")
                     : `
                       <tr>
-                        <td colspan="4" class="empty">
+                        <td colspan="5" class="empty">
                           Este cliente ainda não possui compras.
                         </td>
                       </tr>
@@ -2188,18 +2114,12 @@
                 <div class="timeline">
                   ${cliente.timeline.map(evento => `
                     <div class="timeline-item">
-                      <strong>${htmlSeguro(evento.tipo)}</strong>
+                      <strong>${escapeHtml(evento.tipo)}</strong>
                       <div style="margin-top:5px;">
-                        ${htmlSeguro(evento.descricao)}
+                        ${escapeHtml(evento.descricao)}
                       </div>
-                      <small
-                        style="
-                          display:block;
-                          margin-top:7px;
-                          color:var(--muted);
-                        "
-                      >
-                        ${dataHoraFormatada(evento.data)}
+                      <small style="display:block;margin-top:7px;color:#777;">
+                        ${formatarDataHora(evento.data)}
                       </small>
                     </div>
                   `).join("")}
@@ -2214,75 +2134,76 @@
         </div>
       `;
 
-      document
-        .getElementById("sale-form")
+      document.getElementById("sale-form")
         ?.addEventListener("submit", event => {
           event.preventDefault();
-          salvarVendaDentroDoCliente(clienteId);
+          salvarVenda(clienteId);
         });
 
-      if (abrirModal) {
+      if (mostrarModal) {
         document.getElementById("client-modal").classList.add("open");
       }
     }
 
-    function salvarVendaDentroDoCliente(clienteId) {
-      const cliente = obterCliente(clienteId);
+    function fecharPerfil() {
+      document.getElementById("client-modal").classList.remove("open");
+      clienteAtualId = null;
+    }
 
-      if (!cliente) return;
+    function salvarVenda(clienteId) {
+      const vendedor = document.getElementById("sale-seller")
+        .value.trim();
 
-      const vendedor = document.getElementById("sale-seller").value.trim();
       const canal = document.getElementById("sale-channel").value;
-      const observacao = document.getElementById("sale-notes").value.trim();
+      const observacao = document.getElementById("sale-notes")
+        .value.trim();
 
       const selecionados = Array.from(
-        document.querySelectorAll(".sale-product-check:checked")
+        document.querySelectorAll(".sale-check:checked")
       );
 
       if (!vendedor) {
-        mostrarAviso("Informe o vendedor.");
+        alert("Informe o vendedor.");
         return;
       }
 
       if (!selecionados.length) {
-        mostrarAviso("Selecione pelo menos um produto.");
+        alert("Selecione pelo menos um produto.");
         return;
       }
 
-      const itens = selecionados.map(selecionado => {
-        const produtoId = selecionado.value;
+      const itens = selecionados.map(check => {
+        const produtoId = check.value;
 
-        const campoQuantidade = document.querySelector(
-          `.sale-product-quantity[data-product-id="${produtoId}"]`
+        const quantidadeCampo = document.querySelector(
+          `.sale-quantity[data-id="${produtoId}"]`
         );
 
-        const campoGarantia = document.querySelector(
-          `.sale-product-warranty[data-product-id="${produtoId}"]`
-        );
-
-        const quantidade = Math.max(
-          1,
-          Number(campoQuantidade.value) || 1
+        const garantiaCampo = document.querySelector(
+          `.sale-warranty[data-id="${produtoId}"]`
         );
 
         return {
-          id: id("item"),
+          id: gerarId("item"),
           produtoId,
-          quantidade,
-          garantiaAtiva: campoGarantia.checked,
-          garantiaAtivadaEm: campoGarantia.checked
+          quantidade: Math.max(
+            1,
+            Number(quantidadeCampo.value) || 1
+          ),
+          garantiaAtiva: garantiaCampo.checked,
+          garantiaData: garantiaCampo.checked
             ? new Date().toISOString()
             : null
         };
       });
 
       const venda = {
-        id: id("venda"),
+        id: gerarId("venda"),
         clienteId,
         vendedor,
         canal,
         observacao,
-        data: dataAtual(),
+        data: hojeISO(),
         criadoEm: new Date().toISOString(),
         itens
       };
@@ -2291,9 +2212,8 @@
 
       adicionarTimeline(
         clienteId,
-        "Venda lançada",
-        `Venda lançada pelo vendedor ${vendedor}, pelo canal ${canal}.`,
-        { vendaId: venda.id }
+        "Venda realizada",
+        `Venda lançada por ${vendedor}, pelo canal ${canal}.`
       );
 
       itens.forEach(item => {
@@ -2304,105 +2224,18 @@
         adicionarTimeline(
           clienteId,
           "Garantia ativada",
-          `Garantia ativada para ${produto?.nome || "produto"}.`,
-          {
-            vendaId: venda.id,
-            produtoId: item.produtoId
-          }
+          `Garantia ativada para ${produto?.nome || "produto"}.`
         );
       });
 
       salvar();
       renderizarTudo();
 
-      mostrarAviso("Venda lançada com sucesso.");
-    }
-
-    function verHistoricoProdutoCliente(clienteId, produtoId) {
-      const cliente = obterCliente(clienteId);
-      const produto = obterProduto(produtoId);
-
-      if (!cliente || !produto) return;
-
-      const vendas = banco.vendas.filter(venda =>
-        venda.clienteId === clienteId &&
-        venda.itens.some(item => item.produtoId === produtoId)
-      );
-
-      const eventos = [];
-
-      vendas.forEach(venda => {
-        const item = venda.itens.find(
-          itemVenda => itemVenda.produtoId === produtoId
-        );
-
-        eventos.push(`
-          <div class="timeline-item">
-            <strong>Venda de produto</strong>
-            <div style="margin-top:5px;">
-              ${item.quantidade} unidade(s) de
-              ${htmlSeguro(produto.nome)}
-            </div>
-            <div style="margin-top:5px;">
-              Vendedor: ${htmlSeguro(venda.vendedor)}
-            </div>
-            <div style="margin-top:5px;">
-              ${
-                item.garantiaAtiva
-                  ? '<span class="badge badge-green">Garantia ativa</span>'
-                  : '<span class="badge badge-gray">Garantia inativa</span>'
-              }
-            </div>
-            <small
-              style="
-                display:block;
-                margin-top:7px;
-                color:var(--muted);
-              "
-            >
-              ${dataFormatada(venda.data)}
-            </small>
-          </div>
-        `);
-      });
-
-      const conteudo = `
-        <div class="modal open" style="z-index:30;">
-          <div class="modal-content" style="max-width:700px;">
-            <div class="modal-header">
-              <h2>
-                Histórico: ${htmlSeguro(produto.nome)}
-              </h2>
-
-              <button
-                class="close"
-                onclick="this.closest('.modal').remove()"
-              >
-                &times;
-              </button>
-            </div>
-
-            <div class="timeline">
-              ${
-                eventos.length
-                  ? eventos.join("")
-                  : '<div class="empty">Nenhum lançamento.</div>'
-              }
-            </div>
-          </div>
-        </div>
-      `;
-
-      document.body.insertAdjacentHTML("beforeend", conteudo);
-    }
-
-    function fecharModalCliente() {
-      document.getElementById("client-modal").classList.remove("open");
-      clienteAbertoId = null;
+      alert("Venda salva com sucesso.");
     }
 
     function finalizarGarantia(vendaId, itemId) {
-      const venda = banco.vendas.find(vendaItem => vendaItem.id === vendaId);
+      const venda = banco.vendas.find(item => item.id === vendaId);
 
       if (!venda) return;
 
@@ -2418,11 +2251,7 @@
       adicionarTimeline(
         venda.clienteId,
         "Garantia finalizada",
-        `Garantia finalizada para ${produto?.nome || "produto"}.`,
-        {
-          vendaId,
-          produtoId: item.produtoId
-        }
+        `Garantia finalizada para ${produto?.nome || "produto"}.`
       );
 
       salvar();
@@ -2433,51 +2262,24 @@
       const cliente = obterCliente(clienteId);
 
       if (!cliente?.telefone) {
-        mostrarAviso("Este cliente não possui telefone.");
+        alert("Cliente sem telefone cadastrado.");
         return;
       }
 
-      const telefone = cliente.telefone.replace(/\D/g, "");
+      const numero = cliente.telefone.replace(/\D/g, "");
 
       const mensagem =
-        `Olá, ${cliente.nome}! Entramos em contato para falar sobre seu atendimento.`;
+        `Olá, ${cliente.nome}! Estamos entrando em contato para acompanhar seu atendimento.`;
 
       window.open(
-        `https://wa.me/55${telefone}?text=${encodeURIComponent(mensagem)}`,
+        "https://wa.me/55" + numero +
+        "?text=" + encodeURIComponent(mensagem),
         "_blank"
       );
-    }
-
-    function enviarParabens(clienteId) {
-      const cliente = obterCliente(clienteId);
-
-      if (!cliente?.telefone) {
-        mostrarAviso("Este cliente não possui telefone.");
-        return;
-      }
-
-      const telefone = cliente.telefone.replace(/\D/g, "");
-
-      const mensagem =
-        `Olá, ${cliente.nome}! Desejamos a você um feliz aniversário, com muita saúde, felicidade e sucesso!`;
-
-      window.open(
-        `https://wa.me/55${telefone}?text=${encodeURIComponent(mensagem)}`,
-        "_blank"
-      );
-
-      adicionarTimeline(
-        clienteId,
-        "Contato de aniversário",
-        "Mensagem de parabéns preparada para envio pelo WhatsApp."
-      );
-
-      salvar();
-      renderizarTudo();
     }
 
     function excluirCliente(clienteId) {
-      if (!confirm("Deseja excluir este cliente?")) return;
+      if (!confirm("Excluir este cliente e suas vendas?")) return;
 
       banco.clientes = banco.clientes.filter(
         cliente => cliente.id !== clienteId
@@ -2492,7 +2294,7 @@
     }
 
     function excluirProduto(produtoId) {
-      if (!confirm("Deseja excluir este produto?")) return;
+      if (!confirm("Excluir este produto?")) return;
 
       banco.produtos = banco.produtos.filter(
         produto => produto.id !== produtoId
@@ -2503,21 +2305,27 @@
     }
 
     function excluirFornecedor(fornecedorId) {
-      if (!confirm("Deseja excluir este fornecedor?")) return;
+      if (!confirm("Excluir este fornecedor?")) return;
 
       banco.fornecedores = banco.fornecedores.filter(
         fornecedor => fornecedor.id !== fornecedorId
       );
 
+      banco.produtos.forEach(produto => {
+        if (produto.fornecedorId === fornecedorId) {
+          produto.fornecedorId = "";
+        }
+      });
+
       salvar();
       renderizarTudo();
     }
 
-    function excluirFinanceiro(financeiroId) {
-      if (!confirm("Deseja excluir este lançamento?")) return;
+    function excluirFinanceiro(id) {
+      if (!confirm("Excluir este lançamento?")) return;
 
       banco.financeiro = banco.financeiro.filter(
-        item => item.id !== financeiroId
+        item => item.id !== id
       );
 
       salvar();
@@ -2525,245 +2333,162 @@
     }
 
     function limparDados() {
-      if (!confirm("Deseja apagar todos os dados deste navegador?")) {
-        return;
-      }
+      if (!confirm("Apagar todos os dados deste navegador?")) return;
 
       localStorage.removeItem(STORAGE_KEY);
       location.reload();
-    }
-
-    function escolherPonderado(lista) {
-      const total = lista.reduce(
-        (soma, item) => soma + item.peso,
-        0
-      );
-
-      let sorteio = Math.random() * total;
-
-      for (const item of lista) {
-        sorteio -= item.peso;
-
-        if (sorteio <= 0) {
-          return item;
-        }
-      }
-
-      return lista[lista.length - 1];
     }
 
     function carregarDadosFicticios() {
       if (
         banco.clientes.length ||
         banco.produtos.length ||
-        banco.vendas.length
+        banco.fornecedores.length
       ) {
-        const continuar = confirm(
-          "Já existem dados cadastrados. Deseja adicionar dados fictícios mesmo assim?"
-        );
-
-        if (!continuar) return;
+        if (!confirm("Adicionar dados fictícios aos dados atuais?")) {
+          return;
+        }
       }
 
-      const agora = new Date();
-      const dois = numero => String(numero).padStart(2, "0");
-
-      const fornecedoresFicticios = [
-        "Moto Parts Brasil",
-        "Speed Peças Ltda",
-        "Nordeste Motopeças"
-      ].map(nome => ({
-        id: id("fornecedor"),
-        nome,
-        telefone: "88999990000",
-        documento: "00.000.000/0001-00",
-        observacoes: "Cadastro fictício",
-        criadoEm: agora.toISOString()
-      }));
-
-      banco.fornecedores.push(...fornecedoresFicticios);
-
-      const catalogo = [
-        ["Pastilha de freio dianteira", "Freio", 38.90, 30],
-        ["Kit relação completo", "Transmissão", 189.90, 24],
-        ["Vela de ignição", "Motor", 19.90, 21],
-        ["Filtro de óleo", "Motor", 24.50, 18],
-        ["Pneu traseiro 90/90-18", "Pneus", 219.00, 12],
-        ["Amortecedor traseiro", "Suspensão", 245.00, 8],
-        ["Cabo de embreagem", "Controles", 27.50, 6],
-        ["Retrovisor par", "Acessórios", 59.90, 5],
-        ["Bateria 5Ah", "Elétrica", 169.90, 3],
-        ["Lâmpada de farol", "Elétrica", 14.90, 2],
-        ["Corrente de comando", "Motor", 89.90, 1],
-        ["Disco de freio", "Freio", 129.90, 0.5]
+      const fornecedores = [
+        {
+          nome: "Moto Parts Brasil",
+          cor: "#c8102e"
+        },
+        {
+          nome: "Speed Peças",
+          cor: "#2563eb"
+        },
+        {
+          nome: "Nordeste Motopeças",
+          cor: "#15803d"
+        },
+        {
+          nome: "Distribuidora Central",
+          cor: "#9333ea"
+        }
       ];
 
-      const produtosFicticios = catalogo.map(
-        ([nome, categoria, preco, peso], indice) => ({
-          id: id("produto"),
-          codigoInterno: gerarCodigoProduto(),
+      fornecedores.forEach(item => {
+        banco.fornecedores.push({
+          id: gerarId("fornecedor"),
+          nome: item.nome,
+          cor: item.cor,
+          telefone: "88999990000",
+          documento: "00.000.000/0001-00"
+        });
+      });
+
+      const produtos = [
+        ["Pastilha de freio", 39.90],
+        ["Kit relação", 189.90],
+        ["Vela de ignição", 19.90],
+        ["Filtro de óleo", 24.90],
+        ["Pneu traseiro", 219.00],
+        ["Cabo de embreagem", 29.90],
+        ["Amortecedor", 245.00],
+        ["Lâmpada de farol", 14.90],
+        ["Bateria", 169.90],
+        ["Retrovisor", 59.90]
+      ];
+
+      produtos.forEach((item, index) => {
+        const fornecedor =
+          banco.fornecedores[index % banco.fornecedores.length];
+
+        banco.produtos.push({
+          id: gerarId("produto"),
+          codigo: gerarCodigoProduto(),
+          nome: item[0],
+          preco: item[1],
+          categoria: "Peças para motos",
+          fornecedorId: fornecedor.id
+        });
+      });
+
+      const nomes = [
+        "Oficina do Zé",
+        "Moto Center Silva",
+        "Auto Moto Cariri",
+        "Mecânica Rápida",
+        "Box Moto Peças",
+        "Garagem do Beto",
+        "Moto Service Norte",
+        "Oficina Dois Irmãos",
+        "Moto Fácil",
+        "Renato Mototáxi"
+      ];
+
+      nomes.forEach((nome, index) => {
+        banco.clientes.push({
+          id: gerarId("cliente"),
           nome,
-          categoria,
-          preco,
-          fornecedorId:
-            fornecedoresFicticios[indice % fornecedoresFicticios.length].id,
-          peso,
-          criadoEm: agora.toISOString()
-        })
-      );
+          telefone: "88999991111",
+          aniversario: "1990-01-" +
+            String((index % 9) + 1).padStart(2, "0"),
+          empresa: "Juazeiro do Norte",
+          timeline: [{
+            id: gerarId("timeline"),
+            tipo: "Cliente cadastrado",
+            descricao: "Cadastro fictício criado.",
+            data: new Date().toISOString()
+          }]
+        });
+      });
 
-      banco.produtos.push(
-        ...produtosFicticios.map(produto => {
-          const copia = { ...produto };
-          delete copia.peso;
-          return copia;
-        })
-      );
+      const clientes = banco.clientes.slice(-nomes.length);
 
-      const clientesBase = [
-        ["Oficina do Zé", 30],
-        ["Moto Center Silva", 25],
-        ["Auto Moto Cariri", 18],
-        ["Mecânica Rápida", 12],
-        ["Box Moto Peças", 8],
-        ["Garagem do Beto", 6],
-        ["Moto Service Norte", 5],
-        ["Oficina Dois Irmãos", 4],
-        ["Moto Fácil", 3],
-        ["Renato Mototáxi", 2],
-        ["Cleiton Entregas", 1.5],
-        ["Lucas Motoboy", 1]
-      ];
+      clientes.forEach((cliente, index) => {
+        const totalVendas = index < 4 ? 5 : index < 7 ? 2 : 1;
 
-      const clientesFicticios = clientesBase.map(
-        ([nome, peso], indice) => {
-          const aniversario = indice === 0
-            ? `${1985}-${dois(agora.getMonth() + 1)}-${dois(agora.getDate())}`
-            : `1990-${dois((indice % 12) + 1)}-${dois((indice % 27) + 1)}`;
+        for (let i = 0; i < totalVendas; i++) {
+          const data = new Date();
+          data.setDate(data.getDate() - (
+            index < 4
+              ? i * 5
+              : index < 7
+                ? 20 + i * 15
+                : 50 + i * 4
+          ));
 
-          const cliente = {
-            id: id("cliente"),
-            nome,
-            telefone: "88999991111",
-            aniversario,
-            empresa: "Juazeiro do Norte",
-            observacoes: "Cadastro fictício",
-            criadoEm: agora.toISOString(),
-            timeline: [{
-              id: id("timeline"),
-              data: agora.toISOString(),
-              tipo: "Cliente cadastrado",
-              descricao: "Cadastro fictício realizado."
-            }]
-          };
+          const produto1 =
+            banco.produtos[(index + i) % banco.produtos.length];
 
-          banco.clientes.push(cliente);
-
-          return {
-            cliente,
-            peso
-          };
-        }
-      );
-
-      const vendedores = ["Carlos", "Ana", "Roberto"];
-      const canais = ["Presencial", "WhatsApp", "Telefone"];
-
-      for (let contador = 0; contador < 100; contador++) {
-        const clienteEscolhido = escolherPonderado(
-          clientesFicticios.map(item => ({
-            ...item.cliente,
-            peso: item.peso
-          }))
-        );
-
-        const cliente = obterCliente(clienteEscolhido.id);
-
-        const dataVenda = new Date(agora);
-        dataVenda.setDate(
-          dataVenda.getDate() - Math.floor(Math.random() * 180)
-        );
-
-        const itens = [];
-        const quantidadeItens = 1 + Math.floor(Math.random() * 3);
-
-        for (let indice = 0; indice < quantidadeItens; indice++) {
-          const produtoEscolhido = escolherPonderado(produtosFicticios);
-
-          if (
-            itens.some(item =>
-              item.produtoId === produtoEscolhido.id
-            )
-          ) {
-            continue;
-          }
-
-          const garantiaAtiva = Math.random() < 0.08;
-
-          itens.push({
-            id: id("item"),
-            produtoId: produtoEscolhido.id,
-            quantidade: 1 + Math.floor(Math.random() * 7),
-            garantiaAtiva,
-            garantiaAtivadaEm: garantiaAtiva
-              ? dataVenda.toISOString()
+          const itens = [{
+            id: gerarId("item"),
+            produtoId: produto1.id,
+            quantidade: 1 + (index % 4),
+            garantiaAtiva: index === 0 && i === 0,
+            garantiaData: index === 0 && i === 0
+              ? new Date().toISOString()
               : null
+          }];
+
+          banco.vendas.push({
+            id: gerarId("venda"),
+            clienteId: cliente.id,
+            vendedor: index % 2 ? "Ana" : "Carlos",
+            canal: index % 2 ? "WhatsApp" : "Presencial",
+            observacao: "Venda fictícia",
+            data: data.getFullYear() + "-" +
+              String(data.getMonth() + 1).padStart(2, "0") + "-" +
+              String(data.getDate()).padStart(2, "0"),
+            criadoEm: data.toISOString(),
+            itens
           });
-        }
-
-        const vendedor =
-          vendedores[Math.floor(Math.random() * vendedores.length)];
-
-        const canal =
-          canais[Math.floor(Math.random() * canais.length)];
-
-        const venda = {
-          id: id("venda"),
-          clienteId: cliente.id,
-          vendedor,
-          canal,
-          observacao: "Venda fictícia",
-          data: `${dataVenda.getFullYear()}-${dois(dataVenda.getMonth() + 1)}-${dois(dataVenda.getDate())}`,
-          criadoEm: dataVenda.toISOString(),
-          itens
-        };
-
-        banco.vendas.push(venda);
-
-        adicionarTimeline(
-          cliente.id,
-          "Venda lançada",
-          `Venda fictícia lançada pelo vendedor ${vendedor}.`,
-          { vendaId: venda.id }
-        );
-
-        itens.forEach(item => {
-          if (!item.garantiaAtiva) return;
-
-          const produto = obterProduto(item.produtoId);
 
           adicionarTimeline(
             cliente.id,
-            "Garantia ativada",
-            `Garantia ativada para ${produto?.nome || "produto"}.`,
-            {
-              vendaId: venda.id,
-              produtoId: produto?.id
-            }
+            "Venda realizada",
+            "Venda fictícia registrada no sistema."
           );
-        });
-      }
-
-      banco.vendas.sort((a, b) =>
-        b.data.localeCompare(a.data)
-      );
+        }
+      });
 
       salvar();
       renderizarTudo();
 
-      mostrarAviso(
-        "Dados fictícios carregados com sucesso. Acesse o Dashboard e abra o perfil de qualquer cliente."
-      );
+      alert("Dados fictícios carregados com sucesso.");
     }
 
     document.querySelectorAll(".menu-btn").forEach(botao => {
@@ -2778,8 +2503,8 @@
 
         botao.classList.add("active");
 
-        const viewId = botao.dataset.view;
-        document.getElementById(viewId).classList.add("active");
+        const view = botao.dataset.view;
+        document.getElementById(view).classList.add("active");
 
         const titulos = {
           dashboard: "Dashboard",
@@ -2790,130 +2515,124 @@
         };
 
         document.getElementById("page-title").textContent =
-          titulos[viewId];
+          titulos[view];
       });
     });
 
-    document
-      .getElementById("client-search")
+    document.getElementById("client-search")
       .addEventListener("input", renderizarClientes);
 
-    document
-      .getElementById("client-form")
+    document.getElementById("client-form")
       .addEventListener("submit", event => {
         event.preventDefault();
 
         const cliente = {
-          id: id("cliente"),
+          id: gerarId("cliente"),
           nome: document.getElementById("client-name").value.trim(),
           telefone: document.getElementById("client-phone").value.trim(),
           aniversario: document.getElementById("client-birthday").value,
           empresa: document.getElementById("client-company").value.trim(),
           observacoes: document.getElementById("client-notes").value.trim(),
-          criadoEm: new Date().toISOString(),
           timeline: [{
-            id: id("timeline"),
-            data: new Date().toISOString(),
+            id: gerarId("timeline"),
             tipo: "Cliente cadastrado",
-            descricao: "Cadastro inicial realizado."
+            descricao: "Cadastro inicial realizado.",
+            data: new Date().toISOString()
           }]
         };
 
         banco.clientes.push(cliente);
-
         salvar();
+
         event.target.reset();
         renderizarTudo();
 
-        mostrarAviso(
-          "Cliente cadastrado. Agora clique em 'Abrir perfil e vender' para lançar os produtos vendidos."
+        alert(
+          "Cliente cadastrado. Abra o perfil para registrar a primeira venda."
         );
       });
 
-    document
-      .getElementById("supplier-form")
+    document.getElementById("supplier-form")
       .addEventListener("submit", event => {
         event.preventDefault();
 
         banco.fornecedores.push({
-          id: id("fornecedor"),
+          id: gerarId("fornecedor"),
           nome: document.getElementById("supplier-name").value.trim(),
           telefone: document.getElementById("supplier-phone").value.trim(),
           documento: document.getElementById("supplier-document").value.trim(),
-          observacoes: document.getElementById("supplier-notes").value.trim(),
-          criadoEm: new Date().toISOString()
+          cor: document.getElementById("supplier-color").value
+        });
+
+        salvar();
+
+        event.target.reset();
+        document.getElementById("supplier-color").value = "#c8102e";
+
+        renderizarTudo();
+        alert("Fornecedor cadastrado com sua cor.");
+      });
+
+    document.getElementById("product-form")
+      .addEventListener("submit", event => {
+        event.preventDefault();
+
+        const nome = document.getElementById("product-name")
+          .value.trim();
+
+        const fornecedorId =
+          document.getElementById("product-supplier").value;
+
+        const categoria =
+          document.getElementById("product-category")
+            .value.trim();
+
+        const preco = Number(
+          document.getElementById("product-price").value
+        );
+
+        if (!nome || !preco) {
+          alert("Informe o nome e o preço do produto.");
+          return;
+        }
+
+        banco.produtos.push({
+          id: gerarId("produto"),
+          codigo: gerarCodigoProduto(),
+          nome,
+          fornecedorId,
+          categoria,
+          preco
         });
 
         salvar();
         event.target.reset();
         renderizarTudo();
 
-        mostrarAviso("Fornecedor cadastrado com sucesso.");
+        alert("Produto cadastrado com sucesso.");
       });
 
-    document
-      .getElementById("product-form")
-      .addEventListener("submit", event => {
-        event.preventDefault();
-
-        const nome = document.getElementById("product-name").value.trim();
-        const fornecedorId =
-          document.getElementById("product-supplier").value;
-        const categoria =
-          document.getElementById("product-category").value.trim();
-        const preco =
-          Number(document.getElementById("product-price").value);
-
-        if (!nome || !preco) {
-          mostrarAviso("Informe o nome e o preço do produto.");
-          return;
-        }
-
-        const produto = {
-          id: id("produto"),
-          codigoInterno: gerarCodigoProduto(),
-          nome,
-          fornecedorId,
-          categoria,
-          preco,
-          criadoEm: new Date().toISOString()
-        };
-
-        banco.produtos.push(produto);
-
-        salvar();
-        event.target.reset();
-        renderizarTudo();
-
-        mostrarAviso(
-          `Produto cadastrado com o código ${produto.codigoInterno}.`
-        );
-      });
-
-    document
-      .getElementById("finance-form")
+    document.getElementById("finance-form")
       .addEventListener("submit", event => {
         event.preventDefault();
 
         banco.financeiro.push({
-          id: id("financeiro"),
+          id: gerarId("financeiro"),
           tipo: document.getElementById("finance-type").value,
-          descricao:
-            document.getElementById("finance-description").value.trim(),
+          descricao: document.getElementById("finance-description")
+            .value.trim(),
           valor: Number(
             document.getElementById("finance-value").value
           ),
-          vencimento:
-            document.getElementById("finance-due-date").value,
-          status: document.getElementById("finance-status").value,
-          criadoEm: new Date().toISOString()
+          vencimento: document.getElementById("finance-due-date").value,
+          status: document.getElementById("finance-status").value
         });
 
         salvar();
         event.target.reset();
         renderizarTudo();
 
-        mostrarAviso("Lançamento financeiro salvo.");
+        alert("Lançamento financeiro salvo.");
       });
 
     document.getElementById("current-date").textContent =
