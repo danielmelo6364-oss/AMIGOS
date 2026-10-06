@@ -20,6 +20,7 @@
       --warning-bg: #fef3c7;
       --danger: #b91c1c;
       --danger-bg: #fee2e2;
+      --info-bg: #dbeafe;
       --gray-bg: #f3f4f6;
       --shadow: 0 4px 15px rgba(15, 23, 42, 0.08);
     }
@@ -53,21 +54,20 @@
     }
 
     .sidebar {
-      width: 240px;
+      width: 245px;
       background: var(--primary-dark);
       color: white;
       padding: 22px 14px;
       position: fixed;
-      top: 0;
-      bottom: 0;
-      left: 0;
+      inset: 0 auto 0 0;
+      z-index: 5;
     }
 
     .brand {
       font-size: 21px;
       font-weight: bold;
       padding: 0 12px 24px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
       margin-bottom: 18px;
     }
 
@@ -93,8 +93,8 @@
     }
 
     .content {
-      width: calc(100% - 240px);
-      margin-left: 240px;
+      width: calc(100% - 245px);
+      margin-left: 245px;
       padding: 26px;
     }
 
@@ -102,8 +102,8 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 24px;
       gap: 20px;
+      margin-bottom: 24px;
     }
 
     .topbar h1 {
@@ -113,6 +113,7 @@
     .date {
       color: var(--muted);
       font-size: 14px;
+      margin-top: 5px;
     }
 
     .view {
@@ -130,12 +131,23 @@
       margin-bottom: 22px;
     }
 
-    .card {
+    .card,
+    .form-card,
+    .table-card {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 19px;
       box-shadow: var(--shadow);
+    }
+
+    .card {
+      padding: 19px;
+    }
+
+    .form-card,
+    .table-card {
+      padding: 20px;
+      margin-bottom: 20px;
     }
 
     .indicator-title {
@@ -145,29 +157,24 @@
     }
 
     .indicator-value {
-      font-size: 28px;
+      font-size: 27px;
       font-weight: bold;
     }
 
     .section-title {
       font-size: 21px;
-      margin-bottom: 14px;
+      margin-bottom: 15px;
+    }
+
+    .sub-title {
+      font-size: 17px;
+      margin: 20px 0 12px;
     }
 
     .grid-2 {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 18px;
-    }
-
-    .form-card,
-    .table-card {
-      background: var(--card);
-      border-radius: 12px;
-      padding: 20px;
-      border: 1px solid var(--border);
-      box-shadow: var(--shadow);
-      margin-bottom: 20px;
     }
 
     form {
@@ -192,9 +199,9 @@
     }
 
     label {
+      color: #374151;
       font-size: 13px;
       font-weight: bold;
-      color: #374151;
     }
 
     input,
@@ -269,14 +276,18 @@
       gap: 7px;
     }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 700px;
+    .search {
+      margin-bottom: 15px;
     }
 
     .table-wrapper {
       overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      min-width: 700px;
+      border-collapse: collapse;
     }
 
     th,
@@ -289,8 +300,8 @@
     }
 
     th {
-      font-size: 12px;
       color: var(--muted);
+      font-size: 12px;
       text-transform: uppercase;
     }
 
@@ -301,26 +312,32 @@
       border-radius: 999px;
       font-size: 12px;
       font-weight: bold;
+      white-space: nowrap;
     }
 
     .badge-green {
-      background: var(--success-bg);
       color: var(--success);
+      background: var(--success-bg);
     }
 
     .badge-yellow {
-      background: var(--warning-bg);
       color: var(--warning);
+      background: var(--warning-bg);
     }
 
     .badge-red {
-      background: var(--danger-bg);
       color: var(--danger);
+      background: var(--danger-bg);
+    }
+
+    .badge-blue {
+      color: var(--primary);
+      background: var(--info-bg);
     }
 
     .badge-gray {
-      background: var(--gray-bg);
       color: #4b5563;
+      background: var(--gray-bg);
     }
 
     .alert-list {
@@ -329,15 +346,21 @@
     }
 
     .alert-item {
-      border-left: 5px solid var(--warning);
-      background: var(--warning-bg);
       padding: 13px;
+      border-left: 5px solid var(--warning);
       border-radius: 6px;
+      background: var(--warning-bg);
     }
 
     .alert-item strong {
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 5px;
+    }
+
+    .empty {
+      padding: 18px 0;
+      color: var(--muted);
+      font-size: 14px;
     }
 
     .timeline {
@@ -359,41 +382,31 @@
 
     .timeline-item {
       position: relative;
-      background: #f8fafc;
+      padding: 12px;
       border: 1px solid var(--border);
       border-radius: 8px;
-      padding: 12px;
+      background: #f8fafc;
     }
 
     .timeline-item::before {
       content: "";
       position: absolute;
-      width: 10px;
-      height: 10px;
-      background: var(--primary);
-      border-radius: 50%;
       left: -20px;
       top: 17px;
+      width: 10px;
+      height: 10px;
       border: 3px solid white;
+      border-radius: 50%;
+      background: var(--primary);
       box-shadow: 0 0 0 1px var(--primary);
     }
 
-    .empty {
-      color: var(--muted);
-      padding: 18px 0;
-      font-size: 14px;
-    }
-
-    .search {
-      margin-bottom: 15px;
-    }
-
     .abc-bar {
+      min-width: 120px;
       height: 9px;
+      overflow: hidden;
       border-radius: 20px;
       background: #dbeafe;
-      overflow: hidden;
-      min-width: 120px;
     }
 
     .abc-bar span {
@@ -406,11 +419,11 @@
       display: none;
       position: fixed;
       inset: 0;
-      background: rgba(15, 23, 42, 0.58);
-      z-index: 10;
+      z-index: 20;
       align-items: center;
       justify-content: center;
       padding: 20px;
+      background: rgba(15, 23, 42, 0.62);
     }
 
     .modal.open {
@@ -418,16 +431,17 @@
     }
 
     .modal-content {
-      width: min(700px, 100%);
-      max-height: 90vh;
+      width: min(1050px, 100%);
+      max-height: 94vh;
       overflow-y: auto;
-      background: white;
+      padding: 23px;
       border-radius: 12px;
-      padding: 22px;
+      background: white;
     }
 
     .modal-header {
       display: flex;
+      align-items: center;
       justify-content: space-between;
       gap: 12px;
       margin-bottom: 18px;
@@ -435,12 +449,59 @@
 
     .close {
       border: 0;
+      color: var(--muted);
       background: transparent;
-      font-size: 25px;
+      font-size: 27px;
+    }
+
+    .profile-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 18px;
+    }
+
+    .profile-info {
+      padding: 14px;
+      border-radius: 8px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+    }
+
+    .product-sale-row {
+      display: grid;
+      grid-template-columns: 1fr 120px 150px;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+      padding: 9px;
+      border-radius: 7px;
+      background: #f8fafc;
+      border: 1px solid var(--border);
+    }
+
+    .status-active {
+      color: var(--success);
+      font-weight: bold;
+    }
+
+    .status-inactive {
       color: var(--muted);
     }
 
-    @media (max-width: 1050px) {
+    .analysis-box {
+      padding: 15px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+    }
+
+    .analysis-box ul {
+      padding-left: 20px;
+      line-height: 1.9;
+    }
+
+    @media (max-width: 1100px) {
       .cards {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -448,17 +509,21 @@
       .grid-2 {
         grid-template-columns: 1fr;
       }
+
+      .profile-header {
+        grid-template-columns: 1fr;
+      }
     }
 
-    @media (max-width: 750px) {
-      .sidebar {
-        width: 100%;
-        height: auto;
-        position: relative;
-      }
-
+    @media (max-width: 760px) {
       .layout {
         display: block;
+      }
+
+      .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
       }
 
       .content {
@@ -472,20 +537,21 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .cards {
-        grid-template-columns: 1fr;
-      }
-
-      .form-grid {
-        grid-template-columns: 1fr;
-      }
-
       .topbar {
         display: block;
       }
 
       .topbar .actions {
-        margin-top: 12px;
+        margin-top: 14px;
+      }
+
+      .cards,
+      .form-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .product-sale-row {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -501,7 +567,6 @@
         <button class="menu-btn" data-view="clientes">Clientes</button>
         <button class="menu-btn" data-view="produtos">Produtos</button>
         <button class="menu-btn" data-view="fornecedores">Fornecedores</button>
-        <button class="menu-btn" data-view="pedidos">Pedidos</button>
         <button class="menu-btn" data-view="financeiro">Financeiro</button>
       </nav>
     </aside>
@@ -510,15 +575,16 @@
       <div class="topbar">
         <div>
           <h1 id="page-title">Dashboard</h1>
-          <div class="date" id="current-date"></div>
+          <div id="current-date" class="date"></div>
         </div>
 
         <div class="actions">
           <button class="btn btn-success" onclick="carregarDadosFicticios()">
             Carregar dados fictícios
           </button>
-          <button class="btn btn-outline" onclick="resetarDados()">
-            Limpar dados de teste
+
+          <button class="btn btn-outline" onclick="limparDados()">
+            Limpar dados
           </button>
         </div>
       </div>
@@ -537,13 +603,15 @@
           </div>
 
           <div class="card">
-            <div class="indicator-title">Pedidos realizados</div>
-            <div class="indicator-value" id="indicator-pedidos">0</div>
+            <div class="indicator-title">Vendas realizadas</div>
+            <div class="indicator-value" id="indicator-vendas">0</div>
           </div>
 
           <div class="card">
-            <div class="indicator-title">Faturamento lançado</div>
-            <div class="indicator-value" id="indicator-faturamento">R$ 0,00</div>
+            <div class="indicator-title">Faturamento</div>
+            <div class="indicator-value" id="indicator-faturamento">
+              R$ 0,00
+            </div>
           </div>
         </div>
 
@@ -560,45 +628,75 @@
         </div>
 
         <div class="table-card">
-          <h2 class="section-title">Curva ABC dos produtos</h2>
+          <h2 class="section-title">Curva ABC geral dos produtos</h2>
+          <p class="empty">
+            A classificação considera o faturamento acumulado dos produtos.
+            A = até 80%, B = até 95% e C = restante.
+          </p>
+
           <div class="table-wrapper">
             <table>
               <thead>
                 <tr>
-                  <th>Classificação</th>
+                  <th>ABC</th>
                   <th>Produto</th>
-                  <th>Quantidade | Faturamento</th>
+                  <th>Quantidade pedida</th>
+                  <th>Faturamento</th>
                   <th>Participação</th>
-                  <th>Visualização</th>
+                  <th>Status de demanda</th>
                 </tr>
               </thead>
-              <tbody id="abc-table"></tbody>
+
+              <tbody id="abc-products-table"></tbody>
             </table>
           </div>
         </div>
 
         <div class="table-card">
-          <h2 class="section-title">Curva ABC dos clientes</h2>
+          <h2 class="section-title">Curva ABC geral dos clientes</h2>
+
           <div class="table-wrapper">
             <table>
               <thead>
                 <tr>
-                  <th>Classificação</th>
+                  <th>ABC</th>
                   <th>Cliente</th>
                   <th>Pedidos</th>
+                  <th>Produtos pedidos</th>
                   <th>Faturamento</th>
                   <th>Participação</th>
-                  <th>Visualização</th>
                 </tr>
               </thead>
+
               <tbody id="abc-clients-table"></tbody>
             </table>
           </div>
         </div>
 
-        <div class="table-card">
-          <h2 class="section-title">Análises para decisão</h2>
-          <ul id="decision-analysis" style="padding-left: 20px; line-height: 1.9;"></ul>
+        <div class="grid-2">
+          <div class="table-card">
+            <h2 class="section-title">Produtos menos pedidos</h2>
+
+            <div class="table-wrapper">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Produto</th>
+                    <th>Quantidade</th>
+                    <th>Clientes</th>
+                    <th>Indicador</th>
+                  </tr>
+                </thead>
+
+                <tbody id="low-demand-table"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="table-card">
+            <h2 class="section-title">Análises gerais</h2>
+            <div id="general-analysis" class="analysis-box"></div>
+          </div>
         </div>
       </section>
 
@@ -620,12 +718,12 @@
               </div>
 
               <div class="form-group">
-                <label>Data de nascimento</label>
+                <label>Data de aniversário</label>
                 <input id="client-birthday" type="date" />
               </div>
 
               <div class="form-group">
-                <label>Empresa ou cidade</label>
+                <label>Empresa, cidade ou região</label>
                 <input id="client-company" />
               </div>
 
@@ -635,13 +733,20 @@
               </div>
             </div>
 
-            <button class="btn btn-primary">Salvar cliente</button>
+            <button class="btn btn-primary">
+              Cadastrar cliente
+            </button>
           </form>
         </div>
 
         <div class="table-card">
           <h2 class="section-title">Clientes cadastrados</h2>
-          <input class="search" id="client-search" placeholder="Pesquisar cliente..." />
+
+          <input
+            id="client-search"
+            class="search"
+            placeholder="Pesquisar cliente..."
+          />
 
           <div class="table-wrapper">
             <table>
@@ -651,9 +756,11 @@
                   <th>Telefone</th>
                   <th>Aniversário</th>
                   <th>Empresa/cidade</th>
+                  <th>Pedidos</th>
                   <th>Ações</th>
                 </tr>
               </thead>
+
               <tbody id="clients-table"></tbody>
             </table>
           </div>
@@ -675,27 +782,35 @@
               <div class="form-group">
                 <label>Fornecedor</label>
                 <select id="product-supplier">
-                  <option value="">Selecione</option>
+                  <option value="">Selecione o fornecedor</option>
                 </select>
               </div>
 
               <div class="form-group">
                 <label>Categoria</label>
-                <input id="product-category" placeholder="Ex.: Freio, motor, suspensão" />
+                <input id="product-category" />
               </div>
 
               <div class="form-group">
                 <label>Preço unitário</label>
-                <input id="product-price" type="number" min="0" step="0.01" required />
+                <input
+                  id="product-price"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  required
+                />
               </div>
             </div>
 
-            <button class="btn btn-primary">Salvar produto</button>
+            <button class="btn btn-primary">
+              Cadastrar produto
+            </button>
           </form>
         </div>
 
         <div class="table-card">
-          <h2 class="section-title">Produtos cadastrados</h2>
+          <h2 class="section-title">Painel de produtos</h2>
 
           <div class="table-wrapper">
             <table>
@@ -706,9 +821,11 @@
                   <th>Fornecedor</th>
                   <th>Categoria</th>
                   <th>Preço</th>
+                  <th>Quantidade pedida</th>
                   <th>Ações</th>
                 </tr>
               </thead>
+
               <tbody id="products-table"></tbody>
             </table>
           </div>
@@ -733,8 +850,8 @@
               </div>
 
               <div class="form-group">
-                <label>Documento</label>
-                <input id="supplier-document" placeholder="CNPJ ou CPF" />
+                <label>CNPJ ou CPF</label>
+                <input id="supplier-document" />
               </div>
 
               <div class="form-group">
@@ -743,7 +860,9 @@
               </div>
             </div>
 
-            <button class="btn btn-primary">Salvar fornecedor</button>
+            <button class="btn btn-primary">
+              Cadastrar fornecedor
+            </button>
           </form>
         </div>
 
@@ -754,79 +873,15 @@
             <table>
               <thead>
                 <tr>
-                  <th>Nome</th>
+                  <th>Fornecedor</th>
                   <th>Telefone</th>
                   <th>Documento</th>
-                  <th>Peças cadastradas</th>
+                  <th>Produtos vinculados</th>
                   <th>Ações</th>
                 </tr>
               </thead>
+
               <tbody id="suppliers-table"></tbody>
-            </table>
-          </div>
-        </div>
-      </section>
-
-      <!-- PEDIDOS -->
-      <section id="pedidos" class="view">
-        <div class="form-card">
-          <h2 class="section-title">Lançar pedido do cliente</h2>
-
-          <form id="order-form">
-            <div class="form-grid">
-              <div class="form-group">
-                <label>Cliente</label>
-                <select id="order-client" required>
-                  <option value="">Selecione</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label>Vendedor</label>
-                <input id="order-seller" required />
-              </div>
-
-              <div class="form-group">
-                <label>Canal da venda</label>
-                <select id="order-channel">
-                  <option value="Presencial">Presencial</option>
-                  <option value="Digital">Digital</option>
-                  <option value="WhatsApp">WhatsApp</option>
-                </select>
-              </div>
-
-              <div class="form-group">
-                <label>Observação</label>
-                <input id="order-notes" />
-              </div>
-            </div>
-
-            <div class="form-group">
-              <label>Produtos do pedido</label>
-              <div id="order-products"></div>
-            </div>
-
-            <button class="btn btn-primary">Salvar pedido</button>
-          </form>
-        </div>
-
-        <div class="table-card">
-          <h2 class="section-title">Pedidos lançados</h2>
-
-          <div class="table-wrapper">
-            <table>
-              <thead>
-                <tr>
-                  <th>Data</th>
-                  <th>Cliente</th>
-                  <th>Vendedor</th>
-                  <th>Canal</th>
-                  <th>Produtos</th>
-                  <th>Total</th>
-                  <th>Ações</th>
-                </tr>
-              </thead>
-              <tbody id="orders-table"></tbody>
             </table>
           </div>
         </div>
@@ -835,7 +890,7 @@
       <!-- FINANCEIRO -->
       <section id="financeiro" class="view">
         <div class="form-card">
-          <h2 class="section-title">Lançar movimentação financeira</h2>
+          <h2 class="section-title">Lançamento financeiro</h2>
 
           <form id="finance-form">
             <div class="form-grid">
@@ -854,11 +909,17 @@
 
               <div class="form-group">
                 <label>Valor</label>
-                <input id="finance-value" type="number" min="0" step="0.01" required />
+                <input
+                  id="finance-value"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  required
+                />
               </div>
 
               <div class="form-group">
-                <label>Data de vencimento</label>
+                <label>Vencimento</label>
                 <input id="finance-due-date" type="date" required />
               </div>
 
@@ -871,7 +932,9 @@
               </div>
             </div>
 
-            <button class="btn btn-primary">Salvar lançamento</button>
+            <button class="btn btn-primary">
+              Salvar lançamento
+            </button>
           </form>
         </div>
 
@@ -890,6 +953,7 @@
                   <th>Ações</th>
                 </tr>
               </thead>
+
               <tbody id="finance-table"></tbody>
             </table>
           </div>
@@ -903,67 +967,70 @@
     </main>
   </div>
 
-  <!-- MODAL DE DETALHES DO CLIENTE -->
-  <div class="modal" id="client-modal">
+  <!-- MODAL DO PERFIL DO CLIENTE -->
+  <div id="client-modal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <h2 id="modal-client-name">Detalhes do cliente</h2>
-        <button class="close" onclick="fecharModal()">&times;</button>
+        <h2 id="client-modal-title">Perfil do cliente</h2>
+
+        <button class="close" onclick="fecharModalCliente()">
+          &times;
+        </button>
       </div>
 
-      <div id="client-details"></div>
+      <div id="client-profile-content"></div>
     </div>
   </div>
 
   <script>
-    const STORAGE_KEY = "gestao_comercial_v1";
+    const STORAGE_KEY = "gestao_comercial_corrigido_v1";
 
-    let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
-      clients: [],
-      products: [],
-      suppliers: [],
-      orders: [],
-      finances: []
+    let banco = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
+      clientes: [],
+      produtos: [],
+      fornecedores: [],
+      vendas: [],
+      financeiro: []
     };
 
-    function salvarDados() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
+    let clienteAbertoId = null;
+
+    function salvar() {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(banco));
     }
 
-    function gerarId(prefixo) {
-      return prefixo + "_" + Date.now() + "_" + Math.random().toString(36).substring(2, 8);
+    function id(prefixo) {
+      return prefixo + "_" + Date.now() + "_" +
+        Math.random().toString(36).substring(2, 8);
     }
 
-    function gerarCodigoProduto() {
-      const maior = db.products.reduce((max, produto) => {
-        const numero = parseInt(String(produto.internalCode || "").replace(/\D/g, ""), 10);
-        return Number.isFinite(numero) && numero > max ? numero : max;
-      }, 0);
-
-      return `P-${String(maior + 1).padStart(5, "0")}`;
-    }
-
-    function formatarMoeda(valor) {
+    function moeda(valor) {
       return Number(valor || 0).toLocaleString("pt-BR", {
         style: "currency",
         currency: "BRL"
       });
     }
 
-    function formatarData(data) {
+    function dataAtual() {
+      const agora = new Date();
+      const dois = numero => String(numero).padStart(2, "0");
+
+      return `${agora.getFullYear()}-${dois(agora.getMonth() + 1)}-${dois(agora.getDate())}`;
+    }
+
+    function dataFormatada(data) {
       if (!data) return "-";
 
       return new Date(data + "T00:00:00").toLocaleDateString("pt-BR");
     }
 
-    function dataAtual() {
-      const agora = new Date();
-      const dois = n => String(n).padStart(2, "0");
+    function dataHoraFormatada(data) {
+      if (!data) return "-";
 
-      return `${agora.getFullYear()}-${dois(agora.getMonth() + 1)}-${dois(agora.getDate())}`;
+      return new Date(data).toLocaleString("pt-BR");
     }
 
-    function escaparHTML(texto) {
+    function htmlSeguro(texto) {
       return String(texto || "")
         .replaceAll("&", "&")
         .replaceAll("<", "<")
@@ -972,16 +1039,31 @@
         .replaceAll("'", "&#039;");
     }
 
-    function obterCliente(id) {
-      return db.clients.find(cliente => cliente.id === id);
+    function obterCliente(clienteId) {
+      return banco.clientes.find(cliente => cliente.id === clienteId);
     }
 
-    function obterProduto(id) {
-      return db.products.find(produto => produto.id === id);
+    function obterProduto(produtoId) {
+      return banco.produtos.find(produto => produto.id === produtoId);
     }
 
-    function obterFornecedor(id) {
-      return db.suppliers.find(fornecedor => fornecedor.id === id);
+    function obterFornecedor(fornecedorId) {
+      return banco.fornecedores.find(
+        fornecedor => fornecedor.id === fornecedorId
+      );
+    }
+
+    function gerarCodigoProduto() {
+      const maiorCodigo = banco.produtos.reduce((maior, produto) => {
+        const numero = parseInt(
+          String(produto.codigoInterno || "").replace(/\D/g, ""),
+          10
+        );
+
+        return Number.isFinite(numero) && numero > maior ? numero : maior;
+      }, 0);
+
+      return `P-${String(maiorCodigo + 1).padStart(5, "0")}`;
     }
 
     function adicionarTimeline(clienteId, tipo, descricao, dados = {}) {
@@ -994,7 +1076,7 @@
       }
 
       cliente.timeline.unshift({
-        id: gerarId("timeline"),
+        id: id("timeline"),
         data: new Date().toISOString(),
         tipo,
         descricao,
@@ -1006,130 +1088,280 @@
       alert(mensagem);
     }
 
+    function quantidadePedidosCliente(clienteId) {
+      return banco.vendas.filter(venda => venda.clienteId === clienteId).length;
+    }
+
+    function quantidadeProdutoGeral(produtoId) {
+      return banco.vendas.reduce((total, venda) => {
+        const item = venda.itens.find(
+          itemVenda => itemVenda.produtoId === produtoId
+        );
+
+        return total + (item ? Number(item.quantidade) : 0);
+      }, 0);
+    }
+
+    function quantidadeProdutoCliente(clienteId, produtoId) {
+      return banco.vendas.reduce((total, venda) => {
+        if (venda.clienteId !== clienteId) return total;
+
+        const item = venda.itens.find(
+          itemVenda => itemVenda.produtoId === produtoId
+        );
+
+        return total + (item ? Number(item.quantidade) : 0);
+      }, 0);
+    }
+
+    function clientesQuePediramProduto(produtoId) {
+      return new Set(
+        banco.vendas
+          .filter(venda =>
+            venda.itens.some(item => item.produtoId === produtoId)
+          )
+          .map(venda => venda.clienteId)
+      ).size;
+    }
+
+    function totalVenda(venda) {
+      return venda.itens.reduce((total, item) => {
+        const produto = obterProduto(item.produtoId);
+
+        return total + (
+          Number(item.quantidade) * Number(produto?.preco || 0)
+        );
+      }, 0);
+    }
+
+    function faturamentoGeral() {
+      return banco.vendas.reduce(
+        (total, venda) => total + totalVenda(venda),
+        0
+      );
+    }
+
+    function analiseProdutosGeral() {
+      const produtos = banco.produtos.map(produto => {
+        const quantidade = quantidadeProdutoGeral(produto.id);
+        const faturamento = quantidade * Number(produto.preco || 0);
+        const clientes = clientesQuePediramProduto(produto.id);
+
+        return {
+          produto,
+          quantidade,
+          faturamento,
+          clientes
+        };
+      });
+
+      produtos.sort((a, b) => b.faturamento - a.faturamento);
+
+      const faturamentoTotal = produtos.reduce(
+        (total, item) => total + item.faturamento,
+        0
+      );
+
+      let acumulado = 0;
+
+      return produtos.map(item => {
+        const participacao = faturamentoTotal
+          ? (item.faturamento / faturamentoTotal) * 100
+          : 0;
+
+        const classe = acumulado < 80
+          ? "A"
+          : acumulado < 95
+            ? "B"
+            : "C";
+
+        acumulado += participacao;
+
+        return {
+          ...item,
+          participacao,
+          classe
+        };
+      });
+    }
+
+    function analiseClientesGeral() {
+      const clientes = banco.clientes.map(cliente => {
+        const vendas = banco.vendas.filter(
+          venda => venda.clienteId === cliente.id
+        );
+
+        const produtosPedidos = new Set();
+
+        vendas.forEach(venda => {
+          venda.itens.forEach(item => {
+            produtosPedidos.add(item.produtoId);
+          });
+        });
+
+        return {
+          cliente,
+          pedidos: vendas.length,
+          produtosPedidos: produtosPedidos.size,
+          faturamento: vendas.reduce(
+            (total, venda) => total + totalVenda(venda),
+            0
+          )
+        };
+      });
+
+      clientes.sort((a, b) => b.faturamento - a.faturamento);
+
+      const total = clientes.reduce(
+        (soma, cliente) => soma + cliente.faturamento,
+        0
+      );
+
+      let acumulado = 0;
+
+      return clientes.map(item => {
+        const participacao = total
+          ? (item.faturamento / total) * 100
+          : 0;
+
+        const classe = acumulado < 80
+          ? "A"
+          : acumulado < 95
+            ? "B"
+            : "C";
+
+        acumulado += participacao;
+
+        return {
+          ...item,
+          participacao,
+          classe
+        };
+      });
+    }
+
+    function classeABC(classe) {
+      if (classe === "A") return "badge-green";
+      if (classe === "B") return "badge-yellow";
+      return "badge-red";
+    }
+
+    function statusDemanda(item) {
+      if (item.quantidade === 0) {
+        return '<span class="badge badge-red">Nunca pedido</span>';
+      }
+
+      if (item.quantidade <= 5) {
+        return '<span class="badge badge-yellow">Baixa demanda</span>';
+      }
+
+      return '<span class="badge badge-green">Demanda registrada</span>';
+    }
+
     function renderizarTudo() {
       renderizarIndicadores();
       renderizarSelects();
       renderizarClientes();
       renderizarProdutos();
       renderizarFornecedores();
-      renderizarPedidos();
       renderizarFinanceiro();
       renderizarGarantias();
       renderizarAniversarios();
-      renderizarCurvaABC();
-      renderizarCurvaABCClientes();
-      renderizarAnalises();
+      renderizarABCProdutos();
+      renderizarABCClientes();
+      renderizarProdutosMenosPedidos();
+      renderizarAnaliseGeral();
+
+      if (clienteAbertoId) {
+        abrirPerfilCliente(clienteAbertoId, false);
+      }
     }
 
     function renderizarIndicadores() {
-      document.getElementById("indicator-clientes").textContent = db.clients.length;
-      document.getElementById("indicator-produtos").textContent = db.products.length;
-      document.getElementById("indicator-pedidos").textContent = db.orders.length;
+      document.getElementById("indicator-clientes").textContent =
+        banco.clientes.length;
 
-      const faturamento = db.orders.reduce((total, pedido) => {
-        return total + calcularTotalPedido(pedido);
-      }, 0);
+      document.getElementById("indicator-produtos").textContent =
+        banco.produtos.length;
+
+      document.getElementById("indicator-vendas").textContent =
+        banco.vendas.length;
 
       document.getElementById("indicator-faturamento").textContent =
-        formatarMoeda(faturamento);
+        moeda(faturamentoGeral());
     }
 
     function renderizarSelects() {
-      const supplierSelect = document.getElementById("product-supplier");
-      const clientSelect = document.getElementById("order-client");
+      const selectFornecedor = document.getElementById("product-supplier");
 
-      const fornecedorSelecionado = supplierSelect.value;
-      const clienteSelecionado = clientSelect.value;
-
-      supplierSelect.innerHTML =
-        '<option value="">Selecione</option>' +
-        db.suppliers.map(fornecedor =>
-          `<option value="${fornecedor.id}">${escaparHTML(fornecedor.name)}</option>`
-        ).join("");
-
-      clientSelect.innerHTML =
-        '<option value="">Selecione</option>' +
-        db.clients.map(cliente =>
-          `<option value="${cliente.id}">${escaparHTML(cliente.name)}</option>`
-        ).join("");
-
-      supplierSelect.value = fornecedorSelecionado;
-      clientSelect.value = clienteSelecionado;
-
-      const productsContainer = document.getElementById("order-products");
-
-      if (!db.products.length) {
-        productsContainer.innerHTML =
-          '<p class="empty">Cadastre produtos antes de lançar um pedido.</p>';
-        return;
-      }
-
-      productsContainer.innerHTML = db.products.map(produto => `
-        <div style="display:grid; grid-template-columns: 1fr 110px 140px; gap:8px; margin-bottom:8px; align-items:center;">
-          <label style="font-weight:normal;">
-            <input
-              type="checkbox"
-              class="order-product-check"
-              value="${produto.id}"
-              style="width:auto; margin-right:6px;"
-            />
-            ${escaparHTML(produto.name)} (${escaparHTML(produto.internalCode)})
-          </label>
-
-          <input
-            type="number"
-            min="1"
-            value="1"
-            class="order-product-quantity"
-            data-product-id="${produto.id}"
-            placeholder="Quantidade"
-          />
-
-          <label style="font-weight:normal;">
-            <input
-              type="checkbox"
-              class="order-product-warranty"
-              data-product-id="${produto.id}"
-              style="width:auto; margin-right:5px;"
-            />
-            Ativar garantia
-          </label>
-        </div>
-      `).join("");
+      selectFornecedor.innerHTML =
+        '<option value="">Selecione o fornecedor</option>' +
+        banco.fornecedores.map(fornecedor => `
+          <option value="${fornecedor.id}">
+            ${htmlSeguro(fornecedor.nome)}
+          </option>
+        `).join("");
     }
 
     function renderizarClientes() {
-      const termo = (document.getElementById("client-search")?.value || "")
-        .toLowerCase();
+      const termo = (
+        document.getElementById("client-search")?.value || ""
+      ).toLowerCase();
 
-      const clientes = db.clients.filter(cliente =>
-        cliente.name.toLowerCase().includes(termo)
+      const clientes = banco.clientes.filter(cliente =>
+        cliente.nome.toLowerCase().includes(termo)
       );
 
-      const tbody = document.getElementById("clients-table");
+      const tabela = document.getElementById("clients-table");
 
       if (!clientes.length) {
-        tbody.innerHTML = `<tr><td colspan="5" class="empty">Nenhum cliente cadastrado.</td></tr>`;
+        tabela.innerHTML = `
+          <tr>
+            <td colspan="6" class="empty">
+              Nenhum cliente cadastrado.
+            </td>
+          </tr>
+        `;
         return;
       }
 
-      tbody.innerHTML = clientes.map(cliente => `
+      tabela.innerHTML = clientes.map(cliente => `
         <tr>
-          <td><strong>${escaparHTML(cliente.name)}</strong></td>
-          <td>${escaparHTML(cliente.phone || "-")}</td>
-          <td>${formatarData(cliente.birthday)}</td>
-          <td>${escaparHTML(cliente.company || "-")}</td>
+          <td>
+            <strong>${htmlSeguro(cliente.nome)}</strong>
+          </td>
+
+          <td>${htmlSeguro(cliente.telefone || "-")}</td>
+          <td>${dataFormatada(cliente.aniversario)}</td>
+          <td>${htmlSeguro(cliente.empresa || "-")}</td>
+          <td>${quantidadePedidosCliente(cliente.id)}</td>
+
           <td>
             <div class="actions">
-              <button class="btn btn-primary btn-small" onclick="verDetalhesCliente('${cliente.id}')">
-                Ver timeline
+              <button
+                class="btn btn-primary btn-small"
+                onclick="abrirPerfilCliente('${cliente.id}')"
+              >
+                Abrir perfil e vender
               </button>
+
               ${
-                cliente.phone
-                  ? `<button class="btn btn-success btn-small" onclick="enviarWhatsApp('${cliente.id}')">WhatsApp</button>`
+                cliente.telefone
+                  ? `
+                    <button
+                      class="btn btn-success btn-small"
+                      onclick="enviarWhatsApp('${cliente.id}')"
+                    >
+                      WhatsApp
+                    </button>
+                  `
                   : ""
               }
-              <button class="btn btn-danger btn-small" onclick="excluirCliente('${cliente.id}')">
+
+              <button
+                class="btn btn-danger btn-small"
+                onclick="excluirCliente('${cliente.id}')"
+              >
                 Excluir
               </button>
             </div>
@@ -1139,25 +1371,46 @@
     }
 
     function renderizarProdutos() {
-      const tbody = document.getElementById("products-table");
+      const tabela = document.getElementById("products-table");
 
-      if (!db.products.length) {
-        tbody.innerHTML = `<tr><td colspan="6" class="empty">Nenhum produto cadastrado.</td></tr>`;
+      if (!banco.produtos.length) {
+        tabela.innerHTML = `
+          <tr>
+            <td colspan="7" class="empty">
+              Nenhum produto cadastrado.
+            </td>
+          </tr>
+        `;
         return;
       }
 
-      tbody.innerHTML = db.products.map(produto => {
-        const fornecedor = obterFornecedor(produto.supplierId);
+      const analise = analiseProdutosGeral();
+
+      tabela.innerHTML = banco.produtos.map(produto => {
+        const fornecedor = obterFornecedor(produto.fornecedorId);
+        const item = analise.find(
+          resultado => resultado.produto.id === produto.id
+        );
 
         return `
           <tr>
-            <td><span class="badge badge-gray">${escaparHTML(produto.internalCode)}</span></td>
-            <td><strong>${escaparHTML(produto.name)}</strong></td>
-            <td>${escaparHTML(fornecedor?.name || "Não informado")}</td>
-            <td>${escaparHTML(produto.category || "-")}</td>
-            <td>${formatarMoeda(produto.price)}</td>
             <td>
-              <button class="btn btn-danger btn-small" onclick="excluirProduto('${produto.id}')">
+              <span class="badge badge-gray">
+                ${htmlSeguro(produto.codigoInterno)}
+              </span>
+            </td>
+
+            <td><strong>${htmlSeguro(produto.nome)}</strong></td>
+            <td>${htmlSeguro(fornecedor?.nome || "-")}</td>
+            <td>${htmlSeguro(produto.categoria || "-")}</td>
+            <td>${moeda(produto.preco)}</td>
+            <td>${item?.quantidade || 0}</td>
+
+            <td>
+              <button
+                class="btn btn-danger btn-small"
+                onclick="excluirProduto('${produto.id}')"
+              >
                 Excluir
               </button>
             </td>
@@ -1167,76 +1420,36 @@
     }
 
     function renderizarFornecedores() {
-      const tbody = document.getElementById("suppliers-table");
+      const tabela = document.getElementById("suppliers-table");
 
-      if (!db.suppliers.length) {
-        tbody.innerHTML = `<tr><td colspan="5" class="empty">Nenhum fornecedor cadastrado.</td></tr>`;
+      if (!banco.fornecedores.length) {
+        tabela.innerHTML = `
+          <tr>
+            <td colspan="5" class="empty">
+              Nenhum fornecedor cadastrado.
+            </td>
+          </tr>
+        `;
         return;
       }
 
-      tbody.innerHTML = db.suppliers.map(fornecedor => {
-        const quantidadeProdutos = db.products.filter(
-          produto => produto.supplierId === fornecedor.id
+      tabela.innerHTML = banco.fornecedores.map(fornecedor => {
+        const produtos = banco.produtos.filter(
+          produto => produto.fornecedorId === fornecedor.id
         ).length;
 
         return `
           <tr>
-            <td><strong>${escaparHTML(fornecedor.name)}</strong></td>
-            <td>${escaparHTML(fornecedor.phone || "-")}</td>
-            <td>${escaparHTML(fornecedor.document || "-")}</td>
-            <td>${quantidadeProdutos}</td>
-            <td>
-              <button class="btn btn-danger btn-small" onclick="excluirFornecedor('${fornecedor.id}')">
-                Excluir
-              </button>
-            </td>
-          </tr>
-        `;
-      }).join("");
-    }
-
-    function calcularTotalPedido(pedido) {
-      return pedido.items.reduce((total, item) => {
-        const produto = obterProduto(item.productId);
-        return total + ((produto?.price || 0) * item.quantity);
-      }, 0);
-    }
-
-    function renderizarPedidos() {
-      const tbody = document.getElementById("orders-table");
-
-      if (!db.orders.length) {
-        tbody.innerHTML = `<tr><td colspan="7" class="empty">Nenhum pedido lançado.</td></tr>`;
-        return;
-      }
-
-      tbody.innerHTML = db.orders.map(pedido => {
-        const cliente = obterCliente(pedido.clientId);
-
-        const produtos = pedido.items.map(item => {
-          const produto = obterProduto(item.productId);
-          const garantia = item.warrantyActive
-            ? '<span class="badge badge-green">Garantia ativa</span>'
-            : "";
-
-          return `
-            <div style="margin-bottom:5px;">
-              ${item.quantity}x ${escaparHTML(produto?.name || "Produto removido")}
-              ${garantia}
-            </div>
-          `;
-        }).join("");
-
-        return `
-          <tr>
-            <td>${formatarData(pedido.date)}</td>
-            <td>${escaparHTML(cliente?.name || "Cliente removido")}</td>
-            <td>${escaparHTML(pedido.seller)}</td>
-            <td>${escaparHTML(pedido.channel)}</td>
+            <td><strong>${htmlSeguro(fornecedor.nome)}</strong></td>
+            <td>${htmlSeguro(fornecedor.telefone || "-")}</td>
+            <td>${htmlSeguro(fornecedor.documento || "-")}</td>
             <td>${produtos}</td>
-            <td><strong>${formatarMoeda(calcularTotalPedido(pedido))}</strong></td>
+
             <td>
-              <button class="btn btn-danger btn-small" onclick="excluirPedido('${pedido.id}')">
+              <button
+                class="btn btn-danger btn-small"
+                onclick="excluirFornecedor('${fornecedor.id}')"
+              >
                 Excluir
               </button>
             </td>
@@ -1246,23 +1459,31 @@
     }
 
     function renderizarFinanceiro() {
-      const tbody = document.getElementById("finance-table");
+      const tabela = document.getElementById("finance-table");
 
-      if (!db.finances.length) {
-        tbody.innerHTML = `<tr><td colspan="6" class="empty">Nenhum lançamento financeiro.</td></tr>`;
+      if (!banco.financeiro.length) {
+        tabela.innerHTML = `
+          <tr>
+            <td colspan="6" class="empty">
+              Nenhum lançamento financeiro.
+            </td>
+          </tr>
+        `;
       } else {
-        tbody.innerHTML = db.finances.map(item => `
+        tabela.innerHTML = banco.financeiro.map(item => `
           <tr>
             <td>
               ${
-                item.type === "receber"
+                item.tipo === "receber"
                   ? '<span class="badge badge-green">A receber</span>'
                   : '<span class="badge badge-red">A pagar</span>'
               }
             </td>
-            <td>${escaparHTML(item.description)}</td>
-            <td><strong>${formatarMoeda(item.value)}</strong></td>
-            <td>${formatarData(item.dueDate)}</td>
+
+            <td>${htmlSeguro(item.descricao)}</td>
+            <td>${moeda(item.valor)}</td>
+            <td>${dataFormatada(item.vencimento)}</td>
+
             <td>
               ${
                 item.status === "pago"
@@ -1270,8 +1491,12 @@
                   : '<span class="badge badge-yellow">Pendente</span>'
               }
             </td>
+
             <td>
-              <button class="btn btn-danger btn-small" onclick="excluirFinanceiro('${item.id}')">
+              <button
+                class="btn btn-danger btn-small"
+                onclick="excluirFinanceiro('${item.id}')"
+              >
                 Excluir
               </button>
             </td>
@@ -1279,36 +1504,39 @@
         `).join("");
       }
 
-      const receber = db.finances
-        .filter(item => item.type === "receber")
-        .reduce((sum, item) => sum + Number(item.value), 0);
+      const receber = banco.financeiro
+        .filter(item => item.tipo === "receber")
+        .reduce((total, item) => total + Number(item.valor), 0);
 
-      const pagar = db.finances
-        .filter(item => item.type === "pagar")
-        .reduce((sum, item) => sum + Number(item.value), 0);
+      const pagar = banco.financeiro
+        .filter(item => item.tipo === "pagar")
+        .reduce((total, item) => total + Number(item.valor), 0);
 
       const resultado = receber - pagar;
 
       document.getElementById("dre-summary").innerHTML = `
-        <div class="cards" style="margin-bottom:0; grid-template-columns: repeat(3, 1fr);">
+        <div class="cards" style="grid-template-columns:repeat(3,1fr); margin:0;">
           <div class="card">
             <div class="indicator-title">Total a receber</div>
             <div class="indicator-value" style="color:var(--success);">
-              ${formatarMoeda(receber)}
+              ${moeda(receber)}
             </div>
           </div>
 
           <div class="card">
             <div class="indicator-title">Total a pagar</div>
             <div class="indicator-value" style="color:var(--danger);">
-              ${formatarMoeda(pagar)}
+              ${moeda(pagar)}
             </div>
           </div>
 
           <div class="card">
             <div class="indicator-title">Resultado simplificado</div>
-            <div class="indicator-value" style="color:${resultado >= 0 ? "var(--success)" : "var(--danger)"};">
-              ${formatarMoeda(resultado)}
+            <div
+              class="indicator-value"
+              style="color:${resultado >= 0 ? "var(--success)" : "var(--danger)"};"
+            >
+              ${moeda(resultado)}
             </div>
           </div>
         </div>
@@ -1316,51 +1544,56 @@
     }
 
     function renderizarGarantias() {
-      const alertBox = document.getElementById("warranty-alerts");
+      const caixa = document.getElementById("warranty-alerts");
       const garantias = [];
 
-      db.orders.forEach(pedido => {
-        const cliente = obterCliente(pedido.clientId);
+      banco.vendas.forEach(venda => {
+        const cliente = obterCliente(venda.clienteId);
 
-        pedido.items.forEach(item => {
-          if (item.warrantyActive) {
-            const produto = obterProduto(item.productId);
+        venda.itens.forEach(item => {
+          if (!item.garantiaAtiva) return;
 
-            garantias.push({
-              cliente,
-              produto,
-              pedido,
-              item
-            });
-          }
+          const produto = obterProduto(item.produtoId);
+
+          garantias.push({
+            venda,
+            item,
+            cliente,
+            produto
+          });
         });
       });
 
       if (!garantias.length) {
-        alertBox.innerHTML =
-          '<div class="empty">Nenhuma pendência de garantia ativa.</div>';
+        caixa.innerHTML = `
+          <div class="empty">
+            Nenhuma garantia ativa.
+          </div>
+        `;
         return;
       }
 
-      alertBox.innerHTML = garantias.map(garantia => `
+      caixa.innerHTML = garantias.map(garantia => `
         <div class="alert-item">
           <strong>
-            Pendência: peça ${escaparHTML(garantia.produto?.name || "Produto")}
+            Pendência: ${htmlSeguro(garantia.produto?.nome || "Produto")}
           </strong>
 
           <div>
-            Cliente: ${escaparHTML(garantia.cliente?.name || "Cliente")}
+            Cliente:
+            ${htmlSeguro(garantia.cliente?.nome || "Cliente")}
           </div>
 
-          <div style="font-size:13px; margin-top:5px;">
-            Pedido realizado em ${formatarData(garantia.pedido.date)}
+          <div style="margin-top:5px; font-size:13px;">
+            Venda realizada em ${dataFormatada(garantia.venda.data)}
           </div>
 
           <div class="actions" style="margin-top:9px;">
             <span class="badge badge-green">Garantia ativa</span>
+
             <button
               class="btn btn-success btn-small"
-              onclick="finalizarGarantia('${garantia.pedido.id}', '${garantia.item.id}')"
+              onclick="finalizarGarantia('${garantia.venda.id}', '${garantia.item.id}')"
             >
               Finalizar garantia
             </button>
@@ -1370,13 +1603,15 @@
     }
 
     function renderizarAniversarios() {
-      const box = document.getElementById("birthday-alerts");
+      const caixa = document.getElementById("birthday-alerts");
       const hoje = new Date();
 
-      const aniversarios = db.clients.filter(cliente => {
-        if (!cliente.birthday) return false;
+      const aniversariantes = banco.clientes.filter(cliente => {
+        if (!cliente.aniversario) return false;
 
-        const nascimento = new Date(cliente.birthday + "T00:00:00");
+        const nascimento = new Date(
+          cliente.aniversario + "T00:00:00"
+        );
 
         return (
           nascimento.getDate() === hoje.getDate() &&
@@ -1384,243 +1619,828 @@
         );
       });
 
-      if (!aniversarios.length) {
-        box.innerHTML =
-          '<div class="empty">Nenhum aniversário hoje.</div>';
+      if (!aniversariantes.length) {
+        caixa.innerHTML = `
+          <div class="empty">
+            Nenhum aniversário hoje.
+          </div>
+        `;
         return;
       }
 
-      box.innerHTML = aniversarios.map(cliente => `
-        <div class="alert-item" style="border-left-color:var(--success); background:var(--success-bg);">
-          <strong>Aniversário de ${escaparHTML(cliente.name)}</strong>
-          <div>Hoje é uma boa oportunidade para fortalecer o relacionamento.</div>
+      caixa.innerHTML = aniversariantes.map(cliente => `
+        <div
+          class="alert-item"
+          style="
+            border-left-color:var(--success);
+            background:var(--success-bg);
+          "
+        >
+          <strong>
+            Aniversário de ${htmlSeguro(cliente.nome)}
+          </strong>
 
-          <div class="actions" style="margin-top:9px;">
-            ${
-              cliente.phone
-                ? `<button class="btn btn-success btn-small" onclick="enviarParabens('${cliente.id}')">Enviar parabéns</button>`
-                : '<span class="badge badge-gray">Sem telefone cadastrado</span>'
-            }
+          <div>
+            Cliente aniversariante hoje.
           </div>
+
+          ${
+            cliente.telefone
+              ? `
+                <button
+                  class="btn btn-success btn-small"
+                  style="margin-top:9px;"
+                  onclick="enviarParabens('${cliente.id}')"
+                >
+                  Enviar parabéns
+                </button>
+              `
+              : `
+                <span class="badge badge-gray" style="margin-top:9px;">
+                  Sem telefone cadastrado
+                </span>
+              `
+          }
         </div>
       `).join("");
     }
 
-    /* ===== CURVA ABC ===== */
+    function renderizarABCProdutos() {
+      const tabela = document.getElementById("abc-products-table");
+      const analise = analiseProdutosGeral();
 
-    function classificarABC(acumuladoAnterior) {
-      if (acumuladoAnterior < 80) return "A";
-      if (acumuladoAnterior < 95) return "B";
-      return "C";
-    }
-
-    function classeBadgeABC(classe) {
-      if (classe === "A") return "badge-green";
-      if (classe === "B") return "badge-yellow";
-      return "badge-red";
-    }
-
-    function renderizarCurvaABC() {
-      const tbody = document.getElementById("abc-table");
-      const vendas = {};
-
-      db.orders.forEach(pedido => {
-        pedido.items.forEach(item => {
-          const produto = obterProduto(item.productId);
-          if (!produto) return;
-
-          if (!vendas[item.productId]) {
-            vendas[item.productId] = { produto, quantidade: 0, valor: 0 };
-          }
-
-          vendas[item.productId].quantidade += Number(item.quantity);
-          vendas[item.productId].valor += Number(item.quantity) * Number(produto.price);
-        });
-      });
-
-      const ranking = Object.values(vendas).sort((a, b) => b.valor - a.valor);
-      const totalValor = ranking.reduce((soma, item) => soma + item.valor, 0);
-
-      if (!ranking.length) {
-        tbody.innerHTML =
-          '<tr><td colspan="5" class="empty">Lance pedidos para gerar a curva ABC.</td></tr>';
-        return;
-      }
-
-      let acumulado = 0;
-
-      tbody.innerHTML = ranking.map(item => {
-        const participacao = totalValor ? (item.valor / totalValor) * 100 : 0;
-        const classe = classificarABC(acumulado);
-        acumulado += participacao;
-
-        return `
+      if (!analise.length) {
+        tabela.innerHTML = `
           <tr>
-            <td><span class="badge ${classeBadgeABC(classe)}">${classe}</span></td>
-            <td>${escaparHTML(item.produto.name)}</td>
-            <td>${item.quantidade} un. | ${formatarMoeda(item.valor)}</td>
-            <td>${participacao.toFixed(1)}%</td>
-            <td>
-              <div class="abc-bar">
-                <span style="width:${Math.min(participacao * 4, 100)}%;"></span>
-              </div>
+            <td colspan="6" class="empty">
+              Cadastre produtos e lance vendas para gerar a análise.
             </td>
           </tr>
         `;
-      }).join("");
-    }
-
-    function renderizarCurvaABCClientes() {
-      const tbody = document.getElementById("abc-clients-table");
-      const compras = {};
-
-      db.orders.forEach(pedido => {
-        const cliente = obterCliente(pedido.clientId);
-        if (!cliente) return;
-
-        if (!compras[cliente.id]) {
-          compras[cliente.id] = { cliente, pedidos: 0, valor: 0 };
-        }
-
-        compras[cliente.id].pedidos += 1;
-        compras[cliente.id].valor += calcularTotalPedido(pedido);
-      });
-
-      const ranking = Object.values(compras).sort((a, b) => b.valor - a.valor);
-      const totalValor = ranking.reduce((soma, item) => soma + item.valor, 0);
-
-      if (!ranking.length) {
-        tbody.innerHTML =
-          '<tr><td colspan="6" class="empty">Lance pedidos para gerar a curva ABC de clientes.</td></tr>';
         return;
       }
 
-      let acumulado = 0;
+      tabela.innerHTML = analise.map(item => `
+        <tr>
+          <td>
+            <span class="badge ${classeABC(item.classe)}">
+              ${item.classe}
+            </span>
+          </td>
 
-      tbody.innerHTML = ranking.map(item => {
-        const participacao = totalValor ? (item.valor / totalValor) * 100 : 0;
-        const classe = classificarABC(acumulado);
-        acumulado += participacao;
+          <td>
+            <strong>${htmlSeguro(item.produto.nome)}</strong>
+            <br />
+            <small>${htmlSeguro(item.produto.codigoInterno)}</small>
+          </td>
 
-        return `
+          <td>${item.quantidade}</td>
+          <td>${moeda(item.faturamento)}</td>
+          <td>${item.participacao.toFixed(1)}%</td>
+          <td>${statusDemanda(item)}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderizarABCClientes() {
+      const tabela = document.getElementById("abc-clients-table");
+      const analise = analiseClientesGeral();
+
+      if (!analise.length) {
+        tabela.innerHTML = `
           <tr>
-            <td><span class="badge ${classeBadgeABC(classe)}">${classe}</span></td>
-            <td>${escaparHTML(item.cliente.name)}</td>
-            <td>${item.pedidos}</td>
-            <td>${formatarMoeda(item.valor)}</td>
-            <td>${participacao.toFixed(1)}%</td>
-            <td>
-              <div class="abc-bar">
-                <span style="width:${Math.min(participacao * 4, 100)}%;"></span>
-              </div>
+            <td colspan="6" class="empty">
+              Cadastre clientes e lance vendas para gerar a análise.
             </td>
           </tr>
         `;
-      }).join("");
+        return;
+      }
+
+      tabela.innerHTML = analise.map(item => `
+        <tr>
+          <td>
+            <span class="badge ${classeABC(item.classe)}">
+              ${item.classe}
+            </span>
+          </td>
+
+          <td>${htmlSeguro(item.cliente.nome)}</td>
+          <td>${item.pedidos}</td>
+          <td>${item.produtosPedidos}</td>
+          <td>${moeda(item.faturamento)}</td>
+          <td>${item.participacao.toFixed(1)}%</td>
+        </tr>
+      `).join("");
     }
 
-    function renderizarAnalises() {
-      const lista = document.getElementById("decision-analysis");
+    function renderizarProdutosMenosPedidos() {
+      const tabela = document.getElementById("low-demand-table");
+      const analise = analiseProdutosGeral().sort(
+        (a, b) => a.quantidade - b.quantidade
+      );
 
-      const totalVendas = db.orders.length;
-      const vendasDigitais = db.orders.filter(
-        pedido => pedido.channel === "Digital" || pedido.channel === "WhatsApp"
+      if (!analise.length) {
+        tabela.innerHTML = `
+          <tr>
+            <td colspan="4" class="empty">
+              Nenhum produto cadastrado.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      tabela.innerHTML = analise.map(item => `
+        <tr>
+          <td>${htmlSeguro(item.produto.nome)}</td>
+          <td><strong>${item.quantidade}</strong></td>
+          <td>${item.clientes}</td>
+          <td>${statusDemanda(item)}</td>
+        </tr>
+      `).join("");
+    }
+
+    function renderizarAnaliseGeral() {
+      const caixa = document.getElementById("general-analysis");
+      const analise = analiseProdutosGeral();
+
+      const nuncaPedidos = analise.filter(
+        item => item.quantidade === 0
       ).length;
 
-      const ticketMedio = totalVendas
-        ? db.orders.reduce((sum, pedido) => sum + calcularTotalPedido(pedido), 0) / totalVendas
-        : 0;
+      const baixaDemanda = analise.filter(
+        item => item.quantidade > 0 && item.quantidade <= 5
+      ).length;
 
-      const produtosSemVenda = db.products.filter(produto => {
-        return !db.orders.some(pedido =>
-          pedido.items.some(item => item.productId === produto.id)
-        );
-      });
+      const produtosClasseA = analise.filter(
+        item => item.classe === "A"
+      );
 
-      const clientesSemCompra = db.clients.filter(cliente => {
-        return !db.orders.some(pedido => pedido.clientId === cliente.id);
-      });
+      const produtoMaisPedido = [...analise].sort(
+        (a, b) => b.quantidade - a.quantidade
+      )[0];
 
-      lista.innerHTML = `
-        <li><strong>Ticket médio atual:</strong> ${formatarMoeda(ticketMedio)}.</li>
-        <li><strong>Vendas digitais:</strong> ${vendasDigitais} de ${totalVendas} pedidos.</li>
-        <li><strong>Produtos sem venda registrada:</strong> ${produtosSemVenda.length}.</li>
-        <li><strong>Clientes sem pedido registrado:</strong> ${clientesSemCompra.length}.</li>
-        <li><strong>Garantias ativas:</strong> ${contarGarantiasAtivas()}.</li>
+      const produtoMenosPedido = [...analise].sort(
+        (a, b) => a.quantidade - b.quantidade
+      )[0];
+
+      caixa.innerHTML = `
+        <ul>
+          <li>
+            <strong>Produtos nunca pedidos:</strong>
+            ${nuncaPedidos}.
+          </li>
+
+          <li>
+            <strong>Produtos com baixa demanda:</strong>
+            ${baixaDemanda}.
+          </li>
+
+          <li>
+            <strong>Produtos na curva A:</strong>
+            ${produtosClasseA.length}.
+          </li>
+
+          <li>
+            <strong>Produto mais pedido:</strong>
+            ${
+              produtoMaisPedido
+                ? `${htmlSeguro(produtoMaisPedido.produto.nome)}
+                   (${produtoMaisPedido.quantidade} unidades)`
+                : "Nenhum"
+            }.
+          </li>
+
+          <li>
+            <strong>Produto menos pedido:</strong>
+            ${
+              produtoMenosPedido
+                ? `${htmlSeguro(produtoMenosPedido.produto.nome)}
+                   (${produtoMenosPedido.quantidade} unidades)`
+                : "Nenhum"
+            }.
+          </li>
+        </ul>
       `;
     }
 
-    function contarGarantiasAtivas() {
-      let total = 0;
+    /*
+      ABRE O PERFIL DO CLIENTE.
 
-      db.orders.forEach(pedido => {
-        pedido.items.forEach(item => {
-          if (item.warrantyActive) total++;
-        });
-      });
-
-      return total;
-    }
-
-    /* ===== CLIENTE / TIMELINE ===== */
-
-    function verDetalhesCliente(clienteId) {
+      É dentro desta tela que a venda é lançada.
+      O painel de produtos continua existindo separadamente
+      na aba "Produtos".
+    */
+    function abrirPerfilCliente(clienteId, abrirModal = true) {
       const cliente = obterCliente(clienteId);
 
       if (!cliente) return;
 
-      const pedidos = db.orders.filter(pedido => pedido.clientId === clienteId);
+      clienteAbertoId = clienteId;
 
-      document.getElementById("modal-client-name").textContent =
-        cliente.name;
+      const vendasCliente = banco.vendas.filter(
+        venda => venda.clienteId === clienteId
+      );
 
-      const timeline = cliente.timeline || [];
+      const analiseGeral = analiseProdutosGeral();
 
-      document.getElementById("client-details").innerHTML = `
-        <div class="card" style="box-shadow:none; margin-bottom:18px;">
-          <p><strong>Telefone:</strong> ${escaparHTML(cliente.phone || "-")}</p>
-          <p><strong>Aniversário:</strong> ${formatarData(cliente.birthday)}</p>
-          <p><strong>Empresa/cidade:</strong> ${escaparHTML(cliente.company || "-")}</p>
-          <p><strong>Observações:</strong> ${escaparHTML(cliente.notes || "-")}</p>
-          <p><strong>Total de pedidos:</strong> ${pedidos.length}</p>
+      const produtosComprados = banco.produtos.filter(produto =>
+        vendasCliente.some(venda =>
+          venda.itens.some(item => item.produtoId === produto.id)
+        )
+      );
+
+      const produtosNaoComprados = analiseGeral.filter(item =>
+        item.classe !== "C" &&
+        quantidadeProdutoCliente(clienteId, item.produto.id) === 0
+      );
+
+      const quantidadeTotalGeral = banco.clientes.length || 1;
+
+      const produtosAbaixoDaMedia = analiseGeral.filter(item => {
+        const quantidadeCliente = quantidadeProdutoCliente(
+          clienteId,
+          item.produto.id
+        );
+
+        const mediaPorCliente = item.quantidade / quantidadeTotalGeral;
+
+        return (
+          quantidadeCliente > 0 &&
+          quantidadeCliente < mediaPorCliente
+        );
+      });
+
+      const produtosParaVenda = banco.produtos;
+
+      document.getElementById("client-modal-title").textContent =
+        `Perfil do cliente: ${cliente.nome}`;
+
+      document.getElementById("client-profile-content").innerHTML = `
+        <div class="profile-header">
+          <div class="profile-info">
+            <strong>Cliente</strong>
+            <div>${htmlSeguro(cliente.nome)}</div>
+          </div>
+
+          <div class="profile-info">
+            <strong>Telefone</strong>
+            <div>${htmlSeguro(cliente.telefone || "-")}</div>
+          </div>
+
+          <div class="profile-info">
+            <strong>Total comprado</strong>
+            <div>
+              ${moeda(
+                vendasCliente.reduce(
+                  (total, venda) => total + totalVenda(venda),
+                  0
+                )
+              )}
+            </div>
+          </div>
         </div>
 
-        <h3 style="margin-bottom:12px;">Timeline do cliente</h3>
+        <div class="form-card" style="box-shadow:none; margin-bottom:20px;">
+          <h3 class="sub-title">Lançar venda para este cliente</h3>
 
-        ${
-          timeline.length
-            ? `<div class="timeline">
-                ${timeline.map(item => `
-                  <div class="timeline-item">
-                    <strong>${escaparHTML(item.tipo)}</strong>
-                    <div style="margin-top:4px;">${escaparHTML(item.descricao)}</div>
-                    <small style="display:block; margin-top:7px; color:var(--muted);">
-                      ${new Date(item.data).toLocaleString("pt-BR")}
-                    </small>
+          <form id="sale-form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Vendedor</label>
+                <input id="sale-seller" required />
+              </div>
+
+              <div class="form-group">
+                <label>Canal da venda</label>
+                <select id="sale-channel">
+                  <option value="Presencial">Presencial</option>
+                  <option value="WhatsApp">WhatsApp</option>
+                  <option value="Telefone">Telefone</option>
+                  <option value="E-mail">E-mail</option>
+                </select>
+              </div>
+
+              <div class="form-group full">
+                <label>Observação da venda</label>
+                <input id="sale-notes" />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Selecione os produtos vendidos</label>
+
+              <div id="sale-products-list">
+                ${
+                  produtosParaVenda.length
+                    ? produtosParaVenda.map(produto => `
+                      <div class="product-sale-row">
+                        <label style="font-weight:normal;">
+                          <input
+                            type="checkbox"
+                            class="sale-product-check"
+                            value="${produto.id}"
+                            style="width:auto; margin-right:7px;"
+                          />
+                          ${htmlSeguro(produto.nome)}
+                          <small>
+                            (${htmlSeguro(produto.codigoInterno)})
+                          </small>
+                        </label>
+
+                        <input
+                          type="number"
+                          min="1"
+                          value="1"
+                          class="sale-product-quantity"
+                          data-product-id="${produto.id}"
+                          placeholder="Quantidade"
+                        />
+
+                        <label style="font-weight:normal;">
+                          <input
+                            type="checkbox"
+                            class="sale-product-warranty"
+                            data-product-id="${produto.id}"
+                            style="width:auto; margin-right:5px;"
+                          />
+                          Ativar garantia
+                        </label>
+                      </div>
+                    `).join("")
+                    : `
+                      <div class="empty">
+                        Cadastre produtos antes de lançar uma venda.
+                      </div>
+                    `
+                }
+              </div>
+            </div>
+
+            ${
+              produtosParaVenda.length
+                ? `
+                  <button class="btn btn-primary">
+                    Salvar venda para ${htmlSeguro(cliente.nome)}
+                  </button>
+                `
+                : ""
+            }
+          </form>
+        </div>
+
+        <div class="grid-2">
+          <div class="table-card" style="box-shadow:none;">
+            <h3 class="sub-title">
+              Curva ABC geral x este cliente
+            </h3>
+
+            <p class="empty">
+              Produtos da curva A e B que este cliente ainda não pediu.
+            </p>
+
+            ${
+              produtosNaoComprados.length
+                ? `
+                  <div class="table-wrapper">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>ABC</th>
+                          <th>Produto</th>
+                          <th>Total geral</th>
+                          <th>Situação</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        ${produtosNaoComprados.map(item => `
+                          <tr>
+                            <td>
+                              <span class="badge ${classeABC(item.classe)}">
+                                ${item.classe}
+                              </span>
+                            </td>
+
+                            <td>${htmlSeguro(item.produto.nome)}</td>
+                            <td>${item.quantidade}</td>
+                            <td>
+                              <span class="badge badge-red">
+                                Não pediu
+                              </span>
+                            </td>
+                          </tr>
+                        `).join("")}
+                      </tbody>
+                    </table>
                   </div>
-                `).join("")}
-              </div>`
-            : '<div class="empty">Nenhum evento registrado ainda.</div>'
-        }
+                `
+                : `
+                  <div class="empty">
+                    Este cliente já pediu todos os produtos relevantes
+                    da curva A e B.
+                  </div>
+                `
+            }
+          </div>
+
+          <div class="table-card" style="box-shadow:none;">
+            <h3 class="sub-title">
+              Produtos abaixo da média geral
+            </h3>
+
+            <p class="empty">
+              Produtos que o cliente já pediu, mas em quantidade inferior
+              à média por cliente.
+            </p>
+
+            ${
+              produtosAbaixoDaMedia.length
+                ? `
+                  <div class="table-wrapper">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Produto</th>
+                          <th>Cliente</th>
+                          <th>Média geral</th>
+                          <th>Situação</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        ${produtosAbaixoDaMedia.map(item => {
+                          const quantidadeCliente =
+                            quantidadeProdutoCliente(
+                              clienteId,
+                              item.produto.id
+                            );
+
+                          const media =
+                            item.quantidade / quantidadeTotalGeral;
+
+                          return `
+                            <tr>
+                              <td>${htmlSeguro(item.produto.nome)}</td>
+                              <td>${quantidadeCliente}</td>
+                              <td>${media.toFixed(1)}</td>
+                              <td>
+                                <span class="badge badge-yellow">
+                                  Abaixo da média
+                                </span>
+                              </td>
+                            </tr>
+                          `;
+                        }).join("")}
+                      </tbody>
+                    </table>
+                  </div>
+                `
+                : `
+                  <div class="empty">
+                    Nenhum produto abaixo da média geral.
+                  </div>
+                `
+            }
+          </div>
+        </div>
+
+        <div class="table-card" style="box-shadow:none;">
+          <h3 class="sub-title">
+            Produtos comprados por este cliente
+          </h3>
+
+          <div class="table-wrapper">
+            <table>
+              <thead>
+                <tr>
+                  <th>Produto</th>
+                  <th>Quantidade total</th>
+                  <th>Garantia ativa</th>
+                  <th>Histórico</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                ${
+                  produtosComprados.length
+                    ? produtosComprados.map(produto => {
+                      const quantidade =
+                        quantidadeProdutoCliente(
+                          clienteId,
+                          produto.id
+                        );
+
+                      const garantiaAtiva =
+                        banco.vendas.some(venda =>
+                          venda.clienteId === clienteId &&
+                          venda.itens.some(item =>
+                            item.produtoId === produto.id &&
+                            item.garantiaAtiva
+                          )
+                        );
+
+                      return `
+                        <tr>
+                          <td>${htmlSeguro(produto.nome)}</td>
+                          <td>${quantidade}</td>
+                          <td>
+                            ${
+                              garantiaAtiva
+                                ? '<span class="badge badge-green">Ativa</span>'
+                                : '<span class="badge badge-gray">Inativa</span>'
+                            }
+                          </td>
+                          <td>
+                            <button
+                              class="btn btn-outline btn-small"
+                              onclick="verHistoricoProdutoCliente(
+                                '${clienteId}',
+                                '${produto.id}'
+                              )"
+                            >
+                              Ver timeline
+                            </button>
+                          </td>
+                        </tr>
+                      `;
+                    }).join("")
+                    : `
+                      <tr>
+                        <td colspan="4" class="empty">
+                          Este cliente ainda não possui compras.
+                        </td>
+                      </tr>
+                    `
+                }
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="table-card" style="box-shadow:none;">
+          <h3 class="sub-title">Timeline do cliente</h3>
+
+          ${
+            cliente.timeline?.length
+              ? `
+                <div class="timeline">
+                  ${cliente.timeline.map(evento => `
+                    <div class="timeline-item">
+                      <strong>${htmlSeguro(evento.tipo)}</strong>
+                      <div style="margin-top:5px;">
+                        ${htmlSeguro(evento.descricao)}
+                      </div>
+                      <small
+                        style="
+                          display:block;
+                          margin-top:7px;
+                          color:var(--muted);
+                        "
+                      >
+                        ${dataHoraFormatada(evento.data)}
+                      </small>
+                    </div>
+                  `).join("")}
+                </div>
+              `
+              : `
+                <div class="empty">
+                  Nenhum evento registrado.
+                </div>
+              `
+          }
+        </div>
       `;
 
-      document.getElementById("client-modal").classList.add("open");
+      document
+        .getElementById("sale-form")
+        ?.addEventListener("submit", event => {
+          event.preventDefault();
+          salvarVendaDentroDoCliente(clienteId);
+        });
+
+      if (abrirModal) {
+        document.getElementById("client-modal").classList.add("open");
+      }
     }
 
-    function fecharModal() {
+    function salvarVendaDentroDoCliente(clienteId) {
+      const cliente = obterCliente(clienteId);
+
+      if (!cliente) return;
+
+      const vendedor = document.getElementById("sale-seller").value.trim();
+      const canal = document.getElementById("sale-channel").value;
+      const observacao = document.getElementById("sale-notes").value.trim();
+
+      const selecionados = Array.from(
+        document.querySelectorAll(".sale-product-check:checked")
+      );
+
+      if (!vendedor) {
+        mostrarAviso("Informe o vendedor.");
+        return;
+      }
+
+      if (!selecionados.length) {
+        mostrarAviso("Selecione pelo menos um produto.");
+        return;
+      }
+
+      const itens = selecionados.map(selecionado => {
+        const produtoId = selecionado.value;
+
+        const campoQuantidade = document.querySelector(
+          `.sale-product-quantity[data-product-id="${produtoId}"]`
+        );
+
+        const campoGarantia = document.querySelector(
+          `.sale-product-warranty[data-product-id="${produtoId}"]`
+        );
+
+        const quantidade = Math.max(
+          1,
+          Number(campoQuantidade.value) || 1
+        );
+
+        return {
+          id: id("item"),
+          produtoId,
+          quantidade,
+          garantiaAtiva: campoGarantia.checked,
+          garantiaAtivadaEm: campoGarantia.checked
+            ? new Date().toISOString()
+            : null
+        };
+      });
+
+      const venda = {
+        id: id("venda"),
+        clienteId,
+        vendedor,
+        canal,
+        observacao,
+        data: dataAtual(),
+        criadoEm: new Date().toISOString(),
+        itens
+      };
+
+      banco.vendas.unshift(venda);
+
+      adicionarTimeline(
+        clienteId,
+        "Venda lançada",
+        `Venda lançada pelo vendedor ${vendedor}, pelo canal ${canal}.`,
+        { vendaId: venda.id }
+      );
+
+      itens.forEach(item => {
+        if (!item.garantiaAtiva) return;
+
+        const produto = obterProduto(item.produtoId);
+
+        adicionarTimeline(
+          clienteId,
+          "Garantia ativada",
+          `Garantia ativada para ${produto?.nome || "produto"}.`,
+          {
+            vendaId: venda.id,
+            produtoId: item.produtoId
+          }
+        );
+      });
+
+      salvar();
+      renderizarTudo();
+
+      mostrarAviso("Venda lançada com sucesso.");
+    }
+
+    function verHistoricoProdutoCliente(clienteId, produtoId) {
+      const cliente = obterCliente(clienteId);
+      const produto = obterProduto(produtoId);
+
+      if (!cliente || !produto) return;
+
+      const vendas = banco.vendas.filter(venda =>
+        venda.clienteId === clienteId &&
+        venda.itens.some(item => item.produtoId === produtoId)
+      );
+
+      const eventos = [];
+
+      vendas.forEach(venda => {
+        const item = venda.itens.find(
+          itemVenda => itemVenda.produtoId === produtoId
+        );
+
+        eventos.push(`
+          <div class="timeline-item">
+            <strong>Venda de produto</strong>
+            <div style="margin-top:5px;">
+              ${item.quantidade} unidade(s) de
+              ${htmlSeguro(produto.nome)}
+            </div>
+            <div style="margin-top:5px;">
+              Vendedor: ${htmlSeguro(venda.vendedor)}
+            </div>
+            <div style="margin-top:5px;">
+              ${
+                item.garantiaAtiva
+                  ? '<span class="badge badge-green">Garantia ativa</span>'
+                  : '<span class="badge badge-gray">Garantia inativa</span>'
+              }
+            </div>
+            <small
+              style="
+                display:block;
+                margin-top:7px;
+                color:var(--muted);
+              "
+            >
+              ${dataFormatada(venda.data)}
+            </small>
+          </div>
+        `);
+      });
+
+      const conteudo = `
+        <div class="modal open" style="z-index:30;">
+          <div class="modal-content" style="max-width:700px;">
+            <div class="modal-header">
+              <h2>
+                Histórico: ${htmlSeguro(produto.nome)}
+              </h2>
+
+              <button
+                class="close"
+                onclick="this.closest('.modal').remove()"
+              >
+                &times;
+              </button>
+            </div>
+
+            <div class="timeline">
+              ${
+                eventos.length
+                  ? eventos.join("")
+                  : '<div class="empty">Nenhum lançamento.</div>'
+              }
+            </div>
+          </div>
+        </div>
+      `;
+
+      document.body.insertAdjacentHTML("beforeend", conteudo);
+    }
+
+    function fecharModalCliente() {
       document.getElementById("client-modal").classList.remove("open");
+      clienteAbertoId = null;
+    }
+
+    function finalizarGarantia(vendaId, itemId) {
+      const venda = banco.vendas.find(vendaItem => vendaItem.id === vendaId);
+
+      if (!venda) return;
+
+      const item = venda.itens.find(itemVenda => itemVenda.id === itemId);
+
+      if (!item) return;
+
+      item.garantiaAtiva = false;
+      item.garantiaFinalizadaEm = new Date().toISOString();
+
+      const produto = obterProduto(item.produtoId);
+
+      adicionarTimeline(
+        venda.clienteId,
+        "Garantia finalizada",
+        `Garantia finalizada para ${produto?.nome || "produto"}.`,
+        {
+          vendaId,
+          produtoId: item.produtoId
+        }
+      );
+
+      salvar();
+      renderizarTudo();
     }
 
     function enviarWhatsApp(clienteId) {
       const cliente = obterCliente(clienteId);
 
-      if (!cliente?.phone) {
-        mostrarAviso("Este cliente não possui telefone cadastrado.");
+      if (!cliente?.telefone) {
+        mostrarAviso("Este cliente não possui telefone.");
         return;
       }
 
-      const telefone = cliente.phone.replace(/\D/g, "");
-      const mensagem = `Olá, ${cliente.name}! Entramos em contato para falar sobre seu atendimento.`;
+      const telefone = cliente.telefone.replace(/\D/g, "");
+
+      const mensagem =
+        `Olá, ${cliente.nome}! Entramos em contato para falar sobre seu atendimento.`;
 
       window.open(
         `https://wa.me/55${telefone}?text=${encodeURIComponent(mensagem)}`,
@@ -1631,14 +2451,15 @@
     function enviarParabens(clienteId) {
       const cliente = obterCliente(clienteId);
 
-      if (!cliente?.phone) {
-        mostrarAviso("Este cliente não possui telefone cadastrado.");
+      if (!cliente?.telefone) {
+        mostrarAviso("Este cliente não possui telefone.");
         return;
       }
 
-      const telefone = cliente.phone.replace(/\D/g, "");
+      const telefone = cliente.telefone.replace(/\D/g, "");
+
       const mensagem =
-        `Olá, ${cliente.name}! Desejamos a você um feliz aniversário, com muita saúde, felicidade e sucesso!`;
+        `Olá, ${cliente.nome}! Desejamos a você um feliz aniversário, com muita saúde, felicidade e sucesso!`;
 
       window.open(
         `https://wa.me/55${telefone}?text=${encodeURIComponent(mensagem)}`,
@@ -1651,76 +2472,60 @@
         "Mensagem de parabéns preparada para envio pelo WhatsApp."
       );
 
-      salvarDados();
+      salvar();
       renderizarTudo();
     }
 
-    function finalizarGarantia(pedidoId, itemId) {
-      const pedido = db.orders.find(item => item.id === pedidoId);
-
-      if (!pedido) return;
-
-      const item = pedido.items.find(item => item.id === itemId);
-
-      if (!item) return;
-
-      item.warrantyActive = false;
-      item.warrantyFinishedAt = new Date().toISOString();
-
-      adicionarTimeline(
-        pedido.clientId,
-        "Garantia finalizada",
-        `Garantia finalizada para o produto ${obterProduto(item.productId)?.name || ""}.`
-      );
-
-      salvarDados();
-      renderizarTudo();
-    }
-
-    /* ===== EXCLUSÕES ===== */
-
-    function excluirCliente(id) {
+    function excluirCliente(clienteId) {
       if (!confirm("Deseja excluir este cliente?")) return;
 
-      db.clients = db.clients.filter(cliente => cliente.id !== id);
-      salvarDados();
+      banco.clientes = banco.clientes.filter(
+        cliente => cliente.id !== clienteId
+      );
+
+      banco.vendas = banco.vendas.filter(
+        venda => venda.clienteId !== clienteId
+      );
+
+      salvar();
       renderizarTudo();
     }
 
-    function excluirProduto(id) {
+    function excluirProduto(produtoId) {
       if (!confirm("Deseja excluir este produto?")) return;
 
-      db.products = db.products.filter(produto => produto.id !== id);
-      salvarDados();
+      banco.produtos = banco.produtos.filter(
+        produto => produto.id !== produtoId
+      );
+
+      salvar();
       renderizarTudo();
     }
 
-    function excluirFornecedor(id) {
+    function excluirFornecedor(fornecedorId) {
       if (!confirm("Deseja excluir este fornecedor?")) return;
 
-      db.suppliers = db.suppliers.filter(fornecedor => fornecedor.id !== id);
-      salvarDados();
+      banco.fornecedores = banco.fornecedores.filter(
+        fornecedor => fornecedor.id !== fornecedorId
+      );
+
+      salvar();
       renderizarTudo();
     }
 
-    function excluirPedido(id) {
-      if (!confirm("Deseja excluir este pedido?")) return;
-
-      db.orders = db.orders.filter(pedido => pedido.id !== id);
-      salvarDados();
-      renderizarTudo();
-    }
-
-    function excluirFinanceiro(id) {
+    function excluirFinanceiro(financeiroId) {
       if (!confirm("Deseja excluir este lançamento?")) return;
 
-      db.finances = db.finances.filter(item => item.id !== id);
-      salvarDados();
+      banco.financeiro = banco.financeiro.filter(
+        item => item.id !== financeiroId
+      );
+
+      salvar();
       renderizarTudo();
     }
 
-    function resetarDados() {
-      if (!confirm("Todos os dados deste navegador serão apagados. Continuar?")) {
+    function limparDados() {
+      if (!confirm("Deseja apagar todos os dados deste navegador?")) {
         return;
       }
 
@@ -1728,380 +2533,388 @@
       location.reload();
     }
 
-    /* ===== DADOS FICTÍCIOS ===== */
-
     function escolherPonderado(lista) {
-      const total = lista.reduce((soma, item) => soma + item.peso, 0);
+      const total = lista.reduce(
+        (soma, item) => soma + item.peso,
+        0
+      );
+
       let sorteio = Math.random() * total;
 
       for (const item of lista) {
         sorteio -= item.peso;
-        if (sorteio <= 0) return item;
+
+        if (sorteio <= 0) {
+          return item;
+        }
       }
 
       return lista[lista.length - 1];
     }
 
     function carregarDadosFicticios() {
-      if (db.clients.length || db.products.length || db.orders.length) {
-        if (!confirm("Já existem dados cadastrados. Os dados fictícios serão adicionados aos atuais. Continuar?")) {
-          return;
-        }
+      if (
+        banco.clientes.length ||
+        banco.produtos.length ||
+        banco.vendas.length
+      ) {
+        const continuar = confirm(
+          "Já existem dados cadastrados. Deseja adicionar dados fictícios mesmo assim?"
+        );
+
+        if (!continuar) return;
       }
 
       const agora = new Date();
-      const dois = n => String(n).padStart(2, "0");
+      const dois = numero => String(numero).padStart(2, "0");
 
-      // Fornecedores
-      const fornecedores = ["Moto Parts Brasil", "Speed Peças Ltda", "Nordeste Motopeças"].map(nome => ({
-        id: gerarId("fornecedor"),
-        name: nome,
-        phone: "88999990000",
-        document: "00.000.000/0001-00",
-        notes: "Dado fictício",
-        createdAt: agora.toISOString()
+      const fornecedoresFicticios = [
+        "Moto Parts Brasil",
+        "Speed Peças Ltda",
+        "Nordeste Motopeças"
+      ].map(nome => ({
+        id: id("fornecedor"),
+        nome,
+        telefone: "88999990000",
+        documento: "00.000.000/0001-00",
+        observacoes: "Cadastro fictício",
+        criadoEm: agora.toISOString()
       }));
 
-      db.suppliers.push(...fornecedores);
+      banco.fornecedores.push(...fornecedoresFicticios);
 
-      // Produtos: nome, categoria, preço e peso (quanto maior, mais vende)
       const catalogo = [
-        ["Pastilha de freio dianteira", "Freio", 38.9, 30],
-        ["Kit relação completo", "Transmissão", 189.9, 22],
-        ["Vela de ignição", "Motor", 19.9, 20],
-        ["Filtro de óleo", "Motor", 24.5, 16],
-        ["Pneu traseiro 90/90-18", "Pneus", 219.0, 10],
-        ["Amortecedor traseiro", "Suspensão", 245.0, 6],
-        ["Cabo de embreagem", "Controles", 27.5, 5],
-        ["Retrovisor par", "Acessórios", 59.9, 4],
-        ["Bateria 5Ah", "Elétrica", 169.9, 3],
-        ["Lâmpada de farol", "Elétrica", 14.9, 2],
-        ["Corrente de comando", "Motor", 89.9, 1.5],
-        ["Disco de freio", "Freio", 129.9, 1]
+        ["Pastilha de freio dianteira", "Freio", 38.90, 30],
+        ["Kit relação completo", "Transmissão", 189.90, 24],
+        ["Vela de ignição", "Motor", 19.90, 21],
+        ["Filtro de óleo", "Motor", 24.50, 18],
+        ["Pneu traseiro 90/90-18", "Pneus", 219.00, 12],
+        ["Amortecedor traseiro", "Suspensão", 245.00, 8],
+        ["Cabo de embreagem", "Controles", 27.50, 6],
+        ["Retrovisor par", "Acessórios", 59.90, 5],
+        ["Bateria 5Ah", "Elétrica", 169.90, 3],
+        ["Lâmpada de farol", "Elétrica", 14.90, 2],
+        ["Corrente de comando", "Motor", 89.90, 1],
+        ["Disco de freio", "Freio", 129.90, 0.5]
       ];
 
-      const produtos = catalogo.map(([name, category, price, peso], indice) => {
-        const produto = {
-          id: gerarId("produto"),
-          internalCode: gerarCodigoProduto(),
-          name,
-          supplierId: fornecedores[indice % fornecedores.length].id,
-          category,
-          price,
-          createdAt: agora.toISOString()
-        };
+      const produtosFicticios = catalogo.map(
+        ([nome, categoria, preco, peso], indice) => ({
+          id: id("produto"),
+          codigoInterno: gerarCodigoProduto(),
+          nome,
+          categoria,
+          preco,
+          fornecedorId:
+            fornecedoresFicticios[indice % fornecedoresFicticios.length].id,
+          peso,
+          criadoEm: agora.toISOString()
+        })
+      );
 
-        db.products.push(produto);
+      banco.produtos.push(
+        ...produtosFicticios.map(produto => {
+          const copia = { ...produto };
+          delete copia.peso;
+          return copia;
+        })
+      );
 
-        return { ...produto, peso };
-      });
-
-      // Clientes: nome e peso (clientes com peso alto compram mais)
-      const listaClientes = [
-        ["Oficina do Zé", 30], ["Moto Center Silva", 25], ["Auto Moto Cariri", 18],
-        ["Mecânica Rápida", 12], ["Box Moto Peças", 8], ["Garagem do Beto", 6],
-        ["Moto Service Norte", 5], ["Oficina Dois Irmãos", 4], ["Moto Fácil", 3],
-        ["Renato Mototáxi", 2], ["Cleiton Entregas", 1.5], ["Lucas Motoboy", 1]
+      const clientesBase = [
+        ["Oficina do Zé", 30],
+        ["Moto Center Silva", 25],
+        ["Auto Moto Cariri", 18],
+        ["Mecânica Rápida", 12],
+        ["Box Moto Peças", 8],
+        ["Garagem do Beto", 6],
+        ["Moto Service Norte", 5],
+        ["Oficina Dois Irmãos", 4],
+        ["Moto Fácil", 3],
+        ["Renato Mototáxi", 2],
+        ["Cleiton Entregas", 1.5],
+        ["Lucas Motoboy", 1]
       ];
 
-      const clientes = listaClientes.map(([name, peso], indice) => {
-        const nascimento = indice === 0
-          ? `1985-${dois(agora.getMonth() + 1)}-${dois(agora.getDate())}`
-          : `1990-${dois((indice % 12) + 1)}-${dois((indice % 27) + 1)}`;
+      const clientesFicticios = clientesBase.map(
+        ([nome, peso], indice) => {
+          const aniversario = indice === 0
+            ? `${1985}-${dois(agora.getMonth() + 1)}-${dois(agora.getDate())}`
+            : `1990-${dois((indice % 12) + 1)}-${dois((indice % 27) + 1)}`;
 
-        const cliente = {
-          id: gerarId("cliente"),
-          name,
-          phone: "88999991111",
-          birthday: nascimento,
-          company: "Juazeiro do Norte",
-          notes: "Cliente fictício",
-          createdAt: agora.toISOString(),
-          timeline: [{
-            id: gerarId("timeline"),
-            data: agora.toISOString(),
-            tipo: "Cliente cadastrado",
-            descricao: "Cadastro inicial (dado fictício)."
-          }]
-        };
+          const cliente = {
+            id: id("cliente"),
+            nome,
+            telefone: "88999991111",
+            aniversario,
+            empresa: "Juazeiro do Norte",
+            observacoes: "Cadastro fictício",
+            criadoEm: agora.toISOString(),
+            timeline: [{
+              id: id("timeline"),
+              data: agora.toISOString(),
+              tipo: "Cliente cadastrado",
+              descricao: "Cadastro fictício realizado."
+            }]
+          };
 
-        db.clients.push(cliente);
+          banco.clientes.push(cliente);
 
-        return { id: cliente.id, peso };
-      });
+          return {
+            cliente,
+            peso
+          };
+        }
+      );
 
-      // Pedidos dos últimos 180 dias
       const vendedores = ["Carlos", "Ana", "Roberto"];
-      const canais = ["Presencial", "Digital", "WhatsApp"];
+      const canais = ["Presencial", "WhatsApp", "Telefone"];
 
-      for (let i = 0; i < 90; i++) {
-        const clienteSorteado = escolherPonderado(clientes);
-        const clienteReal = db.clients.find(c => c.id === clienteSorteado.id);
+      for (let contador = 0; contador < 100; contador++) {
+        const clienteEscolhido = escolherPonderado(
+          clientesFicticios.map(item => ({
+            ...item.cliente,
+            peso: item.peso
+          }))
+        );
 
-        const dataPedido = new Date(agora);
-        dataPedido.setDate(dataPedido.getDate() - Math.floor(Math.random() * 180));
+        const cliente = obterCliente(clienteEscolhido.id);
 
-        const dataTexto = `${dataPedido.getFullYear()}-${dois(dataPedido.getMonth() + 1)}-${dois(dataPedido.getDate())}`;
+        const dataVenda = new Date(agora);
+        dataVenda.setDate(
+          dataVenda.getDate() - Math.floor(Math.random() * 180)
+        );
 
         const itens = [];
         const quantidadeItens = 1 + Math.floor(Math.random() * 3);
 
-        for (let j = 0; j < quantidadeItens; j++) {
-          const produto = escolherPonderado(produtos);
+        for (let indice = 0; indice < quantidadeItens; indice++) {
+          const produtoEscolhido = escolherPonderado(produtosFicticios);
 
-          if (itens.some(item => item.productId === produto.id)) continue;
+          if (
+            itens.some(item =>
+              item.produtoId === produtoEscolhido.id
+            )
+          ) {
+            continue;
+          }
 
-          const garantia = Math.random() < 0.06;
+          const garantiaAtiva = Math.random() < 0.08;
 
           itens.push({
-            id: gerarId("item"),
-            productId: produto.id,
-            quantity: 1 + Math.floor(Math.random() * 6),
-            warrantyActive: garantia,
-            warrantyActivatedAt: garantia ? dataPedido.toISOString() : null
+            id: id("item"),
+            produtoId: produtoEscolhido.id,
+            quantidade: 1 + Math.floor(Math.random() * 7),
+            garantiaAtiva,
+            garantiaAtivadaEm: garantiaAtiva
+              ? dataVenda.toISOString()
+              : null
           });
         }
 
-        const vendedor = vendedores[Math.floor(Math.random() * vendedores.length)];
-        const canal = canais[Math.floor(Math.random() * canais.length)];
+        const vendedor =
+          vendedores[Math.floor(Math.random() * vendedores.length)];
 
-        const pedido = {
-          id: gerarId("pedido"),
-          clientId: clienteReal.id,
-          seller: vendedor,
-          channel: canal,
-          notes: "Pedido fictício",
-          date: dataTexto,
-          items: itens
+        const canal =
+          canais[Math.floor(Math.random() * canais.length)];
+
+        const venda = {
+          id: id("venda"),
+          clienteId: cliente.id,
+          vendedor,
+          canal,
+          observacao: "Venda fictícia",
+          data: `${dataVenda.getFullYear()}-${dois(dataVenda.getMonth() + 1)}-${dois(dataVenda.getDate())}`,
+          criadoEm: dataVenda.toISOString(),
+          itens
         };
 
-        db.orders.push(pedido);
+        banco.vendas.push(venda);
 
-        clienteReal.timeline.unshift({
-          id: gerarId("timeline"),
-          data: dataPedido.toISOString(),
-          tipo: "Pedido lançado",
-          descricao: `Pedido lançado pelo vendedor ${vendedor}, pelo canal ${canal}.`
-        });
+        adicionarTimeline(
+          cliente.id,
+          "Venda lançada",
+          `Venda fictícia lançada pelo vendedor ${vendedor}.`,
+          { vendaId: venda.id }
+        );
 
-        itens.filter(item => item.warrantyActive).forEach(item => {
-          const produto = obterProduto(item.productId);
+        itens.forEach(item => {
+          if (!item.garantiaAtiva) return;
 
-          clienteReal.timeline.unshift({
-            id: gerarId("timeline"),
-            data: dataPedido.toISOString(),
-            tipo: "Garantia ativada",
-            descricao: `Garantia ativada para o produto ${produto?.name || ""}.`
-          });
+          const produto = obterProduto(item.produtoId);
+
+          adicionarTimeline(
+            cliente.id,
+            "Garantia ativada",
+            `Garantia ativada para ${produto?.nome || "produto"}.`,
+            {
+              vendaId: venda.id,
+              produtoId: produto?.id
+            }
+          );
         });
       }
 
-      db.orders.sort((a, b) => b.date.localeCompare(a.date));
+      banco.vendas.sort((a, b) =>
+        b.data.localeCompare(a.data)
+      );
 
-      salvarDados();
+      salvar();
       renderizarTudo();
-      mostrarAviso("Dados fictícios carregados. Veja o Dashboard para conferir as curvas ABC.");
+
+      mostrarAviso(
+        "Dados fictícios carregados com sucesso. Acesse o Dashboard e abra o perfil de qualquer cliente."
+      );
     }
 
-    /* ===== MENU E FORMULÁRIOS ===== */
-
-    document.querySelectorAll(".menu-btn").forEach(button => {
-      button.addEventListener("click", () => {
-        document.querySelectorAll(".menu-btn").forEach(btn =>
-          btn.classList.remove("active")
+    document.querySelectorAll(".menu-btn").forEach(botao => {
+      botao.addEventListener("click", () => {
+        document.querySelectorAll(".menu-btn").forEach(item =>
+          item.classList.remove("active")
         );
 
         document.querySelectorAll(".view").forEach(view =>
           view.classList.remove("active")
         );
 
-        button.classList.add("active");
+        botao.classList.add("active");
 
-        const viewId = button.dataset.view;
+        const viewId = botao.dataset.view;
         document.getElementById(viewId).classList.add("active");
 
-        const titles = {
+        const titulos = {
           dashboard: "Dashboard",
           clientes: "Clientes",
           produtos: "Produtos",
           fornecedores: "Fornecedores",
-          pedidos: "Pedidos",
           financeiro: "Financeiro"
         };
 
-        document.getElementById("page-title").textContent = titles[viewId];
+        document.getElementById("page-title").textContent =
+          titulos[viewId];
       });
     });
 
-    document.getElementById("client-form").addEventListener("submit", event => {
-      event.preventDefault();
+    document
+      .getElementById("client-search")
+      .addEventListener("input", renderizarClientes);
 
-      const cliente = {
-        id: gerarId("cliente"),
-        name: document.getElementById("client-name").value.trim(),
-        phone: document.getElementById("client-phone").value.trim(),
-        birthday: document.getElementById("client-birthday").value,
-        company: document.getElementById("client-company").value.trim(),
-        notes: document.getElementById("client-notes").value.trim(),
-        createdAt: new Date().toISOString(),
-        timeline: []
-      };
+    document
+      .getElementById("client-form")
+      .addEventListener("submit", event => {
+        event.preventDefault();
 
-      cliente.timeline.push({
-        id: gerarId("timeline"),
-        data: new Date().toISOString(),
-        tipo: "Cliente cadastrado",
-        descricao: "Cadastro inicial realizado no sistema."
-      });
-
-      db.clients.push(cliente);
-      salvarDados();
-      event.target.reset();
-      renderizarTudo();
-      mostrarAviso("Cliente cadastrado com sucesso.");
-    });
-
-    document.getElementById("supplier-form").addEventListener("submit", event => {
-      event.preventDefault();
-
-      db.suppliers.push({
-        id: gerarId("fornecedor"),
-        name: document.getElementById("supplier-name").value.trim(),
-        phone: document.getElementById("supplier-phone").value.trim(),
-        document: document.getElementById("supplier-document").value.trim(),
-        notes: document.getElementById("supplier-notes").value.trim(),
-        createdAt: new Date().toISOString()
-      });
-
-      salvarDados();
-      event.target.reset();
-      renderizarTudo();
-      mostrarAviso("Fornecedor cadastrado com sucesso.");
-    });
-
-    document.getElementById("product-form").addEventListener("submit", event => {
-      event.preventDefault();
-
-      const codigo = gerarCodigoProduto();
-
-      db.products.push({
-        id: gerarId("produto"),
-        internalCode: codigo,
-        name: document.getElementById("product-name").value.trim(),
-        supplierId: document.getElementById("product-supplier").value,
-        category: document.getElementById("product-category").value.trim(),
-        price: Number(document.getElementById("product-price").value),
-        createdAt: new Date().toISOString()
-      });
-
-      salvarDados();
-      event.target.reset();
-      renderizarTudo();
-      mostrarAviso(`Produto cadastrado com o código interno ${codigo}.`);
-    });
-
-    document.getElementById("order-form").addEventListener("submit", event => {
-      event.preventDefault();
-
-      const clientId = document.getElementById("order-client").value;
-      const seller = document.getElementById("order-seller").value.trim();
-      const channel = document.getElementById("order-channel").value;
-      const notes = document.getElementById("order-notes").value.trim();
-
-      if (!clientId) {
-        mostrarAviso("Selecione um cliente.");
-        return;
-      }
-
-      const checkedProducts = Array.from(
-        document.querySelectorAll(".order-product-check:checked")
-      );
-
-      if (!checkedProducts.length) {
-        mostrarAviso("Selecione pelo menos um produto.");
-        return;
-      }
-
-      const items = checkedProducts.map(check => {
-        const productId = check.value;
-        const quantityInput = document.querySelector(
-          `.order-product-quantity[data-product-id="${productId}"]`
-        );
-        const warrantyInput = document.querySelector(
-          `.order-product-warranty[data-product-id="${productId}"]`
-        );
-
-        return {
-          id: gerarId("item"),
-          productId,
-          quantity: Number(quantityInput.value) || 1,
-          warrantyActive: warrantyInput.checked,
-          warrantyActivatedAt: warrantyInput.checked
-            ? new Date().toISOString()
-            : null
+        const cliente = {
+          id: id("cliente"),
+          nome: document.getElementById("client-name").value.trim(),
+          telefone: document.getElementById("client-phone").value.trim(),
+          aniversario: document.getElementById("client-birthday").value,
+          empresa: document.getElementById("client-company").value.trim(),
+          observacoes: document.getElementById("client-notes").value.trim(),
+          criadoEm: new Date().toISOString(),
+          timeline: [{
+            id: id("timeline"),
+            data: new Date().toISOString(),
+            tipo: "Cliente cadastrado",
+            descricao: "Cadastro inicial realizado."
+          }]
         };
+
+        banco.clientes.push(cliente);
+
+        salvar();
+        event.target.reset();
+        renderizarTudo();
+
+        mostrarAviso(
+          "Cliente cadastrado. Agora clique em 'Abrir perfil e vender' para lançar os produtos vendidos."
+        );
       });
 
-      const pedido = {
-        id: gerarId("pedido"),
-        clientId,
-        seller,
-        channel,
-        notes,
-        date: dataAtual(),
-        items
-      };
+    document
+      .getElementById("supplier-form")
+      .addEventListener("submit", event => {
+        event.preventDefault();
 
-      db.orders.unshift(pedido);
+        banco.fornecedores.push({
+          id: id("fornecedor"),
+          nome: document.getElementById("supplier-name").value.trim(),
+          telefone: document.getElementById("supplier-phone").value.trim(),
+          documento: document.getElementById("supplier-document").value.trim(),
+          observacoes: document.getElementById("supplier-notes").value.trim(),
+          criadoEm: new Date().toISOString()
+        });
 
-      adicionarTimeline(
-        clientId,
-        "Pedido lançado",
-        `Pedido lançado pelo vendedor ${seller}, pelo canal ${channel}.`,
-        { orderId: pedido.id }
-      );
+        salvar();
+        event.target.reset();
+        renderizarTudo();
 
-      items.forEach(item => {
-        if (item.warrantyActive) {
-          const produto = obterProduto(item.productId);
+        mostrarAviso("Fornecedor cadastrado com sucesso.");
+      });
 
-          adicionarTimeline(
-            clientId,
-            "Garantia ativada",
-            `Garantia ativada para o produto ${produto?.name || ""}.`,
-            { orderId: pedido.id, productId: item.productId }
-          );
+    document
+      .getElementById("product-form")
+      .addEventListener("submit", event => {
+        event.preventDefault();
+
+        const nome = document.getElementById("product-name").value.trim();
+        const fornecedorId =
+          document.getElementById("product-supplier").value;
+        const categoria =
+          document.getElementById("product-category").value.trim();
+        const preco =
+          Number(document.getElementById("product-price").value);
+
+        if (!nome || !preco) {
+          mostrarAviso("Informe o nome e o preço do produto.");
+          return;
         }
+
+        const produto = {
+          id: id("produto"),
+          codigoInterno: gerarCodigoProduto(),
+          nome,
+          fornecedorId,
+          categoria,
+          preco,
+          criadoEm: new Date().toISOString()
+        };
+
+        banco.produtos.push(produto);
+
+        salvar();
+        event.target.reset();
+        renderizarTudo();
+
+        mostrarAviso(
+          `Produto cadastrado com o código ${produto.codigoInterno}.`
+        );
       });
 
-      salvarDados();
-      event.target.reset();
-      renderizarTudo();
-      mostrarAviso("Pedido lançado com sucesso.");
-    });
+    document
+      .getElementById("finance-form")
+      .addEventListener("submit", event => {
+        event.preventDefault();
 
-    document.getElementById("finance-form").addEventListener("submit", event => {
-      event.preventDefault();
+        banco.financeiro.push({
+          id: id("financeiro"),
+          tipo: document.getElementById("finance-type").value,
+          descricao:
+            document.getElementById("finance-description").value.trim(),
+          valor: Number(
+            document.getElementById("finance-value").value
+          ),
+          vencimento:
+            document.getElementById("finance-due-date").value,
+          status: document.getElementById("finance-status").value,
+          criadoEm: new Date().toISOString()
+        });
 
-      db.finances.push({
-        id: gerarId("financeiro"),
-        type: document.getElementById("finance-type").value,
-        description: document.getElementById("finance-description").value.trim(),
-        value: Number(document.getElementById("finance-value").value),
-        dueDate: document.getElementById("finance-due-date").value,
-        status: document.getElementById("finance-status").value,
-        createdAt: new Date().toISOString()
+        salvar();
+        event.target.reset();
+        renderizarTudo();
+
+        mostrarAviso("Lançamento financeiro salvo.");
       });
-
-      salvarDados();
-      event.target.reset();
-      renderizarTudo();
-      mostrarAviso("Lançamento financeiro salvo.");
-    });
-
-    document.getElementById("client-search").addEventListener("input", () => {
-      renderizarClientes();
-    });
 
     document.getElementById("current-date").textContent =
       new Date().toLocaleDateString("pt-BR", {
