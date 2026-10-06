@@ -9,16 +9,15 @@
 
   <style>
     :root {
-      --black: #090909;
+      --black: #080808;
       --black-2: #121212;
-      --black-3: #1b1b1b;
+      --black-3: #1c1c1c;
       --red: #e50914;
-      --red-dark: #a80710;
-      --white: #ffffff;
-      --gray: #a8a8a8;
-      --gray-2: #666;
-      --border: #303030;
-      --green: #24c77a;
+      --red-dark: #9f0710;
+      --white: #fff;
+      --gray: #a9a9a9;
+      --border: #333;
+      --green: #26c77b;
       --yellow: #f2bd38;
       --blue: #4e9cff;
     }
@@ -46,47 +45,47 @@
     }
 
     .app {
-      display: flex;
       min-height: 100vh;
+      display: flex;
     }
 
     .sidebar {
-      width: 245px;
-      background: #050505;
-      border-right: 1px solid var(--border);
-      padding: 22px 14px;
       position: fixed;
       inset: 0 auto 0 0;
       z-index: 10;
+      width: 245px;
+      padding: 22px 14px;
+      background: #050505;
+      border-right: 1px solid var(--border);
     }
 
     .brand {
+      margin: 0 10px 28px;
       color: var(--red);
       font-size: 23px;
-      font-weight: 800;
-      margin: 0 10px 28px;
+      font-weight: bold;
       letter-spacing: .5px;
     }
 
     .brand small {
       display: block;
+      margin-top: 5px;
       color: var(--gray);
       font-size: 10px;
       font-weight: normal;
-      margin-top: 5px;
-      text-transform: uppercase;
       letter-spacing: 1px;
+      text-transform: uppercase;
     }
 
     .nav-btn {
       width: 100%;
-      text-align: left;
-      background: transparent;
-      color: #bbb;
+      margin: 3px 0;
+      padding: 13px 12px;
       border: 0;
       border-radius: 7px;
-      padding: 13px 12px;
-      margin: 3px 0;
+      background: transparent;
+      color: #bbb;
+      text-align: left;
       transition: .2s;
     }
 
@@ -97,8 +96,8 @@
     }
 
     .main {
-      margin-left: 245px;
       width: calc(100% - 245px);
+      margin-left: 245px;
       padding: 28px;
     }
 
@@ -121,50 +120,18 @@
     }
 
     h2 {
-      font-size: 20px;
       margin-bottom: 17px;
+      font-size: 20px;
     }
 
     h3 {
-      font-size: 16px;
       margin-bottom: 12px;
+      font-size: 16px;
     }
 
     .muted {
       color: var(--gray);
       font-size: 13px;
-    }
-
-    .btn {
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 10px 14px;
-      color: white;
-      background: var(--black-3);
-    }
-
-    .btn:hover {
-      filter: brightness(1.25);
-    }
-
-    .btn-primary {
-      background: var(--red);
-      border-color: var(--red);
-    }
-
-    .btn-danger {
-      background: #4c0b0f;
-      border-color: #8d131a;
-    }
-
-    .btn-success {
-      background: #095b3a;
-      border-color: #18865a;
-    }
-
-    .btn-small {
-      padding: 6px 9px;
-      font-size: 12px;
     }
 
     .page {
@@ -175,6 +142,14 @@
       display: block;
     }
 
+    .panel,
+    .card {
+      padding: 18px;
+      border: 1px solid var(--border);
+      border-radius: 9px;
+      background: var(--black-2);
+    }
+
     .cards {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -182,29 +157,17 @@
       margin-bottom: 23px;
     }
 
-    .card,
-    .panel {
-      background: var(--black-2);
-      border: 1px solid var(--border);
-      border-radius: 9px;
-      padding: 18px;
-    }
-
     .metric {
       color: var(--gray);
       font-size: 12px;
+      letter-spacing: .5px;
       text-transform: uppercase;
-      letter-spacing: .6px;
     }
 
     .metric-value {
+      margin-top: 10px;
       font-size: 27px;
       font-weight: bold;
-      margin-top: 10px;
-    }
-
-    .red {
-      color: var(--red);
     }
 
     .green {
@@ -213,6 +176,10 @@
 
     .yellow {
       color: var(--yellow);
+    }
+
+    .red {
+      color: var(--red);
     }
 
     .form-grid {
@@ -248,12 +215,12 @@
     select,
     textarea {
       width: 100%;
-      color: white;
-      background: #0b0b0b;
-      border: 1px solid var(--border);
-      border-radius: 5px;
       padding: 10px;
       outline: none;
+      border: 1px solid var(--border);
+      border-radius: 5px;
+      background: #0b0b0b;
+      color: white;
     }
 
     input:focus,
@@ -263,24 +230,56 @@
     }
 
     textarea {
-      min-height: 76px;
+      min-height: 80px;
       resize: vertical;
     }
 
     .form-actions {
       display: flex;
+      flex-wrap: wrap;
       gap: 9px;
       margin-top: 15px;
-      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--black-3);
+      color: white;
+    }
+
+    .btn:hover {
+      filter: brightness(1.25);
+    }
+
+    .btn-primary {
+      border-color: var(--red);
+      background: var(--red);
+    }
+
+    .btn-danger {
+      border-color: #8d131a;
+      background: #4c0b0f;
+    }
+
+    .btn-success {
+      border-color: #19865c;
+      background: #095b3a;
+    }
+
+    .btn-small {
+      padding: 6px 9px;
+      font-size: 12px;
     }
 
     .toolbar {
       display: flex;
-      justify-content: space-between;
+      flex-wrap: wrap;
       align-items: center;
+      justify-content: space-between;
       gap: 12px;
       margin-bottom: 15px;
-      flex-wrap: wrap;
     }
 
     .toolbar input {
@@ -293,17 +292,17 @@
 
     table {
       width: 100%;
+      min-width: 850px;
       border-collapse: collapse;
-      min-width: 700px;
     }
 
     th,
     td {
-      border-bottom: 1px solid var(--border);
       padding: 12px 9px;
+      border-bottom: 1px solid var(--border);
       text-align: left;
-      font-size: 13px;
       vertical-align: middle;
+      font-size: 13px;
     }
 
     th {
@@ -324,8 +323,8 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      border-radius: 20px;
       padding: 4px 8px;
+      border-radius: 20px;
       font-size: 11px;
       white-space: nowrap;
     }
@@ -355,34 +354,60 @@
       display: inline-flex;
       align-items: center;
       gap: 5px;
-      border-radius: 20px;
       padding: 5px 8px;
-      font-size: 11px;
       border: 1px solid #444;
+      border-radius: 20px;
       background: #272727;
+      font-size: 11px;
+      white-space: nowrap;
     }
 
     .supplier-chip.inactive {
-      color: #777;
-      background: #171717;
       border-color: #2e2e2e;
+      background: #171717;
+      color: #777;
     }
 
     .dot {
+      display: inline-block;
       width: 9px;
       height: 9px;
-      border-radius: 50%;
-      display: inline-block;
       border: 1px solid #888;
+      border-radius: 50%;
+    }
+
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .list-item {
+      padding: 11px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #101010;
+    }
+
+    .list-item strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .empty {
+      padding: 25px 10px;
+      color: var(--gray);
+      text-align: center;
+      font-size: 13px;
     }
 
     .alert {
+      margin-bottom: 15px;
+      padding: 12px;
       border-left: 4px solid var(--yellow);
+      border-radius: 5px;
       background: #211b08;
       color: #f2d77a;
-      padding: 12px;
-      border-radius: 5px;
-      margin-bottom: 15px;
       font-size: 13px;
     }
 
@@ -394,9 +419,9 @@
 
     .profile-header {
       display: flex;
+      align-items: flex-start;
       justify-content: space-between;
       gap: 15px;
-      align-items: flex-start;
       margin-bottom: 18px;
     }
 
@@ -406,40 +431,15 @@
       gap: 15px;
     }
 
-    .list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .list-item {
-      border: 1px solid var(--border);
-      background: #101010;
-      border-radius: 6px;
-      padding: 11px;
-    }
-
-    .list-item strong {
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .empty {
-      color: var(--gray);
-      text-align: center;
-      padding: 25px 10px;
-      font-size: 13px;
-    }
-
     .modal {
       position: fixed;
       inset: 0;
-      background: rgba(0, 0, 0, .78);
+      z-index: 30;
       display: none;
       align-items: center;
       justify-content: center;
       padding: 20px;
-      z-index: 30;
+      background: rgba(0, 0, 0, .78);
     }
 
     .modal.show {
@@ -447,26 +447,26 @@
     }
 
     .modal-box {
-      background: var(--black-2);
-      border: 1px solid #444;
-      border-top: 3px solid var(--red);
-      border-radius: 9px;
-      width: min(900px, 100%);
+      width: min(950px, 100%);
       max-height: 92vh;
       overflow: auto;
       padding: 21px;
+      border: 1px solid #444;
+      border-top: 3px solid var(--red);
+      border-radius: 9px;
+      background: var(--black-2);
     }
 
     .modal-title {
       display: flex;
-      justify-content: space-between;
       align-items: center;
+      justify-content: space-between;
       margin-bottom: 18px;
     }
 
     .close {
-      background: transparent;
       border: 0;
+      background: transparent;
       color: #aaa;
       font-size: 23px;
     }
@@ -474,15 +474,15 @@
     .product-line {
       display: grid;
       grid-template-columns: 1fr 100px 130px 42px;
+      align-items: end;
       gap: 8px;
       margin-bottom: 8px;
-      align-items: end;
     }
 
     .mini-total {
+      padding-bottom: 10px;
       color: var(--green);
       font-weight: bold;
-      padding-bottom: 10px;
     }
 
     .image-preview {
@@ -492,7 +492,12 @@
       border-radius: 5px;
     }
 
-    @media (max-width: 1000px) {
+    .suggestion-box {
+      max-height: 210px;
+      overflow: auto;
+    }
+
+    @media (max-width: 1100px) {
       .cards {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -514,6 +519,7 @@
       }
 
       .brand {
+        margin: 0 0 28px;
         font-size: 0;
         text-align: center;
       }
@@ -529,15 +535,21 @@
       }
 
       .nav-btn {
-        text-align: center;
         padding: 12px 5px;
+        text-align: center;
         font-size: 18px;
       }
 
       .main {
-        margin-left: 64px;
         width: calc(100% - 64px);
+        margin-left: 64px;
         padding: 16px;
+      }
+
+      .form-grid,
+      .form-grid.two,
+      .form-grid.four {
+        grid-template-columns: 1fr;
       }
 
       .cards {
@@ -551,16 +563,6 @@
 
       .metric-value {
         font-size: 21px;
-      }
-
-      .form-grid,
-      .form-grid.two,
-      .form-grid.four {
-        grid-template-columns: 1fr;
-      }
-
-      .field.full {
-        grid-column: auto;
       }
 
       .product-line {
@@ -595,6 +597,7 @@
           <h1 id="pageTitle">Dashboard</h1>
           <div class="muted">Controle comercial e análise de clientes</div>
         </div>
+
         <button class="btn btn-primary" onclick="openSaleModal()">+ Nova venda</button>
       </div>
 
@@ -607,14 +610,17 @@
             <div class="metric">Clientes cadastrados</div>
             <div class="metric-value" id="metricClients">0</div>
           </div>
+
           <div class="card">
             <div class="metric">Produtos cadastrados</div>
             <div class="metric-value" id="metricProducts">0</div>
           </div>
+
           <div class="card">
             <div class="metric">Vendas realizadas</div>
             <div class="metric-value" id="metricSales">0</div>
           </div>
+
           <div class="card">
             <div class="metric">Faturamento total</div>
             <div class="metric-value green" id="metricRevenue">R$ 0,00</div>
@@ -683,6 +689,7 @@
             <h2>Clientes cadastrados</h2>
             <input id="clientSearch" placeholder="Buscar cliente..." oninput="renderClients()">
           </div>
+
           <div class="table-wrap">
             <table>
               <thead>
@@ -691,10 +698,11 @@
                   <th>Contato</th>
                   <th>Última compra</th>
                   <th>Status</th>
-                  <th>Compras</th>
+                  <th>Pedidos</th>
                   <th>Ações</th>
                 </tr>
               </thead>
+
               <tbody id="clientsTable"></tbody>
             </table>
           </div>
@@ -745,6 +753,7 @@
             <h2>Produtos cadastrados</h2>
             <input id="productSearch" placeholder="Buscar produto..." oninput="renderProducts()">
           </div>
+
           <div class="table-wrap">
             <table>
               <thead>
@@ -758,6 +767,7 @@
                   <th>Ações</th>
                 </tr>
               </thead>
+
               <tbody id="productsTable"></tbody>
             </table>
           </div>
@@ -795,6 +805,7 @@
 
         <div class="panel" style="margin-top:15px">
           <h2>Fornecedores cadastrados</h2>
+
           <div class="table-wrap">
             <table>
               <thead>
@@ -806,20 +817,24 @@
                   <th>Ações</th>
                 </tr>
               </thead>
+
               <tbody id="suppliersTable"></tbody>
             </table>
           </div>
         </div>
       </section>
 
-      <!-- ABC -->
+      <!-- CURVA ABC -->
       <section class="page" id="page-abc">
         <div class="panel">
           <div class="toolbar">
             <div>
               <h2>Curva ABC de clientes</h2>
-              <div class="muted">Clique em um cliente para consultar os pedidos, fornecedores e oportunidades.</div>
+              <div class="muted">
+                Clique em qualquer cliente para abrir seus pedidos, fornecedores, sugestões e análise de compras.
+              </div>
             </div>
+
             <select id="abcPeriod" onchange="renderABC()">
               <option value="all">Todo o período</option>
               <option value="365">Últimos 365 dias</option>
@@ -828,19 +843,30 @@
             </select>
           </div>
 
+          <div class="alert">
+            <strong>Classificação ABC:</strong>
+            A representa até 80% do faturamento acumulado,
+            B representa de 80% a 95%,
+            C representa acima de 95%.
+          </div>
+
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
                   <th>Cliente</th>
-                  <th>Classificação</th>
+                  <th>Classe ABC</th>
                   <th>Fornecedores comprados</th>
+                  <th>Produtos comprados</th>
                   <th>Pedidos</th>
                   <th>Itens</th>
                   <th>Faturamento</th>
+                  <th>Participação</th>
                   <th>Última compra</th>
+                  <th>Ações</th>
                 </tr>
               </thead>
+
               <tbody id="abcTable"></tbody>
             </table>
           </div>
@@ -848,18 +874,20 @@
 
         <div class="panel" style="margin-top:15px">
           <h2>Curva ABC de produtos</h2>
+
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
                   <th>Produto</th>
                   <th>Fornecedor</th>
-                  <th>Classificação</th>
+                  <th>Classe ABC</th>
                   <th>Quantidade</th>
                   <th>Faturamento</th>
                   <th>Clientes</th>
                 </tr>
               </thead>
+
               <tbody id="abcProductsTable"></tbody>
             </table>
           </div>
@@ -873,7 +901,7 @@
     </main>
   </div>
 
-  <!-- MODAL VENDA -->
+  <!-- MODAL DE VENDA -->
   <div class="modal" id="saleModal">
     <div class="modal-box">
       <div class="modal-title">
@@ -913,15 +941,18 @@
         <h3 style="margin-top:20px">Produtos do pedido</h3>
         <div id="saleLines"></div>
 
-        <button type="button" class="btn btn-small" onclick="addSaleLine()">+ Adicionar produto</button>
+        <button type="button" class="btn btn-small" onclick="addSaleLine()">
+          + Adicionar produto
+        </button>
 
         <div class="field" style="margin-top:15px">
           <label>Observações do pedido</label>
           <textarea id="saleNotes"></textarea>
         </div>
 
-        <div style="text-align:right;margin-top:15px;font-size:18px">
-          Total: <strong class="green" id="saleTotal">R$ 0,00</strong>
+        <div style="margin-top:15px;text-align:right;font-size:18px">
+          Total:
+          <strong class="green" id="saleTotal">R$ 0,00</strong>
         </div>
 
         <div class="form-actions">
@@ -932,19 +963,20 @@
     </div>
   </div>
 
-  <!-- MODAL PEDIDO -->
+  <!-- MODAL DO PEDIDO -->
   <div class="modal" id="orderModal">
     <div class="modal-box">
       <div class="modal-title">
         <h2>Detalhes do pedido</h2>
         <button class="close" onclick="closeModal('orderModal')">×</button>
       </div>
+
       <div id="orderDetails"></div>
     </div>
   </div>
 
   <script>
-    const STORAGE_KEY = "gestao_comercial_black_red_v1";
+    const STORAGE_KEY = "gestao_comercial_corrigido_v2";
 
     let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
       clients: [],
@@ -959,8 +991,12 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(db));
     }
 
-    function uid(prefix = "id") {
-      return prefix + "_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
+    function uid(prefix) {
+      return prefix + "_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+    }
+
+    function today() {
+      return new Date().toISOString().slice(0, 10);
     }
 
     function money(value) {
@@ -972,123 +1008,186 @@
 
     function dateBR(value) {
       if (!value) return "—";
-      const parts = value.split("-");
-      if (parts.length !== 3) return value;
-      return `${parts[2]}/${parts[1]}/${parts[0]}`;
-    }
 
-    function today() {
-      return new Date().toISOString().slice(0, 10);
+      const parts = String(value).split("-");
+
+      if (parts.length !== 3) {
+        return value;
+      }
+
+      return parts[2] + "/" + parts[1] + "/" + parts[0];
     }
 
     function escapeHTML(value) {
-      return String(value ?? "").replace(/[&<>"']/g, char => ({
-        "&": "&",
-        "<": "<",
-        ">": ">",
-        '"': "&quot;",
-        "'": "&#039;"
-      }[char]));
-    }
-
-    function getSupplier(id) {
-      return db.suppliers.find(s => s.id === id);
-    }
-
-    function getProduct(id) {
-      return db.products.find(p => p.id === id);
+      return String(value ?? "").replace(/[&<>"']/g, function(char) {
+        return {
+          "&": "&",
+          "<": "<",
+          ">": ">",
+          '"': "&quot;",
+          "'": "&#039;"
+        }[char];
+      });
     }
 
     function getClient(id) {
-      return db.clients.find(c => c.id === id);
+      return db.clients.find(function(client) {
+        return client.id === id;
+      });
     }
 
-    function supplierChip(supplier, active = true) {
-      if (!supplier) return "";
-      return `
-        <span class="supplier-chip ${active ? "" : "inactive"}">
-          <span class="dot" style="background:${active ? supplier.color : "#555"}"></span>
-          ${escapeHTML(supplier.name)}
-        </span>
-      `;
+    function getProduct(id) {
+      return db.products.find(function(product) {
+        return product.id === id;
+      });
     }
 
-    function getClientSales(clientId) {
-      return db.sales.filter(s => s.clientId === clientId);
+    function getSupplier(id) {
+      return db.suppliers.find(function(supplier) {
+        return supplier.id === id;
+      });
+    }
+
+    function getClientSales(clientId, salesList) {
+      const source = salesList || db.sales;
+
+      return source.filter(function(sale) {
+        return sale.clientId === clientId;
+      });
     }
 
     function getSaleTotal(sale) {
-      return (sale.items || []).reduce((total, item) => {
+      return (sale.items || []).reduce(function(total, item) {
         return total + Number(item.quantity || 0) * Number(item.price || 0);
       }, 0);
     }
 
-    function getClientStats(clientId, salesList = db.sales) {
-      const sales = salesList.filter(s => s.clientId === clientId);
+    function getProductQuantity(productId, salesList) {
+      const source = salesList || db.sales;
+
+      return source.reduce(function(total, sale) {
+        return total + (sale.items || []).reduce(function(itemTotal, item) {
+          if (item.productId === productId) {
+            return itemTotal + Number(item.quantity || 0);
+          }
+
+          return itemTotal;
+        }, 0);
+      }, 0);
+    }
+
+    function getProductRevenue(productId, salesList) {
+      const source = salesList || db.sales;
+
+      return source.reduce(function(total, sale) {
+        return total + (sale.items || []).reduce(function(itemTotal, item) {
+          if (item.productId === productId) {
+            return itemTotal + Number(item.quantity || 0) * Number(item.price || 0);
+          }
+
+          return itemTotal;
+        }, 0);
+      }, 0);
+    }
+
+    function getClientStats(clientId, salesList) {
+      const sales = getClientSales(clientId, salesList);
       const quantities = {};
       let revenue = 0;
       let items = 0;
 
-      sales.forEach(sale => {
+      sales.forEach(function(sale) {
         revenue += getSaleTotal(sale);
-        (sale.items || []).forEach(item => {
+
+        (sale.items || []).forEach(function(item) {
           quantities[item.productId] = (quantities[item.productId] || 0) + Number(item.quantity || 0);
           items += Number(item.quantity || 0);
         });
       });
 
-      const lastSale = sales
-        .map(s => s.date)
+      const dates = sales
+        .map(function(sale) {
+          return sale.date;
+        })
+        .filter(Boolean)
         .sort()
-        .reverse()[0] || "";
+        .reverse();
 
       return {
-        sales,
-        quantities,
-        revenue,
-        items,
-        lastSale
+        sales: sales,
+        quantities: quantities,
+        revenue: revenue,
+        items: items,
+        lastSale: dates[0] || ""
       };
     }
 
     function daysWithoutPurchase(client) {
       const stats = getClientStats(client.id);
-      if (!stats.lastSale) return Infinity;
 
-      const last = new Date(stats.lastSale + "T12:00:00");
-      return Math.floor((new Date() - last) / 86400000);
+      if (!stats.lastSale) {
+        return Infinity;
+      }
+
+      const lastDate = new Date(stats.lastSale + "T12:00:00");
+      return Math.floor((new Date() - lastDate) / 86400000);
     }
 
     function clientStatus(client) {
       const days = daysWithoutPurchase(client);
+
       if (days === Infinity) return "Nunca comprou";
       if (days > 45) return "Mais de 45 dias";
       if (days > 30) return "Mais de 30 dias";
       if (days > 15) return "Mais de 15 dias";
+
       return "Ativo";
     }
 
-    function abcClass(index, total) {
-      if (!total) return "C";
-      const percentage = ((index + 1) / total) * 100;
-      if (percentage <= 20) return "A";
-      if (percentage <= 50) return "B";
-      return "C";
+    function supplierChip(supplier, active) {
+      if (!supplier) return "";
+
+      const isActive = active !== false;
+
+      return `
+        <span class="supplier-chip ${isActive ? "" : "inactive"}">
+          <span
+            class="dot"
+            style="background:${isActive ? supplier.color : "#555"}">
+          </span>
+          ${escapeHTML(supplier.name)}
+        </span>
+      `;
     }
 
     function abcBadge(letter) {
-      return `<span class="badge badge-${letter.toLowerCase()}">Classe ${letter}</span>`;
+      return `
+        <span class="badge badge-${String(letter).toLowerCase()}">
+          Classe ${letter}
+        </span>
+      `;
     }
 
     function showPage(page) {
-      document.querySelectorAll(".page").forEach(el => el.classList.remove("active"));
-      document.querySelectorAll(".nav-btn").forEach(el => el.classList.remove("active"));
+      document.querySelectorAll(".page").forEach(function(element) {
+        element.classList.remove("active");
+      });
 
-      const pageElement = document.getElementById("page-" + page);
-      if (pageElement) pageElement.classList.add("active");
+      document.querySelectorAll(".nav-btn").forEach(function(element) {
+        element.classList.remove("active");
+      });
 
-      const nav = document.querySelector(`[data-page="${page}"]`);
-      if (nav) nav.classList.add("active");
+      const target = document.getElementById("page-" + page);
+
+      if (target) {
+        target.classList.add("active");
+      }
+
+      const nav = document.querySelector('[data-page="' + page + '"]');
+
+      if (nav) {
+        nav.classList.add("active");
+      }
 
       const titles = {
         dashboard: "Dashboard",
@@ -1102,8 +1201,8 @@
       document.getElementById("pageTitle").textContent = titles[page] || "Gestão";
     }
 
-    document.querySelectorAll(".nav-btn").forEach(button => {
-      button.addEventListener("click", () => {
+    document.querySelectorAll(".nav-btn").forEach(function(button) {
+      button.addEventListener("click", function() {
         showPage(button.dataset.page);
         renderAll();
       });
@@ -1119,65 +1218,101 @@
     }
 
     function renderDashboard() {
-      const revenue = db.sales.reduce((sum, sale) => sum + getSaleTotal(sale), 0);
+      const totalRevenue = db.sales.reduce(function(total, sale) {
+        return total + getSaleTotal(sale);
+      }, 0);
 
       document.getElementById("metricClients").textContent = db.clients.length;
       document.getElementById("metricProducts").textContent = db.products.length;
       document.getElementById("metricSales").textContent = db.sales.length;
-      document.getElementById("metricRevenue").textContent = money(revenue);
+      document.getElementById("metricRevenue").textContent = money(totalRevenue);
 
       const inactive = db.clients
-        .map(client => ({ client, days: daysWithoutPurchase(client) }))
-        .filter(item => item.days > 15 || item.days === Infinity)
-        .sort((a, b) => b.days - a.days);
+        .map(function(client) {
+          return {
+            client: client,
+            days: daysWithoutPurchase(client)
+          };
+        })
+        .filter(function(item) {
+          return item.days === Infinity || item.days > 15;
+        })
+        .sort(function(a, b) {
+          if (a.days === Infinity) return -1;
+          if (b.days === Infinity) return 1;
+          return b.days - a.days;
+        });
 
       document.getElementById("inactiveClients").innerHTML = inactive.length
-        ? inactive.map(item => `
-          <div class="list-item" style="cursor:pointer" onclick="openClientProfile('${item.client.id}')">
-            <strong>${escapeHTML(item.client.name)}</strong>
-            <span class="muted">
-              ${item.days === Infinity ? "Nunca comprou" : `${item.days} dias sem comprar`}
-            </span>
-          </div>
-        `).join("")
+        ? inactive.map(function(item) {
+            return `
+              <div
+                class="list-item"
+                style="cursor:pointer"
+                onclick="openClientProfile('${item.client.id}')">
+
+                <strong>${escapeHTML(item.client.name)}</strong>
+
+                <span class="muted">
+                  ${
+                    item.days === Infinity
+                      ? "Nunca comprou"
+                      : item.days + " dias sem comprar"
+                  }
+                </span>
+              </div>
+            `;
+          }).join("")
         : `<div class="empty">Nenhum cliente inativo há mais de 15 dias.</div>`;
 
-      const used = {};
-      db.sales.forEach(sale => (sale.items || []).forEach(item => {
-        used[item.productId] = (used[item.productId] || 0) + Number(item.quantity || 0);
-      }));
-
-      const unused = db.products.filter(product => !used[product.id]);
+      const unused = db.products.filter(function(product) {
+        return getProductQuantity(product.id) === 0;
+      });
 
       document.getElementById("unusedProducts").innerHTML = unused.length
-        ? unused.map(product => `
-          <div class="list-item">
-            <strong>${escapeHTML(product.name)}</strong>
-            <span class="muted">${escapeHTML(getSupplier(product.supplierId)?.name || "Sem fornecedor")}</span>
-          </div>
-        `).join("")
+        ? unused.map(function(product) {
+            const supplier = getSupplier(product.supplierId);
+
+            return `
+              <div class="list-item">
+                <strong>${escapeHTML(product.name)}</strong>
+                <span class="muted">
+                  ${supplier ? escapeHTML(supplier.name) : "Sem fornecedor"}
+                </span>
+              </div>
+            `;
+          }).join("")
         : `<div class="empty">Todos os produtos já possuem pedidos.</div>`;
 
-      const birthdays = db.clients.filter(client => {
-        if (!client.birth) return false;
-        const birth = client.birth.slice(5);
-        return birth === today().slice(5);
+      const birthdays = db.clients.filter(function(client) {
+        return client.birth && client.birth.slice(5) === today().slice(5);
       });
 
       let alerts = "";
 
       if (birthdays.length) {
-        alerts += `<div class="alert">Aniversariantes de hoje: ${birthdays.map(c => escapeHTML(c.name)).join(", ")}</div>`;
+        alerts += `
+          <div class="alert">
+            Aniversariantes de hoje:
+            ${birthdays.map(function(client) {
+              return escapeHTML(client.name);
+            }).join(", ")}
+          </div>
+        `;
       }
 
       if (inactive.length) {
-        alerts += `<div class="alert danger-alert">${inactive.length} cliente(s) precisam de acompanhamento por inatividade.</div>`;
+        alerts += `
+          <div class="alert danger-alert">
+            ${inactive.length} cliente(s) precisam de acompanhamento por inatividade.
+          </div>
+        `;
       }
 
       document.getElementById("dashboardAlerts").innerHTML = alerts;
     }
 
-    document.getElementById("clientForm").addEventListener("submit", event => {
+    document.getElementById("clientForm").addEventListener("submit", function(event) {
       event.preventDefault();
 
       db.clients.push({
@@ -1194,57 +1329,103 @@
       saveDB();
       event.target.reset();
       renderAll();
+
       alert("Cliente salvo com sucesso.");
     });
 
     function renderClients() {
       const search = (document.getElementById("clientSearch")?.value || "").toLowerCase();
 
-      const clients = db.clients.filter(client =>
-        client.name.toLowerCase().includes(search) ||
-        (client.phone || "").toLowerCase().includes(search)
-      );
+      const clients = db.clients.filter(function(client) {
+        return client.name.toLowerCase().includes(search) ||
+          (client.phone || "").toLowerCase().includes(search);
+      });
 
       document.getElementById("clientsTable").innerHTML = clients.length
-        ? clients.map(client => {
-          const stats = getClientStats(client.id);
-          const status = clientStatus(client);
+        ? clients.map(function(client) {
+            const stats = getClientStats(client.id);
+            const status = clientStatus(client);
 
-          return `
-            <tr class="clickable" onclick="openClientProfile('${client.id}')">
-              <td><strong>${escapeHTML(client.name)}</strong><br><span class="muted">${escapeHTML(client.city || "")}</span></td>
-              <td>${escapeHTML(client.phone || "—")}<br><span class="muted">${escapeHTML(client.email || "")}</span></td>
-              <td>${dateBR(stats.lastSale)}</td>
-              <td>
-                <span class="badge ${status === "Ativo" ? "badge-c" : "badge-a"}">${status}</span>
-              </td>
-              <td>${stats.sales.length} pedido(s)</td>
-              <td>
-                <button class="btn btn-small" onclick="event.stopPropagation();openClientProfile('${client.id}')">Abrir perfil</button>
-                <button class="btn btn-small btn-danger" onclick="event.stopPropagation();deleteClient('${client.id}')">Excluir</button>
-              </td>
-            </tr>
-          `;
-        }).join("")
-        : `<tr><td colspan="6" class="empty">Nenhum cliente cadastrado.</td></tr>`;
+            return `
+              <tr
+                class="clickable"
+                onclick="openClientProfile('${client.id}')">
+
+                <td>
+                  <strong>${escapeHTML(client.name)}</strong>
+                  <br>
+                  <span class="muted">${escapeHTML(client.city || "")}</span>
+                </td>
+
+                <td>
+                  ${escapeHTML(client.phone || "—")}
+                  <br>
+                  <span class="muted">${escapeHTML(client.email || "")}</span>
+                </td>
+
+                <td>${dateBR(stats.lastSale)}</td>
+
+                <td>
+                  <span class="badge ${status === "Ativo" ? "badge-c" : "badge-a"}">
+                    ${status}
+                  </span>
+                </td>
+
+                <td>${stats.sales.length}</td>
+
+                <td>
+                  <button
+                    class="btn btn-small"
+                    onclick="event.stopPropagation();openClientProfile('${client.id}')">
+                    Abrir perfil
+                  </button>
+
+                  <button
+                    class="btn btn-small btn-danger"
+                    onclick="event.stopPropagation();deleteClient('${client.id}')">
+                    Excluir
+                  </button>
+                </td>
+              </tr>
+            `;
+          }).join("")
+        : `
+          <tr>
+            <td colspan="6" class="empty">Nenhum cliente cadastrado.</td>
+          </tr>
+        `;
     }
 
     function deleteClient(id) {
       const client = getClient(id);
+
       if (!client) return;
 
-      if (!confirm(`Excluir o cliente ${client.name}? As vendas também serão removidas.`)) return;
+      if (!confirm("Excluir o cliente " + client.name + "? As vendas também serão removidas.")) {
+        return;
+      }
 
-      db.clients = db.clients.filter(c => c.id !== id);
-      db.sales = db.sales.filter(s => s.clientId !== id);
-      db.attachments = db.attachments.filter(a => a.clientId !== id);
-      db.lowerReasons = db.lowerReasons.filter(r => r.clientId !== id);
+      db.clients = db.clients.filter(function(item) {
+        return item.id !== id;
+      });
+
+      db.sales = db.sales.filter(function(sale) {
+        return sale.clientId !== id;
+      });
+
+      db.attachments = db.attachments.filter(function(file) {
+        return file.clientId !== id;
+      });
+
+      db.lowerReasons = db.lowerReasons.filter(function(reason) {
+        return reason.clientId !== id;
+      });
 
       saveDB();
       renderAll();
     }
 
-    document.getElementById("supplierForm").addEventListener("submit", event => {
+    document.getElementById("supplierForm").addEventListener("submit", function(event) {
       event.preventDefault();
 
       db.suppliers.push({
@@ -1258,51 +1439,78 @@
       event.target.reset();
       document.getElementById("supplierColor").value = "#e50914";
       renderAll();
+
       alert("Fornecedor salvo com sucesso.");
     });
 
     function renderSuppliers() {
       document.getElementById("suppliersTable").innerHTML = db.suppliers.length
-        ? db.suppliers.map(supplier => {
-          const products = db.products.filter(p => p.supplierId === supplier.id);
+        ? db.suppliers.map(function(supplier) {
+            const products = db.products.filter(function(product) {
+              return product.supplierId === supplier.id;
+            });
 
-          return `
-            <tr>
-              <td>
-                <span class="dot" style="background:${supplier.color}"></span>
-                <strong>${escapeHTML(supplier.name)}</strong>
-              </td>
-              <td>${escapeHTML(supplier.contact || "—")}</td>
-              <td><span class="supplier-chip"><span class="dot" style="background:${supplier.color}"></span>${supplier.color}</span></td>
-              <td>${products.length}</td>
-              <td>
-                <button class="btn btn-small btn-danger" onclick="deleteSupplier('${supplier.id}')">Excluir</button>
-              </td>
-            </tr>
-          `;
-        }).join("")
-        : `<tr><td colspan="5" class="empty">Nenhum fornecedor cadastrado.</td></tr>`;
+            return `
+              <tr>
+                <td>
+                  <span class="dot" style="background:${supplier.color}"></span>
+                  <strong>${escapeHTML(supplier.name)}</strong>
+                </td>
+
+                <td>${escapeHTML(supplier.contact || "—")}</td>
+
+                <td>
+                  <span class="supplier-chip">
+                    <span class="dot" style="background:${supplier.color}"></span>
+                    ${supplier.color}
+                  </span>
+                </td>
+
+                <td>${products.length}</td>
+
+                <td>
+                  <button
+                    class="btn btn-small btn-danger"
+                    onclick="deleteSupplier('${supplier.id}')">
+                    Excluir
+                  </button>
+                </td>
+              </tr>
+            `;
+          }).join("")
+        : `
+          <tr>
+            <td colspan="5" class="empty">Nenhum fornecedor cadastrado.</td>
+          </tr>
+        `;
     }
 
     function deleteSupplier(id) {
-      if (db.products.some(product => product.supplierId === id)) {
+      const hasProducts = db.products.some(function(product) {
+        return product.supplierId === id;
+      });
+
+      if (hasProducts) {
         alert("Não é possível excluir um fornecedor que possui produtos vinculados.");
         return;
       }
 
-      db.suppliers = db.suppliers.filter(s => s.id !== id);
+      db.suppliers = db.suppliers.filter(function(supplier) {
+        return supplier.id !== id;
+      });
+
       saveDB();
       renderAll();
     }
 
-    document.getElementById("productForm").addEventListener("submit", event => {
+    document.getElementById("productForm").addEventListener("submit", function(event) {
       event.preventDefault();
 
       const code = "P" + String(db.products.length + 1).padStart(4, "0");
 
       db.products.push({
         id: uid("prod"),
-        code,
+        code: code,
         name: document.getElementById("productName").value.trim(),
         supplierId: document.getElementById("productSupplier").value,
         price: Number(document.getElementById("productPrice").value || 0),
@@ -1313,107 +1521,173 @@
       saveDB();
       event.target.reset();
       renderAll();
+
       alert("Produto salvo com sucesso.");
     });
 
     function renderProducts() {
       const search = (document.getElementById("productSearch")?.value || "").toLowerCase();
 
-      const products = db.products.filter(product =>
-        product.name.toLowerCase().includes(search) ||
-        product.code.toLowerCase().includes(search)
-      );
+      const products = db.products.filter(function(product) {
+        return product.name.toLowerCase().includes(search) ||
+          product.code.toLowerCase().includes(search);
+      });
 
       document.getElementById("productsTable").innerHTML = products.length
-        ? products.map(product => {
-          const supplier = getSupplier(product.supplierId);
-          const quantity = db.sales.reduce((sum, sale) => {
-            const item = (sale.items || []).find(i => i.productId === product.id);
-            return sum + Number(item?.quantity || 0);
-          }, 0);
+        ? products.map(function(product) {
+            const supplier = getSupplier(product.supplierId);
+            const quantity = getProductQuantity(product.id);
 
-          return `
-            <tr>
-              <td>${escapeHTML(product.code)}</td>
-              <td><strong>${escapeHTML(product.name)}</strong></td>
-              <td>${supplier ? supplierChip(supplier) : "—"}</td>
-              <td>${escapeHTML(product.category || "—")}</td>
-              <td>${money(product.price)}</td>
-              <td>${quantity}</td>
-              <td>
-                <button class="btn btn-small btn-danger" onclick="deleteProduct('${product.id}')">Excluir</button>
-              </td>
-            </tr>
-          `;
-        }).join("")
-        : `<tr><td colspan="7" class="empty">Nenhum produto cadastrado.</td></tr>`;
+            return `
+              <tr>
+                <td>${escapeHTML(product.code)}</td>
+
+                <td>
+                  <strong>${escapeHTML(product.name)}</strong>
+                </td>
+
+                <td>
+                  ${supplier ? supplierChip(supplier, true) : "—"}
+                </td>
+
+                <td>${escapeHTML(product.category || "—")}</td>
+
+                <td>${money(product.price)}</td>
+
+                <td>${quantity}</td>
+
+                <td>
+                  <button
+                    class="btn btn-small btn-danger"
+                    onclick="deleteProduct('${product.id}')">
+                    Excluir
+                  </button>
+                </td>
+              </tr>
+            `;
+          }).join("")
+        : `
+          <tr>
+            <td colspan="7" class="empty">Nenhum produto cadastrado.</td>
+          </tr>
+        `;
     }
 
     function deleteProduct(id) {
-      if (db.sales.some(sale => sale.items.some(item => item.productId === id))) {
+      const hasSales = db.sales.some(function(sale) {
+        return (sale.items || []).some(function(item) {
+          return item.productId === id;
+        });
+      });
+
+      if (hasSales) {
         alert("Este produto possui histórico de vendas e não pode ser excluído.");
         return;
       }
 
-      db.products = db.products.filter(product => product.id !== id);
+      db.products = db.products.filter(function(product) {
+        return product.id !== id;
+      });
+
       saveDB();
       renderAll();
     }
 
     function updateSelects() {
-      const productSelect = document.getElementById("productSupplier");
-      productSelect.innerHTML = `<option value="">Selecione...</option>` +
-        db.suppliers.map(supplier =>
-          `<option value="${supplier.id}">${escapeHTML(supplier.name)}</option>`
-        ).join("");
+      const productSupplier = document.getElementById("productSupplier");
+      const oldSupplier = productSupplier.value;
 
-      const clientSelect = document.getElementById("saleClient");
-      const currentClient = clientSelect.value;
+      productSupplier.innerHTML =
+        `<option value="">Selecione...</option>` +
+        db.suppliers.map(function(supplier) {
+          return `
+            <option value="${supplier.id}">
+              ${escapeHTML(supplier.name)}
+            </option>
+          `;
+        }).join("");
 
-      clientSelect.innerHTML = `<option value="">Selecione...</option>` +
-        db.clients.map(client =>
-          `<option value="${client.id}">${escapeHTML(client.name)}</option>`
-        ).join("");
+      if (oldSupplier) {
+        productSupplier.value = oldSupplier;
+      }
 
-      if (currentClient) clientSelect.value = currentClient;
+      const saleClient = document.getElementById("saleClient");
+      const oldClient = saleClient.value;
+
+      saleClient.innerHTML =
+        `<option value="">Selecione...</option>` +
+        db.clients.map(function(client) {
+          return `
+            <option value="${client.id}">
+              ${escapeHTML(client.name)}
+            </option>
+          `;
+        }).join("");
+
+      if (oldClient) {
+        saleClient.value = oldClient;
+      }
     }
 
-    function openSaleModal(clientId = "") {
+    function openSaleModal(clientId) {
       updateSelects();
+
       document.getElementById("saleDate").value = today();
-      document.getElementById("saleClient").value = clientId;
+      document.getElementById("saleClient").value = clientId || "";
       document.getElementById("saleSeller").value = "";
       document.getElementById("saleNotes").value = "";
       document.getElementById("saleLines").innerHTML = "";
+
       addSaleLine();
+
       document.getElementById("saleModal").classList.add("show");
     }
 
-    function addSaleLine(productId = "", quantity = 1) {
+    function addSaleLine(productId, quantity) {
       const line = document.createElement("div");
+
       line.className = "product-line";
 
       line.innerHTML = `
         <div class="field">
           <label>Produto</label>
+
           <select class="sale-product" onchange="updateSaleTotal()">
             <option value="">Selecione...</option>
-            ${db.products.map(product => `
-              <option value="${product.id}" ${product.id === productId ? "selected" : ""}>
-                ${escapeHTML(product.code)} - ${escapeHTML(product.name)} (${money(product.price)})
-              </option>
-            `).join("")}
+
+            ${db.products.map(function(product) {
+              return `
+                <option
+                  value="${product.id}"
+                  ${product.id === productId ? "selected" : ""}>
+                  ${escapeHTML(product.code)} -
+                  ${escapeHTML(product.name)}
+                  (${money(product.price)})
+                </option>
+              `;
+            }).join("")}
           </select>
         </div>
 
         <div class="field">
           <label>Quantidade</label>
-          <input class="sale-quantity" type="number" min="1" value="${quantity}" oninput="updateSaleTotal()">
+
+          <input
+            class="sale-quantity"
+            type="number"
+            min="1"
+            value="${quantity || 1}"
+            oninput="updateSaleTotal()">
         </div>
 
         <div class="mini-total">R$ 0,00</div>
 
-        <button type="button" class="btn btn-small btn-danger" onclick="this.parentElement.remove();updateSaleTotal()">×</button>
+        <button
+          type="button"
+          class="btn btn-small btn-danger"
+          onclick="this.parentElement.remove();updateSaleTotal()">
+          ×
+        </button>
       `;
 
       document.getElementById("saleLines").appendChild(line);
@@ -1423,34 +1697,39 @@
     function updateSaleTotal() {
       let total = 0;
 
-      document.querySelectorAll(".product-line").forEach(line => {
-        const product = getProduct(line.querySelector(".sale-product")?.value);
+      document.querySelectorAll(".product-line").forEach(function(line) {
+        const productId = line.querySelector(".sale-product")?.value;
+        const product = getProduct(productId);
         const quantity = Number(line.querySelector(".sale-quantity")?.value || 0);
         const lineTotal = product ? product.price * quantity : 0;
 
         total += lineTotal;
+
         const display = line.querySelector(".mini-total");
-        if (display) display.textContent = money(lineTotal);
+
+        if (display) {
+          display.textContent = money(lineTotal);
+        }
       });
 
       document.getElementById("saleTotal").textContent = money(total);
     }
 
-    document.getElementById("saleForm").addEventListener("submit", event => {
+    document.getElementById("saleForm").addEventListener("submit", function(event) {
       event.preventDefault();
 
       const clientId = document.getElementById("saleClient").value;
-      const lines = [];
+      const items = [];
 
-      document.querySelectorAll(".product-line").forEach(line => {
+      document.querySelectorAll(".product-line").forEach(function(line) {
         const productId = line.querySelector(".sale-product").value;
         const quantity = Number(line.querySelector(".sale-quantity").value || 0);
         const product = getProduct(productId);
 
         if (product && quantity > 0) {
-          lines.push({
-            productId,
-            quantity,
+          items.push({
+            productId: productId,
+            quantity: quantity,
             price: product.price,
             guarantee: false
           });
@@ -1462,196 +1741,499 @@
         return;
       }
 
-      if (!lines.length) {
+      if (!items.length) {
         alert("Adicione pelo menos um produto.");
         return;
       }
 
       db.sales.push({
         id: uid("sale"),
-        clientId,
+        clientId: clientId,
         date: document.getElementById("saleDate").value,
         seller: document.getElementById("saleSeller").value.trim(),
         channel: document.getElementById("saleChannel").value,
         notes: document.getElementById("saleNotes").value.trim(),
-        items: lines
+        items: items
       });
 
       saveDB();
       closeModal("saleModal");
       renderAll();
+
       alert("Venda registrada com sucesso.");
     });
 
-    function renderABC() {
+    function getFilteredSales() {
       const period = document.getElementById("abcPeriod")?.value || "all";
-      let sales = db.sales;
 
-      if (period !== "all") {
-        const limit = new Date();
-        limit.setDate(limit.getDate() - Number(period));
-        sales = sales.filter(sale => new Date(sale.date + "T12:00:00") >= limit);
+      if (period === "all") {
+        return db.sales;
       }
 
-      const rows = db.clients.map(client => {
+      const limit = new Date();
+      limit.setDate(limit.getDate() - Number(period));
+
+      return db.sales.filter(function(sale) {
+        return new Date(sale.date + "T12:00:00") >= limit;
+      });
+    }
+
+    function getABCClassByAccumulated(rows, index) {
+      if (!rows.length) {
+        return "C";
+      }
+
+      const total = rows.reduce(function(sum, row) {
+        return sum + Number(row.revenue || 0);
+      }, 0);
+
+      if (total <= 0) {
+        if (index === 0) return "A";
+        if (index === 1) return "B";
+        return "C";
+      }
+
+      const accumulated = rows
+        .slice(0, index + 1)
+        .reduce(function(sum, row) {
+          return sum + Number(row.revenue || 0);
+        }, 0);
+
+      const percentage = accumulated / total * 100;
+
+      if (percentage <= 80) return "A";
+      if (percentage <= 95) return "B";
+
+      return "C";
+    }
+
+    function getProductABCClass(productId, salesList) {
+      const rows = db.products.map(function(product) {
+        return {
+          id: product.id,
+          revenue: getProductRevenue(product.id, salesList)
+        };
+      }).sort(function(a, b) {
+        return b.revenue - a.revenue;
+      });
+
+      const index = rows.findIndex(function(row) {
+        return row.id === productId;
+      });
+
+      if (index < 0) {
+        return "C";
+      }
+
+      return getABCClassByAccumulated(rows, index);
+    }
+
+    function getProductSuggestions(clientId, salesList) {
+      const stats = getClientStats(clientId, salesList || db.sales);
+      const purchasedIds = Object.keys(stats.quantities);
+      const sourceSales = salesList || db.sales;
+
+      const rows = db.products
+        .filter(function(product) {
+          return !purchasedIds.includes(product.id);
+        })
+        .map(function(product) {
+          const supplier = getSupplier(product.supplierId);
+
+          return {
+            product: product,
+            supplier: supplier,
+            abc: getProductABCClass(product.id, sourceSales),
+            revenue: getProductRevenue(product.id, sourceSales),
+            quantity: getProductQuantity(product.id, sourceSales)
+          };
+        })
+        .sort(function(a, b) {
+          const order = {
+            A: 1,
+            B: 2,
+            C: 3
+          };
+
+          if (order[a.abc] !== order[b.abc]) {
+            return order[a.abc] - order[b.abc];
+          }
+
+          return b.revenue - a.revenue;
+        });
+
+      return rows;
+    }
+
+    function getLowerPurchases(clientId) {
+      const clientStats = getClientStats(clientId);
+      const result = [];
+
+      db.products.forEach(function(product) {
+        const clientQuantity = Number(clientStats.quantities[product.id] || 0);
+
+        if (clientQuantity <= 0) {
+          return;
+        }
+
+        let total = 0;
+        let buyers = 0;
+
+        db.clients.forEach(function(otherClient) {
+          const stats = getClientStats(otherClient.id);
+          const quantity = Number(stats.quantities[product.id] || 0);
+
+          if (quantity > 0) {
+            total += quantity;
+            buyers++;
+          }
+        });
+
+        if (!buyers) {
+          return;
+        }
+
+        const average = total / buyers;
+
+        if (clientQuantity < average) {
+          const savedReason = db.lowerReasons.find(function(reason) {
+            return reason.clientId === clientId &&
+              reason.productId === product.id;
+          });
+
+          result.push({
+            product: product,
+            clientQuantity: clientQuantity,
+            average: average,
+            reason: savedReason ? savedReason.reason : ""
+          });
+        }
+      });
+
+      return result.sort(function(a, b) {
+        return (b.average - b.clientQuantity) - (a.average - a.clientQuantity);
+      });
+    }
+
+    function renderABC() {
+      const sales = getFilteredSales();
+
+      const rows = db.clients.map(function(client) {
         const stats = getClientStats(client.id, sales);
         const supplierIds = [];
+        const productIds = [];
 
-        stats.sales.forEach(sale => (sale.items || []).forEach(item => {
-          const product = getProduct(item.productId);
-          if (product && !supplierIds.includes(product.supplierId)) {
-            supplierIds.push(product.supplierId);
-          }
-        }));
+        stats.sales.forEach(function(sale) {
+          (sale.items || []).forEach(function(item) {
+            const product = getProduct(item.productId);
+
+            if (!product) return;
+
+            if (!supplierIds.includes(product.supplierId)) {
+              supplierIds.push(product.supplierId);
+            }
+
+            if (!productIds.includes(product.id)) {
+              productIds.push(product.id);
+            }
+          });
+        });
 
         return {
-          client,
-          stats,
-          supplierIds
+          client: client,
+          revenue: stats.revenue,
+          stats: stats,
+          supplierIds: supplierIds,
+          productIds: productIds
         };
-      }).sort((a, b) => b.stats.revenue - a.stats.revenue);
+      }).sort(function(a, b) {
+        return b.revenue - a.revenue;
+      });
+
+      const totalRevenue = rows.reduce(function(sum, row) {
+        return sum + row.revenue;
+      }, 0);
 
       document.getElementById("abcTable").innerHTML = rows.length
-        ? rows.map((row, index) => `
-          <tr class="clickable" onclick="openClientProfile('${row.client.id}')">
-            <td><strong>${escapeHTML(row.client.name)}</strong></td>
-            <td>${abcBadge(abcClass(index, rows.length))}</td>
-            <td>
-              <div class="supplier-list">
-                ${db.suppliers.map(supplier =>
-                  supplierChip(supplier, row.supplierIds.includes(supplier.id))
-                ).join("") || "—"}
-              </div>
+        ? rows.map(function(row, index) {
+            const abc = getABCClassByAccumulated(rows, index);
+            const participation = totalRevenue > 0
+              ? row.revenue / totalRevenue * 100
+              : 0;
+
+            const suggestions = getProductSuggestions(row.client.id, sales)
+              .slice(0, 3);
+
+            const suppliersHtml = db.suppliers.length
+              ? db.suppliers.map(function(supplier) {
+                  return supplierChip(
+                    supplier,
+                    row.supplierIds.includes(supplier.id)
+                  );
+                }).join("")
+              : "Nenhum fornecedor cadastrado";
+
+            const productsHtml = row.productIds.length
+              ? row.productIds.map(function(productId) {
+                  const product = getProduct(productId);
+
+                  return product
+                    ? `
+                      <span class="badge badge-c">
+                        ${escapeHTML(product.name)}
+                      </span>
+                    `
+                    : "";
+                }).join(" ")
+              : `<span class="muted">Nenhum produto</span>`;
+
+            const suggestionsHtml = suggestions.length
+              ? `
+                <div class="list suggestion-box">
+                  ${suggestions.map(function(item) {
+                    return `
+                      <div class="list-item">
+                        <strong>${escapeHTML(item.product.name)}</strong>
+                        <span class="muted">
+                          ${abcBadge(item.abc)}
+                          ${item.supplier ? " · " + escapeHTML(item.supplier.name) : ""}
+                        </span>
+                      </div>
+                    `;
+                  }).join("")}
+                </div>
+              `
+              : `<span class="muted">Sem sugestões</span>`;
+
+            return `
+              <tr
+                class="clickable"
+                onclick="openClientProfile('${row.client.id}')">
+
+                <td>
+                  <strong>${escapeHTML(row.client.name)}</strong>
+                  <br>
+                  <span class="muted">Clique para abrir o cliente</span>
+                </td>
+
+                <td>${abcBadge(abc)}</td>
+
+                <td>
+                  <div class="supplier-list">
+                    ${suppliersHtml}
+                  </div>
+                </td>
+
+                <td>
+                  <div class="supplier-list">
+                    ${productsHtml}
+                  </div>
+                </td>
+
+                <td>${row.stats.sales.length}</td>
+                <td>${row.stats.items}</td>
+
+                <td class="green">${money(row.revenue)}</td>
+
+                <td>
+                  ${participation.toFixed(2)}%
+                  <br>
+                  <span class="muted">da base</span>
+                </td>
+
+                <td>${dateBR(row.stats.lastSale)}</td>
+
+                <td>
+                  <button
+                    class="btn btn-small btn-primary"
+                    onclick="event.stopPropagation();openClientProfile('${row.client.id}')">
+                    Ver cliente
+                  </button>
+
+                  <div style="margin-top:8px">
+                    <strong style="font-size:11px">Sugestões:</strong>
+                    ${suggestionsHtml}
+                  </div>
+                </td>
+              </tr>
+            `;
+          }).join("")
+        : `
+          <tr>
+            <td colspan="10" class="empty">
+              Cadastre clientes e vendas para visualizar a Curva ABC.
             </td>
-            <td>${row.stats.sales.length}</td>
-            <td>${row.stats.items}</td>
-            <td class="green">${money(row.stats.revenue)}</td>
-            <td>${dateBR(row.stats.lastSale)}</td>
           </tr>
-        `).join("")
-        : `<tr><td colspan="7" class="empty">Cadastre clientes e vendas para visualizar a curva ABC.</td></tr>`;
+        `;
 
       renderABCProducts(sales);
     }
 
-    function renderABCProducts(sales = db.sales) {
-      const rows = db.products.map(product => {
-        let quantity = 0;
-        let revenue = 0;
+    function renderABCProducts(sales) {
+      const rows = db.products.map(function(product) {
+        const quantity = getProductQuantity(product.id, sales);
+        const revenue = getProductRevenue(product.id, sales);
         const clients = [];
 
-        sales.forEach(sale => {
-          const item = (sale.items || []).find(i => i.productId === product.id);
+        sales.forEach(function(sale) {
+          const hasProduct = (sale.items || []).some(function(item) {
+            return item.productId === product.id;
+          });
 
-          if (item) {
-            quantity += Number(item.quantity || 0);
-            revenue += Number(item.quantity || 0) * Number(item.price || 0);
-
-            if (!clients.includes(sale.clientId)) {
-              clients.push(sale.clientId);
-            }
+          if (hasProduct && !clients.includes(sale.clientId)) {
+            clients.push(sale.clientId);
           }
         });
 
         return {
-          product,
-          quantity,
-          revenue,
-          clients
+          product: product,
+          quantity: quantity,
+          revenue: revenue,
+          clients: clients
         };
-      }).sort((a, b) => b.revenue - a.revenue);
+      }).sort(function(a, b) {
+        return b.revenue - a.revenue;
+      });
 
       document.getElementById("abcProductsTable").innerHTML = rows.length
-        ? rows.map((row, index) => {
-          const supplier = getSupplier(row.product.supplierId);
+        ? rows.map(function(row) {
+            const supplier = getSupplier(row.product.supplierId);
+            const abc = getProductABCClass(row.product.id, sales);
 
-          return `
-            <tr>
-              <td><strong>${escapeHTML(row.product.name)}</strong><br><span class="muted">${escapeHTML(row.product.code)}</span></td>
-              <td>${supplier ? supplierChip(supplier) : "—"}</td>
-              <td>${abcBadge(abcClass(index, rows.length))}</td>
-              <td>${row.quantity}</td>
-              <td class="green">${money(row.revenue)}</td>
-              <td>${row.clients.length}</td>
-            </tr>
-          `;
-        }).join("")
-        : `<tr><td colspan="6" class="empty">Nenhum produto cadastrado.</td></tr>`;
+            return `
+              <tr>
+                <td>
+                  <strong>${escapeHTML(row.product.name)}</strong>
+                  <br>
+                  <span class="muted">${escapeHTML(row.product.code)}</span>
+                </td>
+
+                <td>${supplier ? supplierChip(supplier, true) : "—"}</td>
+                <td>${abcBadge(abc)}</td>
+                <td>${row.quantity}</td>
+                <td class="green">${money(row.revenue)}</td>
+                <td>${row.clients.length}</td>
+              </tr>
+            `;
+          }).join("")
+        : `
+          <tr>
+            <td colspan="6" class="empty">Nenhum produto cadastrado.</td>
+          </tr>
+        `;
     }
 
     function openClientProfile(clientId) {
       const client = getClient(clientId);
+
       if (!client) return;
 
       const stats = getClientStats(clientId);
       const boughtProductIds = Object.keys(stats.quantities);
-      const boughtSupplierIds = [...new Set(
-        boughtProductIds
-          .map(productId => getProduct(productId)?.supplierId)
-          .filter(Boolean)
-      )];
+      const boughtSupplierIds = [];
 
-      const globalProductAverage = {};
-      db.clients.forEach(otherClient => {
-        const otherStats = getClientStats(otherClient.id);
+      boughtProductIds.forEach(function(productId) {
+        const product = getProduct(productId);
 
-        Object.entries(otherStats.quantities).forEach(([productId, quantity]) => {
-          if (!globalProductAverage[productId]) {
-            globalProductAverage[productId] = {
-              total: 0,
-              clients: 0
-            };
-          }
-
-          globalProductAverage[productId].total += quantity;
-          globalProductAverage[productId].clients++;
-        });
+        if (product && !boughtSupplierIds.includes(product.supplierId)) {
+          boughtSupplierIds.push(product.supplierId);
+        }
       });
 
-      const suggestions = db.products
-        .filter(product => !boughtProductIds.includes(product.id))
-        .map(product => {
-          const abcPosition = getProductABCPosition(product.id);
-          const avg = globalProductAverage[product.id];
-          return {
-            product,
-            abcPosition,
-            avg: avg ? avg.total / avg.clients : 0
-          };
-        })
-        .sort((a, b) => {
-          if (a.abcPosition !== b.abcPosition) {
-            return a.abcPosition - b.abcPosition;
-          }
-          return b.avg - a.avg;
-        });
+      const suggestions = getProductSuggestions(clientId);
+      const lowerPurchases = getLowerPurchases(clientId);
 
-      const lowerPurchases = db.products
-        .filter(product => boughtProductIds.includes(product.id))
-        .map(product => {
-          const clientQuantity = stats.quantities[product.id] || 0;
-          const average = globalProductAverage[product.id]
-            ? globalProductAverage[product.id].total / globalProductAverage[product.id].clients
-            : 0;
+      const ordersHtml = stats.sales.length
+        ? stats.sales
+            .slice()
+            .sort(function(a, b) {
+              return b.date.localeCompare(a.date);
+            })
+            .map(function(sale) {
+              return `
+                <div class="list-item">
+                  <strong>
+                    Pedido de ${dateBR(sale.date)} —
+                    ${money(getSaleTotal(sale))}
+                  </strong>
 
-          const savedReason = db.lowerReasons.find(
-            reason => reason.clientId === clientId && reason.productId === product.id
-          );
+                  <div class="muted">
+                    ${(sale.items || []).length} produto(s) ·
+                    ${escapeHTML(sale.channel || "Canal não informado")} ·
+                    ${escapeHTML(sale.seller || "Vendedor não informado")}
+                  </div>
 
-          return {
-            product,
-            clientQuantity,
-            average,
-            savedReason
-          };
-        })
-        .filter(row => row.average > row.clientQuantity);
+                  <div class="form-actions">
+                    <button
+                      class="btn btn-small"
+                      onclick="openOrder('${sale.id}')">
+                      Ver pedido
+                    </button>
+
+                    <button
+                      class="btn btn-small btn-primary"
+                      onclick="downloadOrderPDF('${sale.id}')">
+                      Baixar PDF
+                    </button>
+                  </div>
+                </div>
+              `;
+            }).join("")
+        : `<div class="empty">Este cliente ainda não possui pedidos.</div>`;
+
+      const suggestionsHtml = suggestions.length
+        ? suggestions.slice(0, 15).map(function(item) {
+            return `
+              <div class="list-item">
+                <strong>${escapeHTML(item.product.name)}</strong>
+
+                <div class="muted">
+                  ${abcBadge(item.abc)}
+                  · ${item.quantity} unidade(s) vendida(s) na base
+                  · ${money(item.revenue)} em faturamento
+                  ${item.supplier ? " · " + escapeHTML(item.supplier.name) : ""}
+                </div>
+              </div>
+            `;
+          }).join("")
+        : `<div class="empty">Não há sugestões disponíveis.</div>`;
+
+      const lowerHtml = lowerPurchases.length
+        ? lowerPurchases.map(function(item) {
+            return `
+              <div class="list-item">
+                <strong>${escapeHTML(item.product.name)}</strong>
+
+                <div class="muted">
+                  Cliente comprou: <strong>${item.clientQuantity}</strong>
+                  · Média dos compradores:
+                  <strong>${item.average.toFixed(1)}</strong>
+                </div>
+
+                <div class="field" style="margin-top:10px">
+                  <label>Motivo da compra menor</label>
+
+                  <input
+                    value="${escapeHTML(item.reason)}"
+                    placeholder="Ex.: preço, baixa procura, preferência..."
+                    onchange="saveLowerReason('${client.id}','${item.product.id}',this.value)">
+                </div>
+              </div>
+            `;
+          }).join("")
+        : `<div class="empty">Nenhum produto abaixo da média identificado.</div>`;
 
       document.getElementById("clientProfile").innerHTML = `
         <div class="profile-header">
           <div>
-            <button class="btn btn-small" onclick="showPage('clientes');renderAll()">← Voltar</button>
+            <button
+              class="btn btn-small"
+              onclick="showPage('clientes');renderAll()">
+              ← Voltar
+            </button>
+
             <h2 style="margin-top:15px">${escapeHTML(client.name)}</h2>
+
             <div class="muted">
               ${escapeHTML(client.phone || "Sem telefone")} ·
               ${escapeHTML(client.email || "Sem e-mail")} ·
@@ -1660,9 +2242,23 @@
           </div>
 
           <div class="form-actions" style="margin-top:0">
-            <button class="btn btn-primary" onclick="openSaleModal('${client.id}')">+ Nova venda</button>
-            <button class="btn" onclick="document.getElementById('attachmentInput').click()">Anexar arquivo</button>
-            <input id="attachmentInput" type="file" hidden onchange="saveAttachment('${client.id}', this.files[0])">
+            <button
+              class="btn btn-primary"
+              onclick="openSaleModal('${client.id}')">
+              + Nova venda
+            </button>
+
+            <button
+              class="btn"
+              onclick="document.getElementById('attachmentInput').click()">
+              Anexar arquivo
+            </button>
+
+            <input
+              id="attachmentInput"
+              type="file"
+              hidden
+              onchange="saveAttachment('${client.id}', this.files[0])">
           </div>
         </div>
 
@@ -1671,17 +2267,22 @@
             <div class="metric">Pedidos</div>
             <div class="metric-value">${stats.sales.length}</div>
           </div>
+
           <div class="card">
             <div class="metric">Itens comprados</div>
             <div class="metric-value">${stats.items}</div>
           </div>
+
           <div class="card">
             <div class="metric">Faturamento</div>
             <div class="metric-value green">${money(stats.revenue)}</div>
           </div>
+
           <div class="card">
             <div class="metric">Status</div>
-            <div class="metric-value" style="font-size:18px">${clientStatus(client)}</div>
+            <div class="metric-value" style="font-size:18px">
+              ${clientStatus(client)}
+            </div>
           </div>
         </div>
 
@@ -1689,96 +2290,62 @@
           <div>
             <div class="panel">
               <h2>Fornecedores comprados pelo cliente</h2>
+
               <div class="supplier-list">
-                ${db.suppliers.map(supplier =>
-                  supplierChip(supplier, boughtSupplierIds.includes(supplier.id))
-                ).join("") || `<span class="muted">Nenhum fornecedor cadastrado.</span>`}
+                ${
+                  db.suppliers.length
+                    ? db.suppliers.map(function(supplier) {
+                        return supplierChip(
+                          supplier,
+                          boughtSupplierIds.includes(supplier.id)
+                        );
+                      }).join("")
+                    : `<span class="muted">Nenhum fornecedor cadastrado.</span>`
+                }
               </div>
 
               <div class="muted" style="margin-top:12px">
-                <span class="dot" style="background:#555"></span> Cinza: ainda não comprou
+                <span class="dot" style="background:#555"></span>
+                Cinza: ainda não comprou
                 &nbsp;&nbsp;
-                <span class="dot" style="background:var(--red)"></span> Cor ativa: já comprou
+                <span class="dot" style="background:var(--red)"></span>
+                Cor cadastrada: já comprou
               </div>
             </div>
 
             <div class="panel" style="margin-top:15px">
               <h2>Pedidos do cliente</h2>
-              <div class="list">
-                ${stats.sales.length
-                  ? stats.sales.sort((a, b) => b.date.localeCompare(a.date)).map(sale => `
-                    <div class="list-item">
-                      <strong>Pedido de ${dateBR(sale.date)} — ${money(getSaleTotal(sale))}</strong>
-                      <div class="muted">${sale.items.length} produto(s) · ${escapeHTML(sale.channel || "Canal não informado")} · ${escapeHTML(sale.seller || "Vendedor não informado")}</div>
-                      <div class="form-actions">
-                        <button class="btn btn-small" onclick="openOrder('${sale.id}')">Ver pedido</button>
-                        <button class="btn btn-small btn-primary" onclick="downloadOrderPDF('${sale.id}')">Baixar PDF</button>
-                      </div>
-                    </div>
-                  `).join("")
-                  : `<div class="empty">Este cliente ainda não possui pedidos.</div>`
-                }
-              </div>
+              <div class="list">${ordersHtml}</div>
             </div>
 
             <div class="panel" style="margin-top:15px">
               <h2>Anexos do cliente</h2>
-              <div id="attachments-${client.id}">
-                ${renderAttachments(client.id)}
-              </div>
+              ${renderAttachments(client.id)}
             </div>
           </div>
 
           <div>
             <div class="panel">
               <h2>Sugestões de produtos</h2>
+
               <div class="muted" style="margin-bottom:12px">
                 Produtos que o cliente ainda não comprou, priorizados pela Curva ABC geral.
               </div>
 
               <div class="list">
-                ${suggestions.length
-                  ? suggestions.slice(0, 12).map(row => `
-                    <div class="list-item">
-                      <strong>${escapeHTML(row.product.name)}</strong>
-                      <div class="muted">
-                        ${abcBadge(row.abcPosition)} ·
-                        Média da base: ${row.avg.toFixed(1)} unidade(s)
-                      </div>
-                    </div>
-                  `).join("")
-                  : `<div class="empty">Não há sugestões disponíveis.</div>`
-                }
+                ${suggestionsHtml}
               </div>
             </div>
 
             <div class="panel" style="margin-top:15px">
-              <h2>Comprou abaixo da média</h2>
+              <h2>Produtos comprados em menor quantidade</h2>
+
               <div class="muted" style="margin-bottom:12px">
-                A média considera os clientes que já compraram cada produto.
+                Compare a quantidade comprada pelo cliente com a média dos clientes que compraram o mesmo produto.
               </div>
 
               <div class="list">
-                ${lowerPurchases.length
-                  ? lowerPurchases.map(row => `
-                    <div class="list-item">
-                      <strong>${escapeHTML(row.product.name)}</strong>
-                      <div class="muted">
-                        Cliente: ${row.clientQuantity} · Média da base: ${row.average.toFixed(1)}
-                      </div>
-
-                      <div class="field" style="margin-top:9px">
-                        <label>Motivo da compra menor</label>
-                        <input
-                          value="${escapeHTML(row.savedReason?.reason || "")}"
-                          placeholder="Ex.: preço, preferência, baixa procura..."
-                          onchange="saveLowerReason('${client.id}','${row.product.id}',this.value)"
-                        >
-                      </div>
-                    </div>
-                  `).join("")
-                  : `<div class="empty">Nenhum produto abaixo da média identificado.</div>`
-                }
+                ${lowerHtml}
               </div>
             </div>
           </div>
@@ -1788,36 +2355,20 @@
       showPage("profile");
     }
 
-    function getProductABCPosition(productId) {
-      const rows = db.products.map(product => {
-        const revenue = db.sales.reduce((sum, sale) => {
-          const item = (sale.items || []).find(i => i.productId === product.id);
-          return sum + Number(item?.quantity || 0) * Number(item?.price || 0);
-        }, 0);
-
-        return {
-          id: product.id,
-          revenue
-        };
-      }).sort((a, b) => b.revenue - a.revenue);
-
-      const index = rows.findIndex(row => row.id === productId);
-      return index >= 0 ? abcClass(index, rows.length) : "C";
-    }
-
     function saveLowerReason(clientId, productId, reason) {
-      const existing = db.lowerReasons.find(
-        item => item.clientId === clientId && item.productId === productId
-      );
+      const existing = db.lowerReasons.find(function(item) {
+        return item.clientId === clientId &&
+          item.productId === productId;
+      });
 
       if (existing) {
         existing.reason = reason;
       } else {
         db.lowerReasons.push({
           id: uid("reason"),
-          clientId,
-          productId,
-          reason
+          clientId: clientId,
+          productId: productId,
+          reason: reason
         });
       }
 
@@ -1829,10 +2380,10 @@
 
       const reader = new FileReader();
 
-      reader.onload = () => {
+      reader.onload = function() {
         db.attachments.push({
           id: uid("file"),
-          clientId,
+          clientId: clientId,
           name: file.name,
           type: file.type,
           size: file.size,
@@ -1848,7 +2399,9 @@
     }
 
     function renderAttachments(clientId) {
-      const attachments = db.attachments.filter(file => file.clientId === clientId);
+      const attachments = db.attachments.filter(function(file) {
+        return file.clientId === clientId;
+      });
 
       if (!attachments.length) {
         return `<div class="empty">Nenhum arquivo anexado.</div>`;
@@ -1856,53 +2409,106 @@
 
       return `
         <div class="list">
-          ${attachments.map(file => `
-            <div class="list-item">
-              <strong>${escapeHTML(file.name)}</strong>
-              <div class="muted">${dateBR(file.date)} · ${formatBytes(file.size)}</div>
-              <div class="form-actions">
-                <a class="btn btn-small" href="${file.data}" download="${escapeHTML(file.name)}">Baixar</a>
-                ${file.type.startsWith("image/")
-                  ? `<img class="image-preview" src="${file.data}" alt="Pré-visualização">`
-                  : ""
-                }
-                <button class="btn btn-small btn-danger" onclick="deleteAttachment('${file.id}','${clientId}')">Excluir</button>
+          ${attachments.map(function(file) {
+            return `
+              <div class="list-item">
+                <strong>${escapeHTML(file.name)}</strong>
+
+                <div class="muted">
+                  ${dateBR(file.date)} · ${formatBytes(file.size)}
+                </div>
+
+                <div class="form-actions">
+                  <a
+                    class="btn btn-small"
+                    href="${file.data}"
+                    download="${escapeHTML(file.name)}">
+                    Baixar
+                  </a>
+
+                  ${
+                    file.type && file.type.startsWith("image/")
+                      ? `
+                        <img
+                          class="image-preview"
+                          src="${file.data}"
+                          alt="Pré-visualização">
+                      `
+                      : ""
+                  }
+
+                  <button
+                    class="btn btn-small btn-danger"
+                    onclick="deleteAttachment('${file.id}','${clientId}')">
+                    Excluir
+                  </button>
+                </div>
               </div>
-            </div>
-          `).join("")}
+            `;
+          }).join("")}
         </div>
       `;
     }
 
     function formatBytes(bytes) {
       if (!bytes) return "0 B";
+
       const units = ["B", "KB", "MB", "GB"];
       const index = Math.floor(Math.log(bytes) / Math.log(1024));
-      return `${(bytes / Math.pow(1024, index)).toFixed(1)} ${units[index]}`;
+
+      return (bytes / Math.pow(1024, index)).toFixed(1) + " " + units[index];
     }
 
     function deleteAttachment(fileId, clientId) {
-      if (!confirm("Excluir este anexo?")) return;
+      if (!confirm("Excluir este anexo?")) {
+        return;
+      }
 
-      db.attachments = db.attachments.filter(file => file.id !== fileId);
+      db.attachments = db.attachments.filter(function(file) {
+        return file.id !== fileId;
+      });
+
       saveDB();
       openClientProfile(clientId);
     }
 
     function openOrder(saleId) {
-      const sale = db.sales.find(item => item.id === saleId);
+      const sale = db.sales.find(function(item) {
+        return item.id === saleId;
+      });
+
       if (!sale) return;
 
       const client = getClient(sale.clientId);
 
+      const itemsHtml = (sale.items || []).map(function(item) {
+        const product = getProduct(item.productId);
+        const supplier = product ? getSupplier(product.supplierId) : null;
+
+        return `
+          <tr>
+            <td>${escapeHTML(product?.name || "Produto removido")}</td>
+            <td>${supplier ? supplierChip(supplier, true) : "—"}</td>
+            <td>${item.quantity}</td>
+            <td>${money(item.price)}</td>
+            <td class="green">${money(item.quantity * item.price)}</td>
+          </tr>
+        `;
+      }).join("");
+
       document.getElementById("orderDetails").innerHTML = `
         <div class="card" style="margin-bottom:14px">
           <strong>${escapeHTML(client?.name || "Cliente removido")}</strong>
+
           <div class="muted">
-            ${escapeHTML(client?.phone || "")} · ${escapeHTML(client?.email || "")}
+            ${escapeHTML(client?.phone || "")} ·
+            ${escapeHTML(client?.email || "")}
           </div>
+
           <div class="muted" style="margin-top:7px">
-            Data: ${dateBR(sale.date)} · Vendedor: ${escapeHTML(sale.seller || "—")} · Canal: ${escapeHTML(sale.channel || "—")}
+            Data: ${dateBR(sale.date)} ·
+            Vendedor: ${escapeHTML(sale.seller || "—")} ·
+            Canal: ${escapeHTML(sale.channel || "—")}
           </div>
         </div>
 
@@ -1917,39 +2523,41 @@
                 <th>Total</th>
               </tr>
             </thead>
-            <tbody>
-              ${sale.items.map(item => {
-                const product = getProduct(item.productId);
-                const supplier = product ? getSupplier(product.supplierId) : null;
 
-                return `
-                  <tr>
-                    <td>${escapeHTML(product?.name || "Produto removido")}</td>
-                    <td>${supplier ? supplierChip(supplier) : "—"}</td>
-                    <td>${item.quantity}</td>
-                    <td>${money(item.price)}</td>
-                    <td class="green">${money(item.quantity * item.price)}</td>
-                  </tr>
-                `;
-              }).join("")}
-            </tbody>
+            <tbody>${itemsHtml}</tbody>
           </table>
         </div>
 
-        <div style="text-align:right;font-size:20px;margin-top:18px">
-          Total: <strong class="green">${money(getSaleTotal(sale))}</strong>
+        <div style="margin-top:18px;text-align:right;font-size:20px">
+          Total:
+          <strong class="green">${money(getSaleTotal(sale))}</strong>
         </div>
 
-        ${sale.notes ? `
-          <div class="card" style="margin-top:15px">
-            <strong>Observações</strong>
-            <div class="muted" style="margin-top:7px">${escapeHTML(sale.notes)}</div>
-          </div>
-        ` : ""}
+        ${
+          sale.notes
+            ? `
+              <div class="card" style="margin-top:15px">
+                <strong>Observações</strong>
+                <div class="muted" style="margin-top:7px">
+                  ${escapeHTML(sale.notes)}
+                </div>
+              </div>
+            `
+            : ""
+        }
 
         <div class="form-actions">
-          <button class="btn btn-primary" onclick="downloadOrderPDF('${sale.id}')">Baixar pedido em PDF</button>
-          <button class="btn" onclick="closeModal('orderModal')">Fechar</button>
+          <button
+            class="btn btn-primary"
+            onclick="downloadOrderPDF('${sale.id}')">
+            Baixar pedido em PDF
+          </button>
+
+          <button
+            class="btn"
+            onclick="closeModal('orderModal')">
+            Fechar
+          </button>
         </div>
       `;
 
@@ -1957,7 +2565,10 @@
     }
 
     function downloadOrderPDF(saleId) {
-      const sale = db.sales.find(item => item.id === saleId);
+      const sale = db.sales.find(function(item) {
+        return item.id === saleId;
+      });
+
       if (!sale) return;
 
       const client = getClient(sale.clientId);
@@ -1977,40 +2588,53 @@
       doc.setTextColor(0, 0, 0);
       doc.setFontSize(18);
       doc.text("PEDIDO COMERCIAL", 15, y);
-      y += 10;
 
+      y += 10;
       doc.setFontSize(10);
-      doc.text(`Cliente: ${client?.name || "—"}`, 15, y);
+
+      doc.text("Cliente: " + (client?.name || "—"), 15, y);
       y += 6;
-      doc.text(`Telefone: ${client?.phone || "—"}`, 15, y);
+
+      doc.text("Telefone: " + (client?.phone || "—"), 15, y);
       y += 6;
-      doc.text(`E-mail: ${client?.email || "—"}`, 15, y);
+
+      doc.text("E-mail: " + (client?.email || "—"), 15, y);
       y += 6;
-      doc.text(`Data: ${dateBR(sale.date)}`, 15, y);
+
+      doc.text("Data: " + dateBR(sale.date), 15, y);
       y += 6;
-      doc.text(`Vendedor: ${sale.seller || "—"} | Canal: ${sale.channel || "—"}`, 15, y);
+
+      doc.text(
+        "Vendedor: " + (sale.seller || "—") +
+        " | Canal: " + (sale.channel || "—"),
+        15,
+        y
+      );
+
       y += 12;
 
       doc.setFillColor(35, 35, 35);
       doc.setTextColor(255, 255, 255);
       doc.rect(15, y - 5, 180, 8, "F");
+
       doc.text("Produto", 18, y);
       doc.text("Qtd.", 115, y);
       doc.text("Unitário", 140, y);
       doc.text("Total", 174, y);
-      y += 9;
 
+      y += 9;
       doc.setTextColor(0, 0, 0);
 
-      sale.items.forEach(item => {
+      sale.items.forEach(function(item) {
         const product = getProduct(item.productId);
-        const name = product?.name || "Produto removido";
+        const productName = product?.name || "Produto removido";
         const lineTotal = item.quantity * item.price;
 
-        doc.text(name.substring(0, 48), 18, y);
+        doc.text(productName.substring(0, 48), 18, y);
         doc.text(String(item.quantity), 118, y);
         doc.text(money(item.price), 140, y);
         doc.text(money(lineTotal), 174, y);
+
         y += 7;
 
         if (y > 270) {
@@ -2021,26 +2645,31 @@
 
       y += 8;
       doc.setFontSize(13);
-      doc.text(`TOTAL: ${money(getSaleTotal(sale))}`, 145, y);
+      doc.text("TOTAL: " + money(getSaleTotal(sale)), 145, y);
 
       if (sale.notes) {
         y += 12;
         doc.setFontSize(10);
         doc.text("Observações:", 15, y);
         y += 6;
+
         const notes = doc.splitTextToSize(sale.notes, 175);
         doc.text(notes, 15, y);
       }
 
-      doc.save(`pedido-${client?.name || "cliente"}-${sale.date}.pdf`);
+      const safeName = (client?.name || "cliente")
+        .replace(/[^a-z0-9]/gi, "-")
+        .toLowerCase();
+
+      doc.save("pedido-" + safeName + "-" + sale.date + ".pdf");
     }
 
     function closeModal(id) {
       document.getElementById(id).classList.remove("show");
     }
 
-    document.querySelectorAll(".modal").forEach(modal => {
-      modal.addEventListener("click", event => {
+    document.querySelectorAll(".modal").forEach(function(modal) {
+      modal.addEventListener("click", function(event) {
         if (event.target === modal) {
           modal.classList.remove("show");
         }
