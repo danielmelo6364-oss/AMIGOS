@@ -5,21 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Gestão Comercial</title>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-
   <style>
     :root {
       --black: #080808;
-      --black-2: #121212;
-      --black-3: #1c1c1c;
+      --black2: #121212;
+      --black3: #1d1d1d;
       --red: #e50914;
-      --red-dark: #9f0710;
-      --white: #fff;
+      --red-dark: #6d0b10;
+      --white: #ffffff;
       --gray: #a9a9a9;
-      --border: #333;
-      --green: #26c77b;
-      --yellow: #f2bd38;
-      --blue: #4e9cff;
+      --border: #333333;
+      --green: #2dcc80;
+      --yellow: #f2c14e;
+      --blue: #4b9cff;
+      --orange: #f58b2a;
     }
 
     * {
@@ -46,15 +45,17 @@
 
     .app {
       min-height: 100vh;
-      display: flex;
     }
 
     .sidebar {
       position: fixed;
-      inset: 0 auto 0 0;
+      top: 0;
+      left: 0;
+      bottom: 0;
       z-index: 10;
       width: 245px;
       padding: 22px 14px;
+      overflow-y: auto;
       background: #050505;
       border-right: 1px solid var(--border);
     }
@@ -64,7 +65,6 @@
       color: var(--red);
       font-size: 23px;
       font-weight: bold;
-      letter-spacing: .5px;
     }
 
     .brand small {
@@ -74,10 +74,9 @@
       font-size: 10px;
       font-weight: normal;
       letter-spacing: 1px;
-      text-transform: uppercase;
     }
 
-    .nav-btn {
+    .nav-button {
       width: 100%;
       margin: 3px 0;
       padding: 13px 12px;
@@ -86,11 +85,10 @@
       background: transparent;
       color: #bbb;
       text-align: left;
-      transition: .2s;
     }
 
-    .nav-btn:hover,
-    .nav-btn.active {
+    .nav-button:hover,
+    .nav-button.active {
       background: var(--red);
       color: white;
     }
@@ -106,7 +104,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 15px;
-      margin-bottom: 25px;
+      margin-bottom: 24px;
     }
 
     h1,
@@ -147,26 +145,25 @@
       padding: 18px;
       border: 1px solid var(--border);
       border-radius: 9px;
-      background: var(--black-2);
+      background: var(--black2);
     }
 
     .cards {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
       gap: 15px;
-      margin-bottom: 23px;
+      margin-bottom: 18px;
     }
 
     .metric {
       color: var(--gray);
       font-size: 12px;
-      letter-spacing: .5px;
       text-transform: uppercase;
     }
 
     .metric-value {
-      margin-top: 10px;
-      font-size: 27px;
+      margin-top: 9px;
+      font-size: 26px;
       font-weight: bold;
     }
 
@@ -174,12 +171,20 @@
       color: var(--green);
     }
 
+    .red {
+      color: var(--red);
+    }
+
     .yellow {
       color: var(--yellow);
     }
 
-    .red {
-      color: var(--red);
+    .blue {
+      color: var(--blue);
+    }
+
+    .orange {
+      color: var(--orange);
     }
 
     .form-grid {
@@ -207,7 +212,7 @@
     }
 
     label {
-      color: #d4d4d4;
+      color: #d0d0d0;
       font-size: 12px;
     }
 
@@ -219,7 +224,7 @@
       outline: none;
       border: 1px solid var(--border);
       border-radius: 5px;
-      background: #0b0b0b;
+      background: #0a0a0a;
       color: white;
     }
 
@@ -234,50 +239,50 @@
       resize: vertical;
     }
 
-    .form-actions {
+    .actions {
       display: flex;
       flex-wrap: wrap;
-      gap: 9px;
+      gap: 8px;
       margin-top: 15px;
     }
 
-    .btn {
+    .button {
       padding: 10px 14px;
       border: 1px solid var(--border);
       border-radius: 6px;
-      background: var(--black-3);
+      background: var(--black3);
       color: white;
     }
 
-    .btn:hover {
+    .button:hover {
       filter: brightness(1.25);
     }
 
-    .btn-primary {
+    .button.primary {
       border-color: var(--red);
       background: var(--red);
     }
 
-    .btn-danger {
-      border-color: #8d131a;
+    .button.danger {
       background: #4c0b0f;
+      border-color: #87121a;
     }
 
-    .btn-success {
-      border-color: #19865c;
-      background: #095b3a;
+    .button.success {
+      background: #075f3b;
+      border-color: #138457;
     }
 
-    .btn-small {
+    .button.small {
       padding: 6px 9px;
       font-size: 12px;
     }
 
     .toolbar {
       display: flex;
-      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
+      flex-wrap: wrap;
       gap: 12px;
       margin-bottom: 15px;
     }
@@ -298,7 +303,7 @@
 
     th,
     td {
-      padding: 12px 9px;
+      padding: 11px 9px;
       border-bottom: 1px solid var(--border);
       text-align: left;
       vertical-align: middle;
@@ -320,9 +325,7 @@
     }
 
     .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
+      display: inline-block;
       padding: 4px 8px;
       border-radius: 20px;
       font-size: 11px;
@@ -330,18 +333,33 @@
     }
 
     .badge-a {
-      background: #531116;
-      color: #ff7880;
+      background: #551016;
+      color: #ff858c;
     }
 
     .badge-b {
-      background: #493b0c;
-      color: #f4d36a;
+      background: #55430b;
+      color: #f5d76f;
     }
 
     .badge-c {
-      background: #173b56;
-      color: #7ab9ff;
+      background: #153c58;
+      color: #80bdff;
+    }
+
+    .badge-green {
+      background: #084e32;
+      color: #76e3ad;
+    }
+
+    .badge-red {
+      background: #551016;
+      color: #ff858c;
+    }
+
+    .badge-yellow {
+      background: #55430b;
+      color: #f5d76f;
     }
 
     .supplier-list {
@@ -363,7 +381,7 @@
     }
 
     .supplier-chip.inactive {
-      border-color: #2e2e2e;
+      border-color: #2c2c2c;
       background: #171717;
       color: #777;
     }
@@ -395,7 +413,7 @@
     }
 
     .empty {
-      padding: 25px 10px;
+      padding: 24px 10px;
       color: var(--gray);
       text-align: center;
       font-size: 13px;
@@ -411,21 +429,47 @@
       font-size: 13px;
     }
 
-    .danger-alert {
+    .alert.danger {
       border-left-color: var(--red);
-      background: #270b0d;
-      color: #ff9ca1;
+      background: #290b0e;
+      color: #ffadb1;
     }
 
-    .profile-header {
+    .alert.success {
+      border-left-color: var(--green);
+      background: #083322;
+      color: #8ae8bb;
+    }
+
+    .progress {
+      height: 12px;
+      margin-top: 10px;
+      overflow: hidden;
+      border-radius: 20px;
+      background: #303030;
+    }
+
+    .progress-bar {
+      height: 100%;
+      min-width: 0;
+      border-radius: 20px;
+      background: var(--red);
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+    }
+
+    .profile-head {
       display: flex;
-      align-items: flex-start;
       justify-content: space-between;
       gap: 15px;
       margin-bottom: 18px;
     }
 
-    .profile-layout {
+    .profile-grid {
       display: grid;
       grid-template-columns: 1.1fr .9fr;
       gap: 15px;
@@ -434,12 +478,12 @@
     .modal {
       position: fixed;
       inset: 0;
-      z-index: 30;
+      z-index: 20;
       display: none;
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background: rgba(0, 0, 0, .78);
+      background: rgba(0, 0, 0, .8);
     }
 
     .modal.show {
@@ -447,20 +491,20 @@
     }
 
     .modal-box {
-      width: min(950px, 100%);
-      max-height: 92vh;
-      overflow: auto;
-      padding: 21px;
+      width: min(1000px, 100%);
+      max-height: 93vh;
+      overflow-y: auto;
+      padding: 20px;
       border: 1px solid #444;
       border-top: 3px solid var(--red);
       border-radius: 9px;
-      background: var(--black-2);
+      background: var(--black2);
     }
 
     .modal-title {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       margin-bottom: 18px;
     }
 
@@ -468,33 +512,15 @@
       border: 0;
       background: transparent;
       color: #aaa;
-      font-size: 23px;
+      font-size: 24px;
     }
 
-    .product-line {
+    .sale-line {
       display: grid;
-      grid-template-columns: 1fr 100px 130px 42px;
-      align-items: end;
+      grid-template-columns: 1fr 100px 150px 160px 35px;
       gap: 8px;
+      align-items: end;
       margin-bottom: 8px;
-    }
-
-    .mini-total {
-      padding-bottom: 10px;
-      color: var(--green);
-      font-weight: bold;
-    }
-
-    .image-preview {
-      max-width: 150px;
-      max-height: 100px;
-      margin-top: 8px;
-      border-radius: 5px;
-    }
-
-    .suggestion-box {
-      max-height: 210px;
-      overflow: auto;
     }
 
     @media (max-width: 1100px) {
@@ -502,7 +528,8 @@
         grid-template-columns: repeat(2, 1fr);
       }
 
-      .profile-layout {
+      .dashboard-grid,
+      .profile-grid {
         grid-template-columns: 1fr;
       }
 
@@ -530,11 +557,11 @@
       }
 
       .brand small,
-      .nav-btn span {
+      .nav-button span {
         display: none;
       }
 
-      .nav-btn {
+      .nav-button {
         padding: 12px 5px;
         text-align: center;
         font-size: 18px;
@@ -543,7 +570,7 @@
       .main {
         width: calc(100% - 64px);
         margin-left: 64px;
-        padding: 16px;
+        padding: 15px;
       }
 
       .form-grid,
@@ -557,16 +584,12 @@
         gap: 8px;
       }
 
-      .card {
-        padding: 13px;
-      }
-
       .metric-value {
-        font-size: 21px;
+        font-size: 20px;
       }
 
-      .product-line {
-        grid-template-columns: 1fr 80px 105px 35px;
+      .sale-line {
+        grid-template-columns: 1fr 75px 115px 125px 32px;
       }
 
       h1 {
@@ -584,26 +607,72 @@
         <small>representação comercial</small>
       </div>
 
-      <button class="nav-btn active" data-page="dashboard">▣ <span>Dashboard</span></button>
-      <button class="nav-btn" data-page="clientes">♙ <span>Clientes</span></button>
-      <button class="nav-btn" data-page="produtos">▤ <span>Produtos</span></button>
-      <button class="nav-btn" data-page="fornecedores">◉ <span>Fornecedores</span></button>
-      <button class="nav-btn" data-page="abc">▥ <span>Curva ABC</span></button>
+      <button class="nav-button active" data-page="dashboard">▣ <span>Dashboard</span></button>
+      <button class="nav-button" data-page="clientes">♙ <span>Clientes</span></button>
+      <button class="nav-button" data-page="produtos">▤ <span>Produtos</span></button>
+      <button class="nav-button" data-page="fornecedores">◉ <span>Fornecedores</span></button>
+      <button class="nav-button" data-page="vendas">▣ <span>Vendas</span></button>
+      <button class="nav-button" data-page="abc">▥ <span>Curva ABC</span></button>
     </aside>
 
     <main class="main">
       <div class="topbar">
         <div>
           <h1 id="pageTitle">Dashboard</h1>
-          <div class="muted">Controle comercial e análise de clientes</div>
+          <div class="muted">Acompanhamento comercial e oportunidades de vendas</div>
         </div>
 
-        <button class="btn btn-primary" onclick="openSaleModal()">+ Nova venda</button>
+        <button class="button primary" onclick="openSaleModal()">+ Nova venda</button>
       </div>
 
       <!-- DASHBOARD -->
       <section class="page active" id="page-dashboard">
         <div id="dashboardAlerts"></div>
+
+        <div class="panel" style="margin-bottom:18px">
+          <div class="toolbar">
+            <div>
+              <h2>Meta de vendas</h2>
+              <div class="muted">
+                Cadastre a meta mensal e acompanhe automaticamente a meta diária.
+              </div>
+            </div>
+
+            <button class="button small" onclick="openGoalModal()">Editar meta</button>
+          </div>
+
+          <div class="cards" style="margin-bottom:0">
+            <div>
+              <div class="metric">Meta mensal</div>
+              <div class="metric-value" id="goalMonthly">R$ 0,00</div>
+            </div>
+
+            <div>
+              <div class="metric">Meta diária</div>
+              <div class="metric-value blue" id="goalDaily">R$ 0,00</div>
+            </div>
+
+            <div>
+              <div class="metric">Vendido no mês</div>
+              <div class="metric-value green" id="monthRevenue">R$ 0,00</div>
+            </div>
+
+            <div>
+              <div class="metric">Falta vender</div>
+              <div class="metric-value red" id="remainingGoal">R$ 0,00</div>
+            </div>
+          </div>
+
+          <div class="progress">
+            <div class="progress-bar" id="goalProgress"></div>
+          </div>
+
+          <div class="muted" style="margin-top:8px">
+            <span id="goalPercentage">0%</span> da meta atingida.
+            Meta diária considerando os dias restantes:
+            <strong id="remainingDailyGoal">R$ 0,00</strong>
+          </div>
+        </div>
 
         <div class="cards">
           <div class="card">
@@ -617,24 +686,40 @@
           </div>
 
           <div class="card">
-            <div class="metric">Vendas realizadas</div>
+            <div class="metric">Vendas no mês</div>
             <div class="metric-value" id="metricSales">0</div>
           </div>
 
           <div class="card">
-            <div class="metric">Faturamento total</div>
+            <div class="metric">Faturamento geral</div>
             <div class="metric-value green" id="metricRevenue">R$ 0,00</div>
           </div>
         </div>
 
-        <div class="profile-layout">
+        <div class="dashboard-grid">
+          <div class="panel">
+            <h2>Aniversariantes</h2>
+            <div class="muted" style="margin-bottom:12px">
+              Clientes que fazem aniversário neste mês.
+            </div>
+            <div id="birthdays"></div>
+          </div>
+
+          <div class="panel">
+            <h2>Oportunidades comerciais</h2>
+            <div class="muted" style="margin-bottom:12px">
+              Clientes inativos e clientes com possibilidade de expansão.
+            </div>
+            <div id="opportunities"></div>
+          </div>
+
           <div class="panel">
             <h2>Clientes inativos</h2>
             <div id="inactiveClients"></div>
           </div>
 
           <div class="panel">
-            <h2>Produtos sem pedidos</h2>
+            <h2>Produtos sem vendas</h2>
             <div id="unusedProducts"></div>
           </div>
         </div>
@@ -678,8 +763,8 @@
               </div>
             </div>
 
-            <div class="form-actions">
-              <button class="btn btn-primary">Salvar cliente</button>
+            <div class="actions">
+              <button class="button primary">Salvar cliente</button>
             </div>
           </form>
         </div>
@@ -717,6 +802,11 @@
           <form id="productForm">
             <div class="form-grid">
               <div class="field">
+                <label>SKU *</label>
+                <input id="productSku" placeholder="Ex.: FORN-001-A" required>
+              </div>
+
+              <div class="field">
                 <label>Nome do produto *</label>
                 <input id="productName" required>
               </div>
@@ -728,7 +818,7 @@
 
               <div class="field">
                 <label>Preço de venda *</label>
-                <input id="productPrice" type="number" step="0.01" min="0" required>
+                <input id="productPrice" type="number" min="0" step="0.01" required>
               </div>
 
               <div class="field">
@@ -742,28 +832,28 @@
               </div>
             </div>
 
-            <div class="form-actions">
-              <button class="btn btn-primary">Salvar produto</button>
+            <div class="actions">
+              <button class="button primary">Salvar produto</button>
             </div>
           </form>
         </div>
 
         <div class="panel" style="margin-top:15px">
           <div class="toolbar">
-            <h2>Produtos cadastrados</h2>
-            <input id="productSearch" placeholder="Buscar produto..." oninput="renderProducts()">
+            <h2>Produtos por fornecedor</h2>
+            <input id="productSearch" placeholder="Buscar por SKU, produto ou fornecedor..." oninput="renderProducts()">
           </div>
 
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
-                  <th>Código</th>
+                  <th>SKU</th>
                   <th>Produto</th>
                   <th>Fornecedor</th>
                   <th>Categoria</th>
                   <th>Preço</th>
-                  <th>Quantidade vendida</th>
+                  <th>Qtd. vendida</th>
                   <th>Ações</th>
                 </tr>
               </thead>
@@ -797,14 +887,14 @@
               </div>
             </div>
 
-            <div class="form-actions">
-              <button class="btn btn-primary">Salvar fornecedor</button>
+            <div class="actions">
+              <button class="button primary">Salvar fornecedor</button>
             </div>
           </form>
         </div>
 
         <div class="panel" style="margin-top:15px">
-          <h2>Fornecedores cadastrados</h2>
+          <h2>Fornecedores e seus produtos</h2>
 
           <div class="table-wrap">
             <table>
@@ -812,8 +902,8 @@
                 <tr>
                   <th>Fornecedor</th>
                   <th>Contato</th>
-                  <th>Cor</th>
-                  <th>Produtos</th>
+                  <th>Produtos cadastrados</th>
+                  <th>SKUs</th>
                   <th>Ações</th>
                 </tr>
               </thead>
@@ -824,14 +914,42 @@
         </div>
       </section>
 
-      <!-- CURVA ABC -->
+      <!-- VENDAS -->
+      <section class="page" id="page-vendas">
+        <div class="panel">
+          <div class="toolbar">
+            <h2>Histórico de vendas</h2>
+            <button class="button primary" onclick="openSaleModal()">+ Nova venda</button>
+          </div>
+
+          <div class="table-wrap">
+            <table>
+              <thead>
+                <tr>
+                  <th>Data</th>
+                  <th>Cliente</th>
+                  <th>Fornecedores</th>
+                  <th>Itens</th>
+                  <th>Vendedor</th>
+                  <th>Total</th>
+                  <th>Ações</th>
+                </tr>
+              </thead>
+
+              <tbody id="salesTable"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABC -->
       <section class="page" id="page-abc">
         <div class="panel">
           <div class="toolbar">
             <div>
               <h2>Curva ABC de clientes</h2>
               <div class="muted">
-                Clique em qualquer cliente para abrir seus pedidos, fornecedores, sugestões e análise de compras.
+                A classificação é calculada pelo faturamento acumulado.
               </div>
             </div>
 
@@ -843,21 +961,12 @@
             </select>
           </div>
 
-          <div class="alert">
-            <strong>Classificação ABC:</strong>
-            A representa até 80% do faturamento acumulado,
-            B representa de 80% a 95%,
-            C representa acima de 95%.
-          </div>
-
           <div class="table-wrap">
             <table>
               <thead>
                 <tr>
                   <th>Cliente</th>
-                  <th>Classe ABC</th>
-                  <th>Fornecedores comprados</th>
-                  <th>Produtos comprados</th>
+                  <th>Classe</th>
                   <th>Pedidos</th>
                   <th>Itens</th>
                   <th>Faturamento</th>
@@ -867,7 +976,7 @@
                 </tr>
               </thead>
 
-              <tbody id="abcTable"></tbody>
+              <tbody id="abcClientsTable"></tbody>
             </table>
           </div>
         </div>
@@ -879,9 +988,10 @@
             <table>
               <thead>
                 <tr>
+                  <th>SKU</th>
                   <th>Produto</th>
                   <th>Fornecedor</th>
-                  <th>Classe ABC</th>
+                  <th>Classe</th>
                   <th>Quantidade</th>
                   <th>Faturamento</th>
                   <th>Clientes</th>
@@ -894,14 +1004,43 @@
         </div>
       </section>
 
-      <!-- PERFIL DO CLIENTE -->
+      <!-- PERFIL -->
       <section class="page" id="page-profile">
-        <div id="clientProfile"></div>
+        <div id="profileContent"></div>
       </section>
     </main>
   </div>
 
-  <!-- MODAL DE VENDA -->
+  <!-- MODAL META -->
+  <div class="modal" id="goalModal">
+    <div class="modal-box">
+      <div class="modal-title">
+        <h2>Meta de vendas</h2>
+        <button class="close" onclick="closeModal('goalModal')">×</button>
+      </div>
+
+      <form id="goalForm">
+        <div class="form-grid two">
+          <div class="field">
+            <label>Mês de referência *</label>
+            <input id="goalMonth" type="month" required>
+          </div>
+
+          <div class="field">
+            <label>Meta mensal *</label>
+            <input id="goalValue" type="number" min="0" step="0.01" required>
+          </div>
+        </div>
+
+        <div class="actions">
+          <button class="button primary">Salvar meta</button>
+          <button type="button" class="button" onclick="closeModal('goalModal')">Cancelar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL VENDA -->
   <div class="modal" id="saleModal">
     <div class="modal-box">
       <div class="modal-title">
@@ -938,53 +1077,57 @@
           </div>
         </div>
 
-        <h3 style="margin-top:20px">Produtos do pedido</h3>
+        <h3 style="margin-top:20px">Itens da venda</h3>
+
+        <div class="alert">
+          Selecione o fornecedor primeiro. Depois, o sistema exibirá somente os produtos daquele fornecedor, com seus respectivos SKUs.
+        </div>
+
         <div id="saleLines"></div>
 
-        <button type="button" class="btn btn-small" onclick="addSaleLine()">
-          + Adicionar produto
+        <button type="button" class="button small" onclick="addSaleLine()">
+          + Adicionar item
         </button>
 
         <div class="field" style="margin-top:15px">
-          <label>Observações do pedido</label>
+          <label>Observações</label>
           <textarea id="saleNotes"></textarea>
         </div>
 
-        <div style="margin-top:15px;text-align:right;font-size:18px">
+        <div style="margin-top:15px;text-align:right;font-size:19px">
           Total:
           <strong class="green" id="saleTotal">R$ 0,00</strong>
         </div>
 
-        <div class="form-actions">
-          <button class="btn btn-primary">Salvar venda</button>
-          <button type="button" class="btn" onclick="closeModal('saleModal')">Cancelar</button>
+        <div class="actions">
+          <button class="button primary">Salvar venda</button>
+          <button type="button" class="button" onclick="closeModal('saleModal')">Cancelar</button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- MODAL DO PEDIDO -->
+  <!-- MODAL PEDIDO -->
   <div class="modal" id="orderModal">
     <div class="modal-box">
       <div class="modal-title">
-        <h2>Detalhes do pedido</h2>
+        <h2>Detalhes da venda</h2>
         <button class="close" onclick="closeModal('orderModal')">×</button>
       </div>
 
-      <div id="orderDetails"></div>
+      <div id="orderContent"></div>
     </div>
   </div>
 
   <script>
-    const STORAGE_KEY = "gestao_comercial_corrigido_v2";
+    const STORAGE_KEY = "gestao_comercial_meta_sku_v1";
 
     let db = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
       clients: [],
-      products: [],
       suppliers: [],
+      products: [],
       sales: [],
-      attachments: [],
-      lowerReasons: []
+      goals: []
     };
 
     function saveDB() {
@@ -992,11 +1135,15 @@
     }
 
     function uid(prefix) {
-      return prefix + "_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 8);
+      return prefix + "_" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
     }
 
     function today() {
       return new Date().toISOString().slice(0, 10);
+    }
+
+    function currentMonth() {
+      return today().slice(0, 7);
     }
 
     function money(value) {
@@ -1011,9 +1158,7 @@
 
       const parts = String(value).split("-");
 
-      if (parts.length !== 3) {
-        return value;
-      }
+      if (parts.length !== 3) return value;
 
       return parts[2] + "/" + parts[1] + "/" + parts[0];
     }
@@ -1031,29 +1176,15 @@
     }
 
     function getClient(id) {
-      return db.clients.find(function(client) {
-        return client.id === id;
-      });
-    }
-
-    function getProduct(id) {
-      return db.products.find(function(product) {
-        return product.id === id;
-      });
+      return db.clients.find(item => item.id === id);
     }
 
     function getSupplier(id) {
-      return db.suppliers.find(function(supplier) {
-        return supplier.id === id;
-      });
+      return db.suppliers.find(item => item.id === id);
     }
 
-    function getClientSales(clientId, salesList) {
-      const source = salesList || db.sales;
-
-      return source.filter(function(sale) {
-        return sale.clientId === clientId;
-      });
+    function getProduct(id) {
+      return db.products.find(item => item.id === id);
     }
 
     function getSaleTotal(sale) {
@@ -1062,36 +1193,16 @@
       }, 0);
     }
 
-    function getProductQuantity(productId, salesList) {
-      const source = salesList || db.sales;
-
-      return source.reduce(function(total, sale) {
-        return total + (sale.items || []).reduce(function(itemTotal, item) {
-          if (item.productId === productId) {
-            return itemTotal + Number(item.quantity || 0);
-          }
-
-          return itemTotal;
-        }, 0);
-      }, 0);
+    function salesOfMonth(month) {
+      return db.sales.filter(sale => String(sale.date).slice(0, 7) === month);
     }
 
-    function getProductRevenue(productId, salesList) {
-      const source = salesList || db.sales;
-
-      return source.reduce(function(total, sale) {
-        return total + (sale.items || []).reduce(function(itemTotal, item) {
-          if (item.productId === productId) {
-            return itemTotal + Number(item.quantity || 0) * Number(item.price || 0);
-          }
-
-          return itemTotal;
-        }, 0);
-      }, 0);
+    function getClientSales(clientId, source) {
+      return (source || db.sales).filter(sale => sale.clientId === clientId);
     }
 
-    function getClientStats(clientId, salesList) {
-      const sales = getClientSales(clientId, salesList);
+    function getClientStats(clientId, source) {
+      const sales = getClientSales(clientId, source);
       const quantities = {};
       let revenue = 0;
       let items = 0;
@@ -1106,31 +1217,48 @@
       });
 
       const dates = sales
-        .map(function(sale) {
-          return sale.date;
-        })
+        .map(sale => sale.date)
         .filter(Boolean)
         .sort()
         .reverse();
 
       return {
-        sales: sales,
-        quantities: quantities,
-        revenue: revenue,
-        items: items,
+        sales,
+        quantities,
+        revenue,
+        items,
         lastSale: dates[0] || ""
       };
+    }
+
+    function getProductQuantity(productId, source) {
+      return (source || db.sales).reduce(function(total, sale) {
+        return total + (sale.items || []).reduce(function(sum, item) {
+          return sum + (item.productId === productId ? Number(item.quantity || 0) : 0);
+        }, 0);
+      }, 0);
+    }
+
+    function getProductRevenue(productId, source) {
+      return (source || db.sales).reduce(function(total, sale) {
+        return total + (sale.items || []).reduce(function(sum, item) {
+          return sum + (
+            item.productId === productId
+              ? Number(item.quantity || 0) * Number(item.price || 0)
+              : 0
+          );
+        }, 0);
+      }, 0);
     }
 
     function daysWithoutPurchase(client) {
       const stats = getClientStats(client.id);
 
-      if (!stats.lastSale) {
-        return Infinity;
-      }
+      if (!stats.lastSale) return Infinity;
 
-      const lastDate = new Date(stats.lastSale + "T12:00:00");
-      return Math.floor((new Date() - lastDate) / 86400000);
+      const last = new Date(stats.lastSale + "T12:00:00");
+
+      return Math.floor((new Date() - last) / 86400000);
     }
 
     function clientStatus(client) {
@@ -1147,43 +1275,34 @@
     function supplierChip(supplier, active) {
       if (!supplier) return "";
 
-      const isActive = active !== false;
-
       return `
-        <span class="supplier-chip ${isActive ? "" : "inactive"}">
-          <span
-            class="dot"
-            style="background:${isActive ? supplier.color : "#555"}">
-          </span>
+        <span class="supplier-chip ${active === false ? "inactive" : ""}">
+          <span class="dot" style="background:${active === false ? "#555" : supplier.color}"></span>
           ${escapeHTML(supplier.name)}
         </span>
       `;
     }
 
     function abcBadge(letter) {
-      return `
-        <span class="badge badge-${String(letter).toLowerCase()}">
-          Classe ${letter}
-        </span>
-      `;
+      return `<span class="badge badge-${letter.toLowerCase()}">Classe ${letter}</span>`;
     }
 
     function showPage(page) {
-      document.querySelectorAll(".page").forEach(function(element) {
+      document.querySelectorAll(".page").forEach(element => {
         element.classList.remove("active");
       });
 
-      document.querySelectorAll(".nav-btn").forEach(function(element) {
+      document.querySelectorAll(".nav-button").forEach(element => {
         element.classList.remove("active");
       });
 
-      const target = document.getElementById("page-" + page);
+      const section = document.getElementById("page-" + page);
 
-      if (target) {
-        target.classList.add("active");
+      if (section) {
+        section.classList.add("active");
       }
 
-      const nav = document.querySelector('[data-page="' + page + '"]');
+      const nav = document.querySelector(`[data-page="${page}"]`);
 
       if (nav) {
         nav.classList.add("active");
@@ -1194,6 +1313,7 @@
         clientes: "Clientes",
         produtos: "Produtos",
         fornecedores: "Fornecedores",
+        vendas: "Vendas",
         abc: "Curva ABC",
         profile: "Perfil do cliente"
       };
@@ -1201,7 +1321,7 @@
       document.getElementById("pageTitle").textContent = titles[page] || "Gestão";
     }
 
-    document.querySelectorAll(".nav-btn").forEach(function(button) {
+    document.querySelectorAll(".nav-button").forEach(button => {
       button.addEventListener("click", function() {
         showPage(button.dataset.page);
         renderAll();
@@ -1213,104 +1333,267 @@
       renderClients();
       renderProducts();
       renderSuppliers();
+      renderSales();
       renderABC();
       updateSelects();
     }
 
+    function getCurrentGoal() {
+      return db.goals.find(goal => goal.month === currentMonth()) || {
+        month: currentMonth(),
+        value: 0
+      };
+    }
+
+    function daysInCurrentMonth() {
+      const date = new Date();
+      return new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+    }
+
+    function currentDayOfMonth() {
+      return new Date().getDate();
+    }
+
+    function renderGoal() {
+      const goal = getCurrentGoal();
+      const monthSales = salesOfMonth(currentMonth());
+      const realized = monthSales.reduce((sum, sale) => sum + getSaleTotal(sale), 0);
+      const monthlyGoal = Number(goal.value || 0);
+      const remaining = Math.max(monthlyGoal - realized, 0);
+      const daysLeft = Math.max(daysInCurrentMonth() - currentDayOfMonth() + 1, 1);
+      const dailyGoal = monthlyGoal / daysInCurrentMonth();
+      const remainingDaily = remaining / daysLeft;
+      const percentage = monthlyGoal > 0 ? realized / monthlyGoal * 100 : 0;
+
+      document.getElementById("goalMonthly").textContent = money(monthlyGoal);
+      document.getElementById("goalDaily").textContent = money(dailyGoal);
+      document.getElementById("monthRevenue").textContent = money(realized);
+      document.getElementById("remainingGoal").textContent = money(remaining);
+      document.getElementById("remainingDailyGoal").textContent = money(remainingDaily);
+      document.getElementById("goalPercentage").textContent = percentage.toFixed(1) + "%";
+      document.getElementById("goalProgress").style.width = Math.min(percentage, 100) + "%";
+    }
+
     function renderDashboard() {
-      const totalRevenue = db.sales.reduce(function(total, sale) {
-        return total + getSaleTotal(sale);
-      }, 0);
+      renderGoal();
+
+      const totalRevenue = db.sales.reduce((sum, sale) => sum + getSaleTotal(sale), 0);
+      const monthSales = salesOfMonth(currentMonth());
 
       document.getElementById("metricClients").textContent = db.clients.length;
       document.getElementById("metricProducts").textContent = db.products.length;
-      document.getElementById("metricSales").textContent = db.sales.length;
+      document.getElementById("metricSales").textContent = monthSales.length;
       document.getElementById("metricRevenue").textContent = money(totalRevenue);
 
-      const inactive = db.clients
-        .map(function(client) {
-          return {
-            client: client,
-            days: daysWithoutPurchase(client)
-          };
-        })
-        .filter(function(item) {
-          return item.days === Infinity || item.days > 15;
-        })
-        .sort(function(a, b) {
-          if (a.days === Infinity) return -1;
-          if (b.days === Infinity) return 1;
-          return b.days - a.days;
-        });
-
-      document.getElementById("inactiveClients").innerHTML = inactive.length
-        ? inactive.map(function(item) {
-            return `
-              <div
-                class="list-item"
-                style="cursor:pointer"
-                onclick="openClientProfile('${item.client.id}')">
-
-                <strong>${escapeHTML(item.client.name)}</strong>
-
-                <span class="muted">
-                  ${
-                    item.days === Infinity
-                      ? "Nunca comprou"
-                      : item.days + " dias sem comprar"
-                  }
-                </span>
-              </div>
-            `;
-          }).join("")
-        : `<div class="empty">Nenhum cliente inativo há mais de 15 dias.</div>`;
-
-      const unused = db.products.filter(function(product) {
-        return getProductQuantity(product.id) === 0;
+      const birthdays = db.clients.filter(function(client) {
+        return client.birth && client.birth.slice(5, 7) === today().slice(5, 7);
+      }).sort(function(a, b) {
+        return a.birth.slice(8, 10).localeCompare(b.birth.slice(8, 10));
       });
 
+      document.getElementById("birthdays").innerHTML = birthdays.length
+        ? `<div class="list">${birthdays.map(client => `
+            <div class="list-item">
+              <strong>${escapeHTML(client.name)}</strong>
+              <div class="muted">
+                Aniversário: ${dateBR(client.birth).slice(0, 5)}
+                ${client.phone ? " · " + escapeHTML(client.phone) : ""}
+              </div>
+              <div class="actions">
+                <button class="button small primary" onclick="openClientProfile('${client.id}')">
+                  Acompanhar cliente
+                </button>
+              </div>
+            </div>
+          `).join("")}</div>`
+        : `<div class="empty">Nenhum aniversariante neste mês.</div>`;
+
+      const inactive = db.clients.filter(client => {
+        const days = daysWithoutPurchase(client);
+        return days === Infinity || days > 15;
+      }).sort(function(a, b) {
+        const da = daysWithoutPurchase(a);
+        const dbb = daysWithoutPurchase(b);
+
+        if (da === Infinity) return -1;
+        if (dbb === Infinity) return 1;
+
+        return dbb - da;
+      });
+
+      document.getElementById("inactiveClients").innerHTML = inactive.length
+        ? `<div class="list">${inactive.slice(0, 12).map(client => {
+            const days = daysWithoutPurchase(client);
+
+            return `
+              <div class="list-item">
+                <strong>${escapeHTML(client.name)}</strong>
+                <div class="muted">
+                  ${days === Infinity ? "Nunca comprou" : days + " dias sem comprar"}
+                </div>
+                <div class="actions">
+                  <button class="button small" onclick="openClientProfile('${client.id}')">
+                    Abrir cliente
+                  </button>
+                  <button class="button small primary" onclick="openSaleModal('${client.id}')">
+                    Nova venda
+                  </button>
+                </div>
+              </div>
+            `;
+          }).join("")}</div>`
+        : `<div class="empty">Nenhum cliente inativo.</div>`;
+
+      const opportunities = getExpansionOpportunities();
+
+      document.getElementById("opportunities").innerHTML = opportunities.length
+        ? `<div class="list">${opportunities.slice(0, 12).map(item => `
+            <div class="list-item">
+              <strong>${escapeHTML(item.client.name)}</strong>
+              <div class="muted">
+                ${item.type === "inactive"
+                  ? "Recuperação de cliente inativo"
+                  : "Possibilidade de venda expandida"}
+              </div>
+              <div class="${item.type === "inactive" ? "red" : "orange"}" style="margin-top:5px">
+                ${escapeHTML(item.reason)}
+              </div>
+              <div class="actions">
+                <button class="button small" onclick="openClientProfile('${item.client.id}')">
+                  Ver análise
+                </button>
+                <button class="button small primary" onclick="openSaleModal('${item.client.id}')">
+                  Lançar venda
+                </button>
+              </div>
+            </div>
+          `).join("")}</div>`
+        : `<div class="empty">Nenhuma oportunidade identificada.</div>`;
+
+      const unused = db.products.filter(product => getProductQuantity(product.id) === 0);
+
       document.getElementById("unusedProducts").innerHTML = unused.length
-        ? unused.map(function(product) {
+        ? `<div class="list">${unused.map(product => {
             const supplier = getSupplier(product.supplierId);
 
             return `
               <div class="list-item">
                 <strong>${escapeHTML(product.name)}</strong>
-                <span class="muted">
-                  ${supplier ? escapeHTML(supplier.name) : "Sem fornecedor"}
-                </span>
+                <div class="muted">
+                  SKU: ${escapeHTML(product.sku)}
+                  · ${supplier ? escapeHTML(supplier.name) : "Sem fornecedor"}
+                </div>
               </div>
             `;
-          }).join("")
-        : `<div class="empty">Todos os produtos já possuem pedidos.</div>`;
+          }).join("")}</div>`
+        : `<div class="empty">Todos os produtos possuem vendas.</div>`;
 
-      const birthdays = db.clients.filter(function(client) {
-        return client.birth && client.birth.slice(5) === today().slice(5);
-      });
-
-      let alerts = "";
+      const alerts = [];
 
       if (birthdays.length) {
-        alerts += `
+        alerts.push(`
           <div class="alert">
-            Aniversariantes de hoje:
-            ${birthdays.map(function(client) {
-              return escapeHTML(client.name);
-            }).join(", ")}
+            Existem <strong>${birthdays.length}</strong> aniversariante(s) neste mês.
+            Acompanhe os clientes na seção de aniversariantes.
           </div>
-        `;
+        `);
       }
 
       if (inactive.length) {
-        alerts += `
-          <div class="alert danger-alert">
-            ${inactive.length} cliente(s) precisam de acompanhamento por inatividade.
+        alerts.push(`
+          <div class="alert danger">
+            Existem <strong>${inactive.length}</strong> oportunidade(s) de recuperação de clientes inativos.
           </div>
-        `;
+        `);
       }
 
-      document.getElementById("dashboardAlerts").innerHTML = alerts;
+      if (getCurrentGoal().value > 0) {
+        const goal = getCurrentGoal();
+        const realized = monthSales.reduce((sum, sale) => sum + getSaleTotal(sale), 0);
+        const percentage = realized / Number(goal.value) * 100;
+
+        if (percentage >= 100) {
+          alerts.push(`
+            <div class="alert success">
+              A meta mensal foi atingida. Parabéns!
+            </div>
+          `);
+        }
+      }
+
+      document.getElementById("dashboardAlerts").innerHTML = alerts.join("");
     }
+
+    function getExpansionOpportunities() {
+      const opportunities = [];
+
+      db.clients.forEach(function(client) {
+        const stats = getClientStats(client.id);
+        const days = daysWithoutPurchase(client);
+
+        if (days === Infinity || days > 15) {
+          opportunities.push({
+            client,
+            type: "inactive",
+            reason: days === Infinity
+              ? "Cliente cadastrado sem nenhuma compra."
+              : `${days} dias desde a última compra.`
+          });
+
+          return;
+        }
+
+        const purchasedIds = Object.keys(stats.quantities);
+
+        const suggestions = db.products.filter(product => {
+          return !purchasedIds.includes(product.id) &&
+            getProductQuantity(product.id) > 0;
+        });
+
+        if (suggestions.length) {
+          opportunities.push({
+            client,
+            type: "expanded",
+            reason: `${suggestions.length} produto(s) da base ainda não comprado(s) por este cliente.`
+          });
+        }
+      });
+
+      return opportunities;
+    }
+
+    function openGoalModal() {
+      const goal = getCurrentGoal();
+
+      document.getElementById("goalMonth").value = goal.month;
+      document.getElementById("goalValue").value = goal.value || "";
+      document.getElementById("goalModal").classList.add("show");
+    }
+
+    document.getElementById("goalForm").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const month = document.getElementById("goalMonth").value;
+      const value = Number(document.getElementById("goalValue").value || 0);
+
+      const existing = db.goals.find(goal => goal.month === month);
+
+      if (existing) {
+        existing.value = value;
+      } else {
+        db.goals.push({
+          id: uid("goal"),
+          month,
+          value
+        });
+      }
+
+      saveDB();
+      closeModal("goalModal");
+      renderAll();
+
+      alert("Meta salva com sucesso.");
+    });
 
     document.getElementById("clientForm").addEventListener("submit", function(event) {
       event.preventDefault();
@@ -1336,21 +1619,18 @@
     function renderClients() {
       const search = (document.getElementById("clientSearch")?.value || "").toLowerCase();
 
-      const clients = db.clients.filter(function(client) {
+      const clients = db.clients.filter(client => {
         return client.name.toLowerCase().includes(search) ||
           (client.phone || "").toLowerCase().includes(search);
       });
 
       document.getElementById("clientsTable").innerHTML = clients.length
-        ? clients.map(function(client) {
+        ? clients.map(client => {
             const stats = getClientStats(client.id);
             const status = clientStatus(client);
 
             return `
-              <tr
-                class="clickable"
-                onclick="openClientProfile('${client.id}')">
-
+              <tr class="clickable" onclick="openClientProfile('${client.id}')">
                 <td>
                   <strong>${escapeHTML(client.name)}</strong>
                   <br>
@@ -1366,7 +1646,7 @@
                 <td>${dateBR(stats.lastSale)}</td>
 
                 <td>
-                  <span class="badge ${status === "Ativo" ? "badge-c" : "badge-a"}">
+                  <span class="badge ${status === "Ativo" ? "badge-green" : "badge-red"}">
                     ${status}
                   </span>
                 </td>
@@ -1374,52 +1654,27 @@
                 <td>${stats.sales.length}</td>
 
                 <td>
-                  <button
-                    class="btn btn-small"
-                    onclick="event.stopPropagation();openClientProfile('${client.id}')">
-                    Abrir perfil
+                  <button class="button small" onclick="event.stopPropagation();openClientProfile('${client.id}')">
+                    Abrir
                   </button>
 
-                  <button
-                    class="btn btn-small btn-danger"
-                    onclick="event.stopPropagation();deleteClient('${client.id}')">
+                  <button class="button small danger" onclick="event.stopPropagation();deleteClient('${client.id}')">
                     Excluir
                   </button>
                 </td>
               </tr>
             `;
           }).join("")
-        : `
-          <tr>
-            <td colspan="6" class="empty">Nenhum cliente cadastrado.</td>
-          </tr>
-        `;
+        : `<tr><td colspan="6" class="empty">Nenhum cliente cadastrado.</td></tr>`;
     }
 
     function deleteClient(id) {
       const client = getClient(id);
 
-      if (!client) return;
+      if (!client || !confirm("Excluir o cliente " + client.name + "?")) return;
 
-      if (!confirm("Excluir o cliente " + client.name + "? As vendas também serão removidas.")) {
-        return;
-      }
-
-      db.clients = db.clients.filter(function(item) {
-        return item.id !== id;
-      });
-
-      db.sales = db.sales.filter(function(sale) {
-        return sale.clientId !== id;
-      });
-
-      db.attachments = db.attachments.filter(function(file) {
-        return file.clientId !== id;
-      });
-
-      db.lowerReasons = db.lowerReasons.filter(function(reason) {
-        return reason.clientId !== id;
-      });
+      db.clients = db.clients.filter(item => item.id !== id);
+      db.sales = db.sales.filter(sale => sale.clientId !== id);
 
       saveDB();
       renderAll();
@@ -1445,60 +1700,57 @@
 
     function renderSuppliers() {
       document.getElementById("suppliersTable").innerHTML = db.suppliers.length
-        ? db.suppliers.map(function(supplier) {
-            const products = db.products.filter(function(product) {
-              return product.supplierId === supplier.id;
-            });
+        ? db.suppliers.map(supplier => {
+            const products = db.products.filter(product => product.supplierId === supplier.id);
 
             return `
               <tr>
                 <td>
-                  <span class="dot" style="background:${supplier.color}"></span>
-                  <strong>${escapeHTML(supplier.name)}</strong>
+                  ${supplierChip(supplier, true)}
                 </td>
 
                 <td>${escapeHTML(supplier.contact || "—")}</td>
 
                 <td>
-                  <span class="supplier-chip">
-                    <span class="dot" style="background:${supplier.color}"></span>
-                    ${supplier.color}
-                  </span>
+                  ${
+                    products.length
+                      ? products.map(product => `
+                          <span class="badge badge-c">
+                            ${escapeHTML(product.name)}
+                          </span>
+                        `).join(" ")
+                      : `<span class="muted">Nenhum produto</span>`
+                  }
                 </td>
 
-                <td>${products.length}</td>
+                <td>
+                  ${
+                    products.length
+                      ? products.map(product => `
+                          <span class="badge badge-b">${escapeHTML(product.sku)}</span>
+                        `).join(" ")
+                      : "—"
+                  }
+                </td>
 
                 <td>
-                  <button
-                    class="btn btn-small btn-danger"
-                    onclick="deleteSupplier('${supplier.id}')">
+                  <button class="button small danger" onclick="deleteSupplier('${supplier.id}')">
                     Excluir
                   </button>
                 </td>
               </tr>
             `;
           }).join("")
-        : `
-          <tr>
-            <td colspan="5" class="empty">Nenhum fornecedor cadastrado.</td>
-          </tr>
-        `;
+        : `<tr><td colspan="5" class="empty">Nenhum fornecedor cadastrado.</td></tr>`;
     }
 
     function deleteSupplier(id) {
-      const hasProducts = db.products.some(function(product) {
-        return product.supplierId === id;
-      });
-
-      if (hasProducts) {
-        alert("Não é possível excluir um fornecedor que possui produtos vinculados.");
+      if (db.products.some(product => product.supplierId === id)) {
+        alert("Este fornecedor possui produtos vinculados e não pode ser excluído.");
         return;
       }
 
-      db.suppliers = db.suppliers.filter(function(supplier) {
-        return supplier.id !== id;
-      });
-
+      db.suppliers = db.suppliers.filter(supplier => supplier.id !== id);
       saveDB();
       renderAll();
     }
@@ -1506,11 +1758,16 @@
     document.getElementById("productForm").addEventListener("submit", function(event) {
       event.preventDefault();
 
-      const code = "P" + String(db.products.length + 1).padStart(4, "0");
+      const sku = document.getElementById("productSku").value.trim().toUpperCase();
+
+      if (db.products.some(product => product.sku.toUpperCase() === sku)) {
+        alert("Este SKU já está cadastrado. Informe um SKU único.");
+        return;
+      }
 
       db.products.push({
         id: uid("prod"),
-        code: code,
+        sku,
         name: document.getElementById("productName").value.trim(),
         supplierId: document.getElementById("productSupplier").value,
         price: Number(document.getElementById("productPrice").value || 0),
@@ -1528,105 +1785,78 @@
     function renderProducts() {
       const search = (document.getElementById("productSearch")?.value || "").toLowerCase();
 
-      const products = db.products.filter(function(product) {
-        return product.name.toLowerCase().includes(search) ||
-          product.code.toLowerCase().includes(search);
+      const products = db.products.filter(product => {
+        const supplier = getSupplier(product.supplierId);
+
+        return product.sku.toLowerCase().includes(search) ||
+          product.name.toLowerCase().includes(search) ||
+          (supplier?.name || "").toLowerCase().includes(search);
       });
 
       document.getElementById("productsTable").innerHTML = products.length
-        ? products.map(function(product) {
+        ? products.map(product => {
             const supplier = getSupplier(product.supplierId);
-            const quantity = getProductQuantity(product.id);
 
             return `
               <tr>
-                <td>${escapeHTML(product.code)}</td>
-
-                <td>
-                  <strong>${escapeHTML(product.name)}</strong>
-                </td>
-
-                <td>
-                  ${supplier ? supplierChip(supplier, true) : "—"}
-                </td>
-
+                <td><strong>${escapeHTML(product.sku)}</strong></td>
+                <td>${escapeHTML(product.name)}</td>
+                <td>${supplier ? supplierChip(supplier, true) : "—"}</td>
                 <td>${escapeHTML(product.category || "—")}</td>
-
                 <td>${money(product.price)}</td>
-
-                <td>${quantity}</td>
-
+                <td>${getProductQuantity(product.id)}</td>
                 <td>
-                  <button
-                    class="btn btn-small btn-danger"
-                    onclick="deleteProduct('${product.id}')">
+                  <button class="button small danger" onclick="deleteProduct('${product.id}')">
                     Excluir
                   </button>
                 </td>
               </tr>
             `;
           }).join("")
-        : `
-          <tr>
-            <td colspan="7" class="empty">Nenhum produto cadastrado.</td>
-          </tr>
-        `;
+        : `<tr><td colspan="7" class="empty">Nenhum produto cadastrado.</td></tr>`;
     }
 
     function deleteProduct(id) {
-      const hasSales = db.sales.some(function(sale) {
-        return (sale.items || []).some(function(item) {
-          return item.productId === id;
-        });
+      const used = db.sales.some(sale => {
+        return (sale.items || []).some(item => item.productId === id);
       });
 
-      if (hasSales) {
+      if (used) {
         alert("Este produto possui histórico de vendas e não pode ser excluído.");
         return;
       }
 
-      db.products = db.products.filter(function(product) {
-        return product.id !== id;
-      });
-
+      db.products = db.products.filter(product => product.id !== id);
       saveDB();
       renderAll();
     }
 
     function updateSelects() {
-      const productSupplier = document.getElementById("productSupplier");
-      const oldSupplier = productSupplier.value;
+      const supplierSelect = document.getElementById("productSupplier");
+      const oldSupplier = supplierSelect.value;
 
-      productSupplier.innerHTML =
+      supplierSelect.innerHTML =
         `<option value="">Selecione...</option>` +
-        db.suppliers.map(function(supplier) {
-          return `
-            <option value="${supplier.id}">
-              ${escapeHTML(supplier.name)}
-            </option>
-          `;
-        }).join("");
+        db.suppliers.map(supplier => `
+          <option value="${supplier.id}">
+            ${escapeHTML(supplier.name)}
+          </option>
+        `).join("");
 
-      if (oldSupplier) {
-        productSupplier.value = oldSupplier;
-      }
+      if (oldSupplier) supplierSelect.value = oldSupplier;
 
-      const saleClient = document.getElementById("saleClient");
-      const oldClient = saleClient.value;
+      const clientSelect = document.getElementById("saleClient");
+      const oldClient = clientSelect.value;
 
-      saleClient.innerHTML =
+      clientSelect.innerHTML =
         `<option value="">Selecione...</option>` +
-        db.clients.map(function(client) {
-          return `
-            <option value="${client.id}">
-              ${escapeHTML(client.name)}
-            </option>
-          `;
-        }).join("");
+        db.clients.map(client => `
+          <option value="${client.id}">
+            ${escapeHTML(client.name)}
+          </option>
+        `).join("");
 
-      if (oldClient) {
-        saleClient.value = oldClient;
-      }
+      if (oldClient) clientSelect.value = oldClient;
     }
 
     function openSaleModal(clientId) {
@@ -1643,63 +1873,74 @@
       document.getElementById("saleModal").classList.add("show");
     }
 
-    function addSaleLine(productId, quantity) {
+    function addSaleLine() {
       const line = document.createElement("div");
 
-      line.className = "product-line";
+      line.className = "sale-line";
 
       line.innerHTML = `
         <div class="field">
-          <label>Produto</label>
-
-          <select class="sale-product" onchange="updateSaleTotal()">
+          <label>Fornecedor</label>
+          <select class="sale-supplier" onchange="filterSaleProducts(this)">
             <option value="">Selecione...</option>
+            ${db.suppliers.map(supplier => `
+              <option value="${supplier.id}">
+                ${escapeHTML(supplier.name)}
+              </option>
+            `).join("")}
+          </select>
+        </div>
 
-            ${db.products.map(function(product) {
-              return `
-                <option
-                  value="${product.id}"
-                  ${product.id === productId ? "selected" : ""}>
-                  ${escapeHTML(product.code)} -
-                  ${escapeHTML(product.name)}
-                  (${money(product.price)})
-                </option>
-              `;
-            }).join("")}
+        <div class="field">
+          <label>Produto / SKU</label>
+          <select class="sale-product" onchange="updateSaleLineTotal(this)" disabled>
+            <option value="">Selecione o fornecedor</option>
           </select>
         </div>
 
         <div class="field">
           <label>Quantidade</label>
-
-          <input
-            class="sale-quantity"
-            type="number"
-            min="1"
-            value="${quantity || 1}"
-            oninput="updateSaleTotal()">
+          <input class="sale-quantity" type="number" min="1" value="1" oninput="updateSaleTotal()">
         </div>
 
-        <div class="mini-total">R$ 0,00</div>
+        <div class="mini-total muted">R$ 0,00</div>
 
-        <button
-          type="button"
-          class="btn btn-small btn-danger"
-          onclick="this.parentElement.remove();updateSaleTotal()">
+        <button type="button" class="button small danger" onclick="this.parentElement.remove();updateSaleTotal()">
           ×
         </button>
       `;
 
       document.getElementById("saleLines").appendChild(line);
+    }
+
+    function filterSaleProducts(supplierSelect) {
+      const line = supplierSelect.closest(".sale-line");
+      const productSelect = line.querySelector(".sale-product");
+      const supplierId = supplierSelect.value;
+
+      productSelect.innerHTML = supplierId
+        ? `<option value="">Selecione...</option>` + db.products
+            .filter(product => product.supplierId === supplierId)
+            .map(product => `
+              <option value="${product.id}">
+                ${escapeHTML(product.sku)} - ${escapeHTML(product.name)} - ${money(product.price)}
+              </option>
+            `).join("")
+        : `<option value="">Selecione o fornecedor</option>`;
+
+      productSelect.disabled = !supplierId;
+      updateSaleTotal();
+    }
+
+    function updateSaleLineTotal(productSelect) {
       updateSaleTotal();
     }
 
     function updateSaleTotal() {
       let total = 0;
 
-      document.querySelectorAll(".product-line").forEach(function(line) {
-        const productId = line.querySelector(".sale-product")?.value;
-        const product = getProduct(productId);
+      document.querySelectorAll(".sale-line").forEach(line => {
+        const product = getProduct(line.querySelector(".sale-product")?.value);
         const quantity = Number(line.querySelector(".sale-quantity")?.value || 0);
         const lineTotal = product ? product.price * quantity : 0;
 
@@ -1718,86 +1959,92 @@
     document.getElementById("saleForm").addEventListener("submit", function(event) {
       event.preventDefault();
 
-      const clientId = document.getElementById("saleClient").value;
       const items = [];
 
-      document.querySelectorAll(".product-line").forEach(function(line) {
+      document.querySelectorAll(".sale-line").forEach(line => {
+        const supplierId = line.querySelector(".sale-supplier").value;
         const productId = line.querySelector(".sale-product").value;
         const quantity = Number(line.querySelector(".sale-quantity").value || 0);
         const product = getProduct(productId);
 
-        if (product && quantity > 0) {
+        if (supplierId && product && quantity > 0) {
           items.push({
-            productId: productId,
-            quantity: quantity,
-            price: product.price,
-            guarantee: false
+            supplierId,
+            productId,
+            quantity,
+            price: product.price
           });
         }
       });
 
-      if (!clientId) {
-        alert("Selecione um cliente.");
+      if (!document.getElementById("saleClient").value) {
+        alert("Selecione o cliente.");
         return;
       }
 
       if (!items.length) {
-        alert("Adicione pelo menos um produto.");
+        alert("Adicione pelo menos um item com fornecedor e produto.");
         return;
       }
 
       db.sales.push({
         id: uid("sale"),
-        clientId: clientId,
+        clientId: document.getElementById("saleClient").value,
         date: document.getElementById("saleDate").value,
         seller: document.getElementById("saleSeller").value.trim(),
         channel: document.getElementById("saleChannel").value,
         notes: document.getElementById("saleNotes").value.trim(),
-        items: items
+        items
       });
 
       saveDB();
       closeModal("saleModal");
       renderAll();
 
-      alert("Venda registrada com sucesso.");
+      alert("Venda lançada com sucesso.");
     });
 
-    function getFilteredSales() {
-      const period = document.getElementById("abcPeriod")?.value || "all";
+    function renderSales() {
+      const rows = db.sales.slice().sort((a, b) => b.date.localeCompare(a.date));
 
-      if (period === "all") {
-        return db.sales;
-      }
+      document.getElementById("salesTable").innerHTML = rows.length
+        ? rows.map(sale => {
+            const client = getClient(sale.clientId);
+            const supplierIds = [...new Set((sale.items || []).map(item => item.supplierId))];
 
-      const limit = new Date();
-      limit.setDate(limit.getDate() - Number(period));
-
-      return db.sales.filter(function(sale) {
-        return new Date(sale.date + "T12:00:00") >= limit;
-      });
+            return `
+              <tr>
+                <td>${dateBR(sale.date)}</td>
+                <td>${escapeHTML(client?.name || "Cliente removido")}</td>
+                <td>
+                  <div class="supplier-list">
+                    ${supplierIds.map(id => supplierChip(getSupplier(id), true)).join("")}
+                  </div>
+                </td>
+                <td>${(sale.items || []).length}</td>
+                <td>${escapeHTML(sale.seller || "—")}</td>
+                <td class="green">${money(getSaleTotal(sale))}</td>
+                <td>
+                  <button class="button small" onclick="openOrder('${sale.id}')">
+                    Ver venda
+                  </button>
+                </td>
+              </tr>
+            `;
+          }).join("")
+        : `<tr><td colspan="7" class="empty">Nenhuma venda cadastrada.</td></tr>`;
     }
 
-    function getABCClassByAccumulated(rows, index) {
-      if (!rows.length) {
-        return "C";
-      }
-
-      const total = rows.reduce(function(sum, row) {
-        return sum + Number(row.revenue || 0);
-      }, 0);
+    function getABCClass(rows, index) {
+      const total = rows.reduce((sum, row) => sum + row.revenue, 0);
 
       if (total <= 0) {
-        if (index === 0) return "A";
-        if (index === 1) return "B";
-        return "C";
+        return index === 0 ? "A" : index === 1 ? "B" : "C";
       }
 
       const accumulated = rows
         .slice(0, index + 1)
-        .reduce(function(sum, row) {
-          return sum + Number(row.revenue || 0);
-        }, 0);
+        .reduce((sum, row) => sum + row.revenue, 0);
 
       const percentage = accumulated / total * 100;
 
@@ -1807,320 +2054,101 @@
       return "C";
     }
 
-    function getProductABCClass(productId, salesList) {
-      const rows = db.products.map(function(product) {
-        return {
-          id: product.id,
-          revenue: getProductRevenue(product.id, salesList)
-        };
-      }).sort(function(a, b) {
-        return b.revenue - a.revenue;
-      });
+    function getABCSource() {
+      const period = document.getElementById("abcPeriod")?.value || "all";
 
-      const index = rows.findIndex(function(row) {
-        return row.id === productId;
-      });
+      if (period === "all") return db.sales;
 
-      if (index < 0) {
-        return "C";
-      }
+      const limit = new Date();
+      limit.setDate(limit.getDate() - Number(period));
 
-      return getABCClassByAccumulated(rows, index);
-    }
-
-    function getProductSuggestions(clientId, salesList) {
-      const stats = getClientStats(clientId, salesList || db.sales);
-      const purchasedIds = Object.keys(stats.quantities);
-      const sourceSales = salesList || db.sales;
-
-      const rows = db.products
-        .filter(function(product) {
-          return !purchasedIds.includes(product.id);
-        })
-        .map(function(product) {
-          const supplier = getSupplier(product.supplierId);
-
-          return {
-            product: product,
-            supplier: supplier,
-            abc: getProductABCClass(product.id, sourceSales),
-            revenue: getProductRevenue(product.id, sourceSales),
-            quantity: getProductQuantity(product.id, sourceSales)
-          };
-        })
-        .sort(function(a, b) {
-          const order = {
-            A: 1,
-            B: 2,
-            C: 3
-          };
-
-          if (order[a.abc] !== order[b.abc]) {
-            return order[a.abc] - order[b.abc];
-          }
-
-          return b.revenue - a.revenue;
-        });
-
-      return rows;
-    }
-
-    function getLowerPurchases(clientId) {
-      const clientStats = getClientStats(clientId);
-      const result = [];
-
-      db.products.forEach(function(product) {
-        const clientQuantity = Number(clientStats.quantities[product.id] || 0);
-
-        if (clientQuantity <= 0) {
-          return;
-        }
-
-        let total = 0;
-        let buyers = 0;
-
-        db.clients.forEach(function(otherClient) {
-          const stats = getClientStats(otherClient.id);
-          const quantity = Number(stats.quantities[product.id] || 0);
-
-          if (quantity > 0) {
-            total += quantity;
-            buyers++;
-          }
-        });
-
-        if (!buyers) {
-          return;
-        }
-
-        const average = total / buyers;
-
-        if (clientQuantity < average) {
-          const savedReason = db.lowerReasons.find(function(reason) {
-            return reason.clientId === clientId &&
-              reason.productId === product.id;
-          });
-
-          result.push({
-            product: product,
-            clientQuantity: clientQuantity,
-            average: average,
-            reason: savedReason ? savedReason.reason : ""
-          });
-        }
-      });
-
-      return result.sort(function(a, b) {
-        return (b.average - b.clientQuantity) - (a.average - a.clientQuantity);
+      return db.sales.filter(sale => {
+        return new Date(sale.date + "T12:00:00") >= limit;
       });
     }
 
     function renderABC() {
-      const sales = getFilteredSales();
+      const source = getABCSource();
 
-      const rows = db.clients.map(function(client) {
-        const stats = getClientStats(client.id, sales);
-        const supplierIds = [];
-        const productIds = [];
-
-        stats.sales.forEach(function(sale) {
-          (sale.items || []).forEach(function(item) {
-            const product = getProduct(item.productId);
-
-            if (!product) return;
-
-            if (!supplierIds.includes(product.supplierId)) {
-              supplierIds.push(product.supplierId);
-            }
-
-            if (!productIds.includes(product.id)) {
-              productIds.push(product.id);
-            }
-          });
-        });
+      const clients = db.clients.map(client => {
+        const stats = getClientStats(client.id, source);
 
         return {
-          client: client,
+          client,
           revenue: stats.revenue,
-          stats: stats,
-          supplierIds: supplierIds,
-          productIds: productIds
+          stats
         };
-      }).sort(function(a, b) {
-        return b.revenue - a.revenue;
-      });
+      }).sort((a, b) => b.revenue - a.revenue);
 
-      const totalRevenue = rows.reduce(function(sum, row) {
-        return sum + row.revenue;
-      }, 0);
+      const total = clients.reduce((sum, row) => sum + row.revenue, 0);
 
-      document.getElementById("abcTable").innerHTML = rows.length
-        ? rows.map(function(row, index) {
-            const abc = getABCClassByAccumulated(rows, index);
-            const participation = totalRevenue > 0
-              ? row.revenue / totalRevenue * 100
-              : 0;
-
-            const suggestions = getProductSuggestions(row.client.id, sales)
-              .slice(0, 3);
-
-            const suppliersHtml = db.suppliers.length
-              ? db.suppliers.map(function(supplier) {
-                  return supplierChip(
-                    supplier,
-                    row.supplierIds.includes(supplier.id)
-                  );
-                }).join("")
-              : "Nenhum fornecedor cadastrado";
-
-            const productsHtml = row.productIds.length
-              ? row.productIds.map(function(productId) {
-                  const product = getProduct(productId);
-
-                  return product
-                    ? `
-                      <span class="badge badge-c">
-                        ${escapeHTML(product.name)}
-                      </span>
-                    `
-                    : "";
-                }).join(" ")
-              : `<span class="muted">Nenhum produto</span>`;
-
-            const suggestionsHtml = suggestions.length
-              ? `
-                <div class="list suggestion-box">
-                  ${suggestions.map(function(item) {
-                    return `
-                      <div class="list-item">
-                        <strong>${escapeHTML(item.product.name)}</strong>
-                        <span class="muted">
-                          ${abcBadge(item.abc)}
-                          ${item.supplier ? " · " + escapeHTML(item.supplier.name) : ""}
-                        </span>
-                      </div>
-                    `;
-                  }).join("")}
-                </div>
-              `
-              : `<span class="muted">Sem sugestões</span>`;
+      document.getElementById("abcClientsTable").innerHTML = clients.length
+        ? clients.map((row, index) => {
+            const participation = total > 0 ? row.revenue / total * 100 : 0;
 
             return `
-              <tr
-                class="clickable"
-                onclick="openClientProfile('${row.client.id}')">
-
-                <td>
-                  <strong>${escapeHTML(row.client.name)}</strong>
-                  <br>
-                  <span class="muted">Clique para abrir o cliente</span>
-                </td>
-
-                <td>${abcBadge(abc)}</td>
-
-                <td>
-                  <div class="supplier-list">
-                    ${suppliersHtml}
-                  </div>
-                </td>
-
-                <td>
-                  <div class="supplier-list">
-                    ${productsHtml}
-                  </div>
-                </td>
-
+              <tr class="clickable" onclick="openClientProfile('${row.client.id}')">
+                <td><strong>${escapeHTML(row.client.name)}</strong></td>
+                <td>${abcBadge(getABCClass(clients, index))}</td>
                 <td>${row.stats.sales.length}</td>
                 <td>${row.stats.items}</td>
-
                 <td class="green">${money(row.revenue)}</td>
-
-                <td>
-                  ${participation.toFixed(2)}%
-                  <br>
-                  <span class="muted">da base</span>
-                </td>
-
+                <td>${participation.toFixed(2)}%</td>
                 <td>${dateBR(row.stats.lastSale)}</td>
-
                 <td>
-                  <button
-                    class="btn btn-small btn-primary"
-                    onclick="event.stopPropagation();openClientProfile('${row.client.id}')">
-                    Ver cliente
+                  <button class="button small" onclick="event.stopPropagation();openClientProfile('${row.client.id}')">
+                    Ver análise
                   </button>
-
-                  <div style="margin-top:8px">
-                    <strong style="font-size:11px">Sugestões:</strong>
-                    ${suggestionsHtml}
-                  </div>
                 </td>
               </tr>
             `;
           }).join("")
-        : `
-          <tr>
-            <td colspan="10" class="empty">
-              Cadastre clientes e vendas para visualizar a Curva ABC.
-            </td>
-          </tr>
-        `;
+        : `<tr><td colspan="8" class="empty">Ainda não há dados suficientes.</td></tr>`;
 
-      renderABCProducts(sales);
-    }
+      const products = db.products.map(product => {
+        const revenue = getProductRevenue(product.id, source);
 
-    function renderABCProducts(sales) {
-      const rows = db.products.map(function(product) {
-        const quantity = getProductQuantity(product.id, sales);
-        const revenue = getProductRevenue(product.id, sales);
-        const clients = [];
-
-        sales.forEach(function(sale) {
-          const hasProduct = (sale.items || []).some(function(item) {
-            return item.productId === product.id;
-          });
-
-          if (hasProduct && !clients.includes(sale.clientId)) {
-            clients.push(sale.clientId);
-          }
-        });
+        const clientsBought = source.filter(sale => {
+          return (sale.items || []).some(item => item.productId === product.id);
+        }).map(sale => sale.clientId);
 
         return {
-          product: product,
-          quantity: quantity,
-          revenue: revenue,
-          clients: clients
+          product,
+          revenue,
+          quantity: getProductQuantity(product.id, source),
+          clients: [...new Set(clientsBought)]
         };
-      }).sort(function(a, b) {
-        return b.revenue - a.revenue;
-      });
+      }).sort((a, b) => b.revenue - a.revenue);
 
-      document.getElementById("abcProductsTable").innerHTML = rows.length
-        ? rows.map(function(row) {
+      document.getElementById("abcProductsTable").innerHTML = products.length
+        ? products.map((row, index) => {
             const supplier = getSupplier(row.product.supplierId);
-            const abc = getProductABCClass(row.product.id, sales);
 
             return `
               <tr>
-                <td>
-                  <strong>${escapeHTML(row.product.name)}</strong>
-                  <br>
-                  <span class="muted">${escapeHTML(row.product.code)}</span>
-                </td>
-
+                <td><strong>${escapeHTML(row.product.sku)}</strong></td>
+                <td>${escapeHTML(row.product.name)}</td>
                 <td>${supplier ? supplierChip(supplier, true) : "—"}</td>
-                <td>${abcBadge(abc)}</td>
+                <td>${abcBadge(getABCClass(products, index))}</td>
                 <td>${row.quantity}</td>
                 <td class="green">${money(row.revenue)}</td>
                 <td>${row.clients.length}</td>
               </tr>
             `;
           }).join("")
-        : `
-          <tr>
-            <td colspan="6" class="empty">Nenhum produto cadastrado.</td>
-          </tr>
-        `;
+        : `<tr><td colspan="7" class="empty">Nenhum produto cadastrado.</td></tr>`;
+    }
+
+    function getSuggestions(clientId) {
+      const stats = getClientStats(clientId);
+      const purchased = Object.keys(stats.quantities);
+
+      return db.products
+        .filter(product => {
+          return !purchased.includes(product.id) &&
+            getProductQuantity(product.id) > 0;
+        })
+        .sort((a, b) => getProductRevenue(b.id) - getProductRevenue(a.id));
     }
 
     function openClientProfile(clientId) {
@@ -2129,106 +2157,18 @@
       if (!client) return;
 
       const stats = getClientStats(clientId);
+      const suggestions = getSuggestions(clientId);
       const boughtProductIds = Object.keys(stats.quantities);
-      const boughtSupplierIds = [];
+      const boughtSupplierIds = boughtProductIds
+        .map(productId => getProduct(productId)?.supplierId)
+        .filter(Boolean);
 
-      boughtProductIds.forEach(function(productId) {
-        const product = getProduct(productId);
+      const orders = stats.sales.slice().sort((a, b) => b.date.localeCompare(a.date));
 
-        if (product && !boughtSupplierIds.includes(product.supplierId)) {
-          boughtSupplierIds.push(product.supplierId);
-        }
-      });
-
-      const suggestions = getProductSuggestions(clientId);
-      const lowerPurchases = getLowerPurchases(clientId);
-
-      const ordersHtml = stats.sales.length
-        ? stats.sales
-            .slice()
-            .sort(function(a, b) {
-              return b.date.localeCompare(a.date);
-            })
-            .map(function(sale) {
-              return `
-                <div class="list-item">
-                  <strong>
-                    Pedido de ${dateBR(sale.date)} —
-                    ${money(getSaleTotal(sale))}
-                  </strong>
-
-                  <div class="muted">
-                    ${(sale.items || []).length} produto(s) ·
-                    ${escapeHTML(sale.channel || "Canal não informado")} ·
-                    ${escapeHTML(sale.seller || "Vendedor não informado")}
-                  </div>
-
-                  <div class="form-actions">
-                    <button
-                      class="btn btn-small"
-                      onclick="openOrder('${sale.id}')">
-                      Ver pedido
-                    </button>
-
-                    <button
-                      class="btn btn-small btn-primary"
-                      onclick="downloadOrderPDF('${sale.id}')">
-                      Baixar PDF
-                    </button>
-                  </div>
-                </div>
-              `;
-            }).join("")
-        : `<div class="empty">Este cliente ainda não possui pedidos.</div>`;
-
-      const suggestionsHtml = suggestions.length
-        ? suggestions.slice(0, 15).map(function(item) {
-            return `
-              <div class="list-item">
-                <strong>${escapeHTML(item.product.name)}</strong>
-
-                <div class="muted">
-                  ${abcBadge(item.abc)}
-                  · ${item.quantity} unidade(s) vendida(s) na base
-                  · ${money(item.revenue)} em faturamento
-                  ${item.supplier ? " · " + escapeHTML(item.supplier.name) : ""}
-                </div>
-              </div>
-            `;
-          }).join("")
-        : `<div class="empty">Não há sugestões disponíveis.</div>`;
-
-      const lowerHtml = lowerPurchases.length
-        ? lowerPurchases.map(function(item) {
-            return `
-              <div class="list-item">
-                <strong>${escapeHTML(item.product.name)}</strong>
-
-                <div class="muted">
-                  Cliente comprou: <strong>${item.clientQuantity}</strong>
-                  · Média dos compradores:
-                  <strong>${item.average.toFixed(1)}</strong>
-                </div>
-
-                <div class="field" style="margin-top:10px">
-                  <label>Motivo da compra menor</label>
-
-                  <input
-                    value="${escapeHTML(item.reason)}"
-                    placeholder="Ex.: preço, baixa procura, preferência..."
-                    onchange="saveLowerReason('${client.id}','${item.product.id}',this.value)">
-                </div>
-              </div>
-            `;
-          }).join("")
-        : `<div class="empty">Nenhum produto abaixo da média identificado.</div>`;
-
-      document.getElementById("clientProfile").innerHTML = `
-        <div class="profile-header">
+      document.getElementById("profileContent").innerHTML = `
+        <div class="profile-head">
           <div>
-            <button
-              class="btn btn-small"
-              onclick="showPage('clientes');renderAll()">
+            <button class="button small" onclick="showPage('clientes');renderAll()">
               ← Voltar
             </button>
 
@@ -2241,25 +2181,9 @@
             </div>
           </div>
 
-          <div class="form-actions" style="margin-top:0">
-            <button
-              class="btn btn-primary"
-              onclick="openSaleModal('${client.id}')">
-              + Nova venda
-            </button>
-
-            <button
-              class="btn"
-              onclick="document.getElementById('attachmentInput').click()">
-              Anexar arquivo
-            </button>
-
-            <input
-              id="attachmentInput"
-              type="file"
-              hidden
-              onchange="saveAttachment('${client.id}', this.files[0])">
-          </div>
+          <button class="button primary" onclick="openSaleModal('${client.id}')">
+            + Nova venda
+          </button>
         </div>
 
         <div class="cards">
@@ -2280,21 +2204,19 @@
 
           <div class="card">
             <div class="metric">Status</div>
-            <div class="metric-value" style="font-size:18px">
-              ${clientStatus(client)}
-            </div>
+            <div class="metric-value" style="font-size:18px">${clientStatus(client)}</div>
           </div>
         </div>
 
-        <div class="profile-layout">
+        <div class="profile-grid">
           <div>
             <div class="panel">
-              <h2>Fornecedores comprados pelo cliente</h2>
+              <h2>Fornecedores comprados</h2>
 
               <div class="supplier-list">
                 ${
                   db.suppliers.length
-                    ? db.suppliers.map(function(supplier) {
+                    ? db.suppliers.map(supplier => {
                         return supplierChip(
                           supplier,
                           boughtSupplierIds.includes(supplier.id)
@@ -2303,49 +2225,73 @@
                     : `<span class="muted">Nenhum fornecedor cadastrado.</span>`
                 }
               </div>
-
-              <div class="muted" style="margin-top:12px">
-                <span class="dot" style="background:#555"></span>
-                Cinza: ainda não comprou
-                &nbsp;&nbsp;
-                <span class="dot" style="background:var(--red)"></span>
-                Cor cadastrada: já comprou
-              </div>
             </div>
 
             <div class="panel" style="margin-top:15px">
-              <h2>Pedidos do cliente</h2>
-              <div class="list">${ordersHtml}</div>
-            </div>
+              <h2>Histórico de pedidos</h2>
 
-            <div class="panel" style="margin-top:15px">
-              <h2>Anexos do cliente</h2>
-              ${renderAttachments(client.id)}
+              ${
+                orders.length
+                  ? `<div class="list">${orders.map(sale => `
+                      <div class="list-item">
+                        <strong>${dateBR(sale.date)} · ${money(getSaleTotal(sale))}</strong>
+                        <div class="muted">
+                          ${(sale.items || []).length} item(ns) ·
+                          ${escapeHTML(sale.seller || "Vendedor não informado")}
+                        </div>
+                        <div class="actions">
+                          <button class="button small" onclick="openOrder('${sale.id}')">
+                            Ver detalhes
+                          </button>
+                        </div>
+                      </div>
+                    `).join("")}</div>`
+                  : `<div class="empty">Este cliente ainda não possui pedidos.</div>`
+              }
             </div>
           </div>
 
           <div>
             <div class="panel">
-              <h2>Sugestões de produtos</h2>
+              <h2>Oportunidade de venda expandida</h2>
 
               <div class="muted" style="margin-bottom:12px">
-                Produtos que o cliente ainda não comprou, priorizados pela Curva ABC geral.
+                Produtos vendidos para outros clientes, mas ainda não comprados por este cliente.
               </div>
 
-              <div class="list">
-                ${suggestionsHtml}
-              </div>
+              ${
+                suggestions.length
+                  ? `<div class="list">${suggestions.slice(0, 15).map(product => {
+                      const supplier = getSupplier(product.supplierId);
+
+                      return `
+                        <div class="list-item">
+                          <strong>${escapeHTML(product.name)}</strong>
+                          <div class="muted">
+                            SKU: ${escapeHTML(product.sku)} ·
+                            ${supplier ? escapeHTML(supplier.name) : "Sem fornecedor"} ·
+                            ${getProductQuantity(product.id)} unidade(s) vendida(s) na base
+                          </div>
+                        </div>
+                      `;
+                    }).join("")}</div>`
+                  : `<div class="empty">Nenhum produto novo identificado.</div>`
+              }
             </div>
 
             <div class="panel" style="margin-top:15px">
-              <h2>Produtos comprados em menor quantidade</h2>
+              <h2>Próxima ação recomendada</h2>
 
-              <div class="muted" style="margin-bottom:12px">
-                Compare a quantidade comprada pelo cliente com a média dos clientes que compraram o mesmo produto.
-              </div>
-
-              <div class="list">
-                ${lowerHtml}
+              <div class="alert ${daysWithoutPurchase(client) > 15 || daysWithoutPurchase(client) === Infinity ? "danger" : "success"}">
+                ${
+                  daysWithoutPurchase(client) === Infinity
+                    ? "Realizar o primeiro contato comercial e apresentar produtos de maior saída."
+                    : daysWithoutPurchase(client) > 15
+                      ? "Entrar em contato para recuperar o cliente e entender o motivo da ausência."
+                      : suggestions.length
+                        ? "Apresentar produtos complementares que o cliente ainda não comprou."
+                        : "Cliente ativo. Manter relacionamento e acompanhar novas oportunidades."
+                }
               </div>
             </div>
           </div>
@@ -2355,157 +2301,17 @@
       showPage("profile");
     }
 
-    function saveLowerReason(clientId, productId, reason) {
-      const existing = db.lowerReasons.find(function(item) {
-        return item.clientId === clientId &&
-          item.productId === productId;
-      });
-
-      if (existing) {
-        existing.reason = reason;
-      } else {
-        db.lowerReasons.push({
-          id: uid("reason"),
-          clientId: clientId,
-          productId: productId,
-          reason: reason
-        });
-      }
-
-      saveDB();
-    }
-
-    function saveAttachment(clientId, file) {
-      if (!file) return;
-
-      const reader = new FileReader();
-
-      reader.onload = function() {
-        db.attachments.push({
-          id: uid("file"),
-          clientId: clientId,
-          name: file.name,
-          type: file.type,
-          size: file.size,
-          data: reader.result,
-          date: today()
-        });
-
-        saveDB();
-        openClientProfile(clientId);
-      };
-
-      reader.readAsDataURL(file);
-    }
-
-    function renderAttachments(clientId) {
-      const attachments = db.attachments.filter(function(file) {
-        return file.clientId === clientId;
-      });
-
-      if (!attachments.length) {
-        return `<div class="empty">Nenhum arquivo anexado.</div>`;
-      }
-
-      return `
-        <div class="list">
-          ${attachments.map(function(file) {
-            return `
-              <div class="list-item">
-                <strong>${escapeHTML(file.name)}</strong>
-
-                <div class="muted">
-                  ${dateBR(file.date)} · ${formatBytes(file.size)}
-                </div>
-
-                <div class="form-actions">
-                  <a
-                    class="btn btn-small"
-                    href="${file.data}"
-                    download="${escapeHTML(file.name)}">
-                    Baixar
-                  </a>
-
-                  ${
-                    file.type && file.type.startsWith("image/")
-                      ? `
-                        <img
-                          class="image-preview"
-                          src="${file.data}"
-                          alt="Pré-visualização">
-                      `
-                      : ""
-                  }
-
-                  <button
-                    class="btn btn-small btn-danger"
-                    onclick="deleteAttachment('${file.id}','${clientId}')">
-                    Excluir
-                  </button>
-                </div>
-              </div>
-            `;
-          }).join("")}
-        </div>
-      `;
-    }
-
-    function formatBytes(bytes) {
-      if (!bytes) return "0 B";
-
-      const units = ["B", "KB", "MB", "GB"];
-      const index = Math.floor(Math.log(bytes) / Math.log(1024));
-
-      return (bytes / Math.pow(1024, index)).toFixed(1) + " " + units[index];
-    }
-
-    function deleteAttachment(fileId, clientId) {
-      if (!confirm("Excluir este anexo?")) {
-        return;
-      }
-
-      db.attachments = db.attachments.filter(function(file) {
-        return file.id !== fileId;
-      });
-
-      saveDB();
-      openClientProfile(clientId);
-    }
-
     function openOrder(saleId) {
-      const sale = db.sales.find(function(item) {
-        return item.id === saleId;
-      });
+      const sale = db.sales.find(item => item.id === saleId);
 
       if (!sale) return;
 
       const client = getClient(sale.clientId);
 
-      const itemsHtml = (sale.items || []).map(function(item) {
-        const product = getProduct(item.productId);
-        const supplier = product ? getSupplier(product.supplierId) : null;
-
-        return `
-          <tr>
-            <td>${escapeHTML(product?.name || "Produto removido")}</td>
-            <td>${supplier ? supplierChip(supplier, true) : "—"}</td>
-            <td>${item.quantity}</td>
-            <td>${money(item.price)}</td>
-            <td class="green">${money(item.quantity * item.price)}</td>
-          </tr>
-        `;
-      }).join("");
-
-      document.getElementById("orderDetails").innerHTML = `
-        <div class="card" style="margin-bottom:14px">
+      document.getElementById("orderContent").innerHTML = `
+        <div class="card" style="margin-bottom:15px">
           <strong>${escapeHTML(client?.name || "Cliente removido")}</strong>
-
           <div class="muted">
-            ${escapeHTML(client?.phone || "")} ·
-            ${escapeHTML(client?.email || "")}
-          </div>
-
-          <div class="muted" style="margin-top:7px">
             Data: ${dateBR(sale.date)} ·
             Vendedor: ${escapeHTML(sale.seller || "—")} ·
             Canal: ${escapeHTML(sale.channel || "—")}
@@ -2516,15 +2322,32 @@
           <table>
             <thead>
               <tr>
-                <th>Produto</th>
                 <th>Fornecedor</th>
+                <th>SKU</th>
+                <th>Produto</th>
                 <th>Quantidade</th>
-                <th>Preço unitário</th>
+                <th>Unitário</th>
                 <th>Total</th>
               </tr>
             </thead>
 
-            <tbody>${itemsHtml}</tbody>
+            <tbody>
+              ${(sale.items || []).map(item => {
+                const product = getProduct(item.productId);
+                const supplier = getSupplier(item.supplierId);
+
+                return `
+                  <tr>
+                    <td>${supplier ? supplierChip(supplier, true) : "—"}</td>
+                    <td>${escapeHTML(product?.sku || "—")}</td>
+                    <td>${escapeHTML(product?.name || "Produto removido")}</td>
+                    <td>${item.quantity}</td>
+                    <td>${money(item.price)}</td>
+                    <td class="green">${money(item.quantity * item.price)}</td>
+                  </tr>
+                `;
+              }).join("")}
+            </tbody>
           </table>
         </div>
 
@@ -2545,138 +2368,22 @@
             `
             : ""
         }
-
-        <div class="form-actions">
-          <button
-            class="btn btn-primary"
-            onclick="downloadOrderPDF('${sale.id}')">
-            Baixar pedido em PDF
-          </button>
-
-          <button
-            class="btn"
-            onclick="closeModal('orderModal')">
-            Fechar
-          </button>
-        </div>
       `;
 
       document.getElementById("orderModal").classList.add("show");
-    }
-
-    function downloadOrderPDF(saleId) {
-      const sale = db.sales.find(function(item) {
-        return item.id === saleId;
-      });
-
-      if (!sale) return;
-
-      const client = getClient(sale.clientId);
-      const jsPDF = window.jspdf?.jsPDF;
-
-      if (!jsPDF) {
-        alert("A biblioteca de PDF não foi carregada. Verifique sua conexão com a internet.");
-        return;
-      }
-
-      const doc = new jsPDF();
-      let y = 20;
-
-      doc.setFillColor(229, 9, 20);
-      doc.rect(0, 0, 210, 10, "F");
-
-      doc.setTextColor(0, 0, 0);
-      doc.setFontSize(18);
-      doc.text("PEDIDO COMERCIAL", 15, y);
-
-      y += 10;
-      doc.setFontSize(10);
-
-      doc.text("Cliente: " + (client?.name || "—"), 15, y);
-      y += 6;
-
-      doc.text("Telefone: " + (client?.phone || "—"), 15, y);
-      y += 6;
-
-      doc.text("E-mail: " + (client?.email || "—"), 15, y);
-      y += 6;
-
-      doc.text("Data: " + dateBR(sale.date), 15, y);
-      y += 6;
-
-      doc.text(
-        "Vendedor: " + (sale.seller || "—") +
-        " | Canal: " + (sale.channel || "—"),
-        15,
-        y
-      );
-
-      y += 12;
-
-      doc.setFillColor(35, 35, 35);
-      doc.setTextColor(255, 255, 255);
-      doc.rect(15, y - 5, 180, 8, "F");
-
-      doc.text("Produto", 18, y);
-      doc.text("Qtd.", 115, y);
-      doc.text("Unitário", 140, y);
-      doc.text("Total", 174, y);
-
-      y += 9;
-      doc.setTextColor(0, 0, 0);
-
-      sale.items.forEach(function(item) {
-        const product = getProduct(item.productId);
-        const productName = product?.name || "Produto removido";
-        const lineTotal = item.quantity * item.price;
-
-        doc.text(productName.substring(0, 48), 18, y);
-        doc.text(String(item.quantity), 118, y);
-        doc.text(money(item.price), 140, y);
-        doc.text(money(lineTotal), 174, y);
-
-        y += 7;
-
-        if (y > 270) {
-          doc.addPage();
-          y = 20;
-        }
-      });
-
-      y += 8;
-      doc.setFontSize(13);
-      doc.text("TOTAL: " + money(getSaleTotal(sale)), 145, y);
-
-      if (sale.notes) {
-        y += 12;
-        doc.setFontSize(10);
-        doc.text("Observações:", 15, y);
-        y += 6;
-
-        const notes = doc.splitTextToSize(sale.notes, 175);
-        doc.text(notes, 15, y);
-      }
-
-      const safeName = (client?.name || "cliente")
-        .replace(/[^a-z0-9]/gi, "-")
-        .toLowerCase();
-
-      doc.save("pedido-" + safeName + "-" + sale.date + ".pdf");
     }
 
     function closeModal(id) {
       document.getElementById(id).classList.remove("show");
     }
 
-    document.querySelectorAll(".modal").forEach(function(modal) {
+    document.querySelectorAll(".modal").forEach(modal => {
       modal.addEventListener("click", function(event) {
         if (event.target === modal) {
           modal.classList.remove("show");
         }
       });
     });
-
-    document.getElementById("saleClient").addEventListener("change", updateSaleTotal);
 
     renderAll();
   </script>
