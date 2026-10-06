@@ -51,6 +51,11 @@
       color: var(--white);
     }
 
+    a.button {
+      display: inline-block;
+      text-decoration: none;
+    }
+
     .layout {
       min-height: 100vh;
     }
@@ -85,6 +90,7 @@
     }
 
     .nav-button {
+      display: block;
       width: 100%;
       margin: 3px 0;
       padding: 12px;
@@ -93,6 +99,7 @@
       background: transparent;
       color: #bdbdbd;
       text-align: left;
+      font-size: 14px;
     }
 
     .nav-button:hover,
@@ -618,36 +625,44 @@
 
     @media (max-width: 760px) {
       .sidebar {
-        width: 65px;
-        padding: 15px 7px;
+        position: sticky;
+        top: 0;
+        bottom: auto;
+        left: 0;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        width: 100%;
+        padding: 8px;
+        overflow-x: auto;
+        overflow-y: hidden;
+        border-right: 0;
+        border-bottom: 1px solid var(--border);
       }
 
       .logo {
-        margin: 0 0 25px;
-        font-size: 0;
-        text-align: center;
-      }
-
-      .logo::before {
-        content: "G";
-        font-size: 24px;
-      }
-
-      .logo small,
-      .nav-button span {
         display: none;
       }
 
       .nav-button {
-        padding: 12px 5px;
+        flex: 0 0 auto;
+        width: auto;
+        margin: 0;
+        padding: 10px 14px;
+        white-space: nowrap;
         text-align: center;
-        font-size: 17px;
+        font-size: 13px;
       }
 
       .main {
-        width: calc(100% - 65px);
-        margin-left: 65px;
+        width: 100%;
+        margin-left: 0;
         padding: 15px;
+      }
+
+      .topbar {
+        flex-direction: column;
+        align-items: flex-start;
       }
 
       .grid-2,
@@ -666,10 +681,10 @@
       }
 
       .sale-line {
-        grid-template-columns: 1fr 75px 100px 35px;
+        grid-template-columns: 1fr 1fr 40px;
       }
 
-      .sale-line .seller-field,
+      .sale-line .supplier-field,
       .sale-line .product-field {
         grid-column: 1 / -1;
       }
@@ -689,13 +704,13 @@
         <small>representação comercial</small>
       </div>
 
-      <button class="nav-button active" data-page="dashboard">▣ <span>Dashboard</span></button>
-      <button class="nav-button" data-page="clientes">♙ <span>Clientes</span></button>
-      <button class="nav-button" data-page="produtos">▤ <span>Produtos</span></button>
-      <button class="nav-button" data-page="fornecedores">◉ <span>Fornecedores</span></button>
-      <button class="nav-button" data-page="vendedores">♟ <span>Vendedores</span></button>
-      <button class="nav-button" data-page="financeiro">$ <span>Financeiro</span></button>
-      <button class="nav-button" data-page="abc">▥ <span>Curva ABC</span></button>
+      <button class="nav-button active" data-page="dashboard">Dashboard</button>
+      <button class="nav-button" data-page="clientes">Clientes</button>
+      <button class="nav-button" data-page="produtos">Produtos</button>
+      <button class="nav-button" data-page="fornecedores">Fornecedores</button>
+      <button class="nav-button" data-page="vendedores">Vendedores</button>
+      <button class="nav-button" data-page="financeiro">Financeiro</button>
+      <button class="nav-button" data-page="abc">Curva ABC</button>
     </aside>
 
     <main class="main">
@@ -1159,7 +1174,7 @@
               </div>
             </div>
 
-            <select id="abc-period" onchange="renderABC()">
+            <select id="abc-period" onchange="renderABC()" style="max-width:220px">
               <option value="all">Todo o período</option>
               <option value="365">Últimos 365 dias</option>
               <option value="90">Últimos 90 dias</option>
@@ -1169,9 +1184,9 @@
 
           <div class="alert">
             <strong>Critério utilizado:</strong>
-            Curva A representa até 60% do faturamento acumulado.
-            Curva B representa de 60% até 90%.
-            Curva C representa os 10% restantes.
+            Curva A reúne os produtos que formam os primeiros 60% do faturamento acumulado.
+            Curva B reúne os 30% seguintes (até 90% acumulado).
+            Curva C reúne os 10% restantes.
           </div>
 
           <div class="chips" style="margin-bottom:14px">
@@ -1257,7 +1272,7 @@
           </div>
         </div>
 
-        <div class="alert">
+        <div class="alert" style="margin-top:14px">
           A meta diária será calculada automaticamente pela fórmula:
           meta mensal ÷ dias considerados.
         </div>
@@ -1357,21 +1372,31 @@
   <script>
     const STORAGE_KEY = "gestao_comercial_completo_2026";
 
-    let database = JSON.parse(localStorage.getItem(STORAGE_KEY)) || {
-      settings: {
-        monthlyGoal: 0,
-        dailyGoal: 0,
-        consideredDays: 30
-      },
-      clients: [],
-      suppliers: [],
-      sellers: [],
-      products: [],
-      sales: [],
-      finances: [],
-      attachments: [],
-      lowerReasons: []
-    };
+    let database;
+
+    try {
+      database = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    } catch (error) {
+      database = null;
+    }
+
+    if (!database || typeof database !== "object") {
+      database = {
+        settings: {
+          monthlyGoal: 0,
+          dailyGoal: 0,
+          consideredDays: 30
+        },
+        clients: [],
+        suppliers: [],
+        sellers: [],
+        products: [],
+        sales: [],
+        finances: [],
+        attachments: [],
+        lowerReasons: []
+      };
+    }
 
     database.settings = database.settings || {};
     database.settings.monthlyGoal = Number(database.settings.monthlyGoal || 0);
@@ -1390,7 +1415,11 @@
     saveDatabase();
 
     function saveDatabase() {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(database));
+      try {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(database));
+      } catch (error) {
+        alert("Não foi possível salvar os dados. O armazenamento do navegador pode estar cheio (verifique os anexos).");
+      }
     }
 
     function createId(prefix) {
@@ -1399,7 +1428,11 @@
     }
 
     function today() {
-      return new Date().toISOString().substring(0, 10);
+      const now = new Date();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+
+      return now.getFullYear() + "-" + month + "-" + day;
     }
 
     function money(value) {
@@ -1639,6 +1672,8 @@
 
       document.getElementById("page-title").textContent =
         titles[page] || "Gestão";
+
+      window.scrollTo(0, 0);
     }
 
     document.querySelectorAll(".nav-button").forEach(function(button) {
@@ -1726,7 +1761,11 @@
         alerts.push(`
           <div class="alert red-alert">
             Existem <strong>${warranties.length}</strong>
-            garantia(s) ativa(s) para acompanhamento.
+            garantia(s) ativa(s) para acompanhamento:
+            ${warranties.slice(0, 5).map(function(item) {
+              return escapeHTML(item.product.name) + " (" +
+                escapeHTML(item.client.name) + ")";
+            }).join(", ")}${warranties.length > 5 ? "..." : ""}
           </div>
         `);
       }
@@ -1754,7 +1793,7 @@
               return `
                 <div
                   class="list-item"
-                  style="cursor:pointer"
+                  style="cursor:pointer;margin-bottom:8px"
                   onclick="openClientProfile('${client.id}')">
 
                   <strong>${escapeHTML(client.name)}</strong>
@@ -1790,6 +1829,7 @@
           return item.days === Infinity || item.days > 15;
         })
         .sort(function(a, b) {
+          if (a.days === b.days) return 0;
           if (a.days === Infinity) return -1;
           if (b.days === Infinity) return 1;
 
@@ -1802,7 +1842,7 @@
               return `
                 <div
                   class="list-item"
-                  style="cursor:pointer"
+                  style="cursor:pointer;margin-bottom:8px"
                   onclick="openClientProfile('${item.client.id}')">
 
                   <strong>${escapeHTML(item.client.name)}</strong>
@@ -1825,7 +1865,9 @@
       const opportunities = database.clients
         .map(function(client) {
           const stats = getClientStats(client.id);
-          const suggestions = getSuggestions(client.id);
+          const suggestions = stats.sales.length
+            ? getSuggestions(client.id)
+            : [];
           const lower = getLowerPurchases(client.id);
 
           return {
@@ -1852,15 +1894,15 @@
 
               const lowerNames = item.lower
                 .slice(0, 2)
-                .map(function(item) {
-                  return item.product.name;
+                .map(function(lowerItem) {
+                  return lowerItem.product.name;
                 })
                 .join(", ");
 
               return `
                 <div
                   class="list-item"
-                  style="cursor:pointer"
+                  style="cursor:pointer;margin-bottom:8px"
                   onclick="openClientProfile('${item.client.id}')">
 
                   <strong>${escapeHTML(item.client.name)}</strong>
@@ -1906,12 +1948,12 @@
               const supplier = getSupplier(product.supplierId);
 
               return `
-                <div class="list-item">
+                <div class="list-item" style="margin-bottom:8px">
                   <strong>${escapeHTML(product.name)}</strong>
 
                   <div class="muted">
                     SKU: ${escapeHTML(product.sku)}
-                    · ${escapeHTML(supplier?.name || "Sem fornecedor")}
+                    · ${escapeHTML(supplier ? supplier.name : "Sem fornecedor")}
                   </div>
                 </div>
               `;
@@ -1920,9 +1962,8 @@
     }
 
     function renderClients() {
-      const search = (
-        document.getElementById("client-search")?.value || ""
-      ).toLowerCase();
+      const searchField = document.getElementById("client-search");
+      const search = (searchField ? searchField.value : "").toLowerCase();
 
       const clients = database.clients.filter(function(client) {
         return client.name.toLowerCase().includes(search) ||
@@ -2131,9 +2172,8 @@
     }
 
     function renderProducts() {
-      const search = (
-        document.getElementById("product-search")?.value || ""
-      ).toLowerCase();
+      const searchField = document.getElementById("product-search");
+      const search = (searchField ? searchField.value : "").toLowerCase();
 
       const productRows = database.products.map(function(product) {
         return {
@@ -2158,7 +2198,7 @@
                 return item.row.product.id === product.id;
               });
 
-              const curve = classification?.curve || "C";
+              const curve = classification ? classification.curve : "C";
 
               return `
                 <tr class="abc-row-${curve.toLowerCase()}">
@@ -2242,6 +2282,7 @@
 
       saveDatabase();
       event.target.reset();
+      document.getElementById("product-warranty").value = 0;
       renderAll();
 
       alert("Produto cadastrado com sucesso.");
@@ -2284,6 +2325,7 @@
 
       saveDatabase();
       event.target.reset();
+      document.getElementById("seller-goal").value = 0;
       renderAll();
 
       alert("Vendedor cadastrado com sucesso.");
@@ -2360,6 +2402,8 @@
       const supplierSelect = document.getElementById("product-supplier");
 
       if (supplierSelect) {
+        const currentSupplier = supplierSelect.value;
+
         supplierSelect.innerHTML =
           `<option value="">Selecione...</option>` +
           database.suppliers.map(function(supplier) {
@@ -2369,11 +2413,15 @@
               </option>
             `;
           }).join("");
+
+        supplierSelect.value = currentSupplier;
       }
 
       const clientSelect = document.getElementById("sale-client");
 
       if (clientSelect) {
+        const currentClient = clientSelect.value;
+
         clientSelect.innerHTML =
           `<option value="">Selecione...</option>` +
           database.clients.map(function(client) {
@@ -2383,11 +2431,15 @@
               </option>
             `;
           }).join("");
+
+        clientSelect.value = currentClient;
       }
 
       const sellerSelect = document.getElementById("sale-seller");
 
       if (sellerSelect) {
+        const currentSeller = sellerSelect.value;
+
         sellerSelect.innerHTML =
           `<option value="">Selecione...</option>` +
           database.sellers
@@ -2401,6 +2453,8 @@
                 </option>
               `;
             }).join("");
+
+        sellerSelect.value = currentSeller;
       }
     }
 
@@ -2565,12 +2619,13 @@
       let total = 0;
 
       document.querySelectorAll(".sale-line").forEach(function(line) {
-        const product = getProduct(
-          line.querySelector(".sale-product")?.value
-        );
+        const productSelect = line.querySelector(".sale-product");
+        const quantityInput = line.querySelector(".sale-quantity");
+
+        const product = getProduct(productSelect ? productSelect.value : "");
 
         const quantity = Number(
-          line.querySelector(".sale-quantity")?.value || 0
+          quantityInput ? quantityInput.value || 0 : 0
         );
 
         const lineTotal = product
@@ -2657,11 +2712,16 @@
       closeModal("sale-modal");
       renderAll();
 
+      if (document.getElementById("page-profile").classList.contains("active")) {
+        openClientProfile(clientId);
+      }
+
       alert("Venda registrada com sucesso.");
     });
 
     function getSalesByPeriod() {
-      const period = document.getElementById("abc-period")?.value || "all";
+      const periodField = document.getElementById("abc-period");
+      const period = periodField ? periodField.value : "all";
 
       if (period === "all") {
         return database.sales;
@@ -2677,15 +2737,16 @@
     }
 
     /*
-      REGRA DA CURVA ABC:
+      REGRA DA CURVA ABC
 
-      - Os registros são ordenados pelo maior faturamento.
-      - O percentual individual é calculado sobre o faturamento total.
-      - O percentual acumulado define a curva.
-      - Até 60%: Curva A.
-      - Acima de 60% até 90%: Curva B.
-      - Acima de 90%: Curva C.
-      */
+      1. Os registros são ordenados do maior para o menor faturamento.
+      2. O percentual individual é calculado sobre o faturamento total.
+      3. O percentual acumulado ANTES de somar o item define a curva:
+         - menor que 60%  -> Curva A
+         - de 60% até 90% -> Curva B
+         - 90% ou mais    -> Curva C
+      4. Itens sem faturamento ficam na Curva C.
+    */
     function calculateABC(rows) {
       const sorted = rows.slice().sort(function(a, b) {
         return Number(b.revenue || 0) - Number(a.revenue || 0);
@@ -2705,20 +2766,21 @@
             row: row,
             index: index + 1,
             individualPercentage: 0,
-            accumulatedPercentage: 0,
+            accumulatedPercentage: total > 0 ? accumulated : 0,
             curve: "C"
           };
         }
 
+        const previous = accumulated;
         const individual = revenue / total * 100;
 
         accumulated += individual;
 
         let curve = "C";
 
-        if (accumulated <= 60) {
+        if (previous < 60) {
           curve = "A";
-        } else if (accumulated <= 90) {
+        } else if (previous < 90) {
           curve = "B";
         }
 
@@ -2842,36 +2904,25 @@
       const clientStats = getClientStats(clientId);
       const purchased = Object.keys(clientStats.quantities);
 
-      const rows = database.products.map(function(product) {
-        return {
-          product: product,
-          revenue: getProductRevenue(product.id),
-          curve: calculateABC(
-            database.products.map(function(item) {
-              return {
-                product: item,
-                revenue: getProductRevenue(item.id)
-              };
-            })
-          ).find(function(item) {
-            return item.row.product.id === product.id;
-          })?.curve || "C"
-        };
-      });
-
-      const order = {
-        A: 1,
-        B: 2,
-        C: 3
-      };
-
-      return rows
-        .filter(function(item) {
-          return !purchased.includes(item.product.id);
+      const abc = calculateABC(
+        database.products.map(function(product) {
+          return {
+            product: product,
+            revenue: getProductRevenue(product.id)
+          };
         })
-        .sort(function(a, b) {
-          return order[a.curve] - order[b.curve] ||
-            b.revenue - a.revenue;
+      );
+
+      return abc
+        .filter(function(item) {
+          return !purchased.includes(item.row.product.id);
+        })
+        .map(function(item) {
+          return {
+            product: item.row.product,
+            revenue: item.row.revenue,
+            curve: item.curve
+          };
         });
     }
 
@@ -2913,7 +2964,7 @@
             product: product,
             clientQuantity: clientQuantity,
             average: average,
-            reason: reason?.reason || ""
+            reason: reason ? reason.reason : ""
           });
         }
       });
@@ -2950,9 +3001,11 @@
         ? stats.sales
             .slice()
             .sort(function(a, b) {
-              return b.date.localeCompare(a.date);
+              return String(b.date).localeCompare(String(a.date));
             })
             .map(function(sale) {
+              const seller = getSeller(sale.sellerId);
+
               return `
                 <div class="list-item">
                   <strong>
@@ -2962,7 +3015,7 @@
 
                   <div class="muted">
                     Vendedor:
-                    ${escapeHTML(getSeller(sale.sellerId)?.name || "—")}
+                    ${escapeHTML(seller ? seller.name : "—")}
                     · ${escapeHTML(sale.channel || "—")}
                   </div>
 
@@ -2991,30 +3044,32 @@
             const supplier = getSupplier(item.product.supplierId);
 
             return `
-              <div class="list-item">
+              <div class="list-item abc-row-${item.curve.toLowerCase()}">
                 <strong>${escapeHTML(item.product.name)}</strong>
 
                 <div class="muted">
                   SKU: ${escapeHTML(item.product.sku)}
                   · ${abcBadge(item.curve)}
-                  · ${escapeHTML(supplier?.name || "Sem fornecedor")}
+                  · ${escapeHTML(supplier ? supplier.name : "Sem fornecedor")}
                 </div>
               </div>
             `;
           }).join("")
         : `<div class="empty">Nenhuma sugestão disponível.</div>`;
 
-      const lowerHTML = getLowerPurchases(clientId).length
-        ? getLowerPurchases(clientId).map(function(item) {
+      const lowerPurchases = getLowerPurchases(clientId);
+
+      const lowerHTML = lowerPurchases.length
+        ? lowerPurchases.map(function(item) {
             return `
               <div class="list-item">
                 <strong>${escapeHTML(item.product.name)}</strong>
 
                 <div class="muted">
                   Comprado pelo cliente:
-                  <strong>${item.clientQuantity}</strong>
-                  · Média:
-                  <strong>${item.average.toFixed(1)}</strong>
+                  <strong style="display:inline">${item.clientQuantity}</strong>
+                  · Média dos clientes:
+                  <strong style="display:inline">${item.average.toFixed(1)}</strong>
                 </div>
 
                 <div class="field" style="margin-top:8px">
@@ -3180,6 +3235,14 @@
                   <a
                     class="button small"
                     href="${file.data}"
+                    target="_blank"
+                    rel="noopener">
+                    Visualizar
+                  </a>
+
+                  <a
+                    class="button small"
+                    href="${file.data}"
                     download="${escapeHTML(file.name)}">
                     Baixar
                   </a>
@@ -3254,20 +3317,6 @@
       return result;
     }
 
-    function getSaleSuppliers(sale) {
-      const suppliers = [];
-
-      (sale.items || []).forEach(function(item) {
-        const supplier = getSupplier(item.supplierId);
-
-        if (supplier && !suppliers.includes(supplier.name)) {
-          suppliers.push(supplier.name);
-        }
-      });
-
-      return suppliers.map(escapeHTML).join(", ") || "—";
-    }
-
     function openOrder(saleId) {
       const sale = database.sales.find(function(item) {
         return item.id === saleId;
@@ -3276,6 +3325,7 @@
       if (!sale) return;
 
       const client = getClient(sale.clientId);
+      const seller = getSeller(sale.sellerId);
 
       const rows = sale.items.map(function(item) {
         const product = getProduct(item.productId);
@@ -3284,7 +3334,7 @@
         return `
           <tr>
             <td>
-              <strong>${escapeHTML(product?.name || "Produto removido")}</strong>
+              <strong>${escapeHTML(product ? product.name : "Produto removido")}</strong>
               <br>
               <span class="muted">
                 SKU: ${escapeHTML(item.sku || "—")}
@@ -3299,7 +3349,7 @@
             <td>
               ${
                 item.warrantyActive
-                  ? `<span class="badge badge-active">Ativa</span>`
+                  ? `<span class="badge badge-active">Ativa até ${dateBR(item.warrantyEnd)}</span>`
                   : `<span class="badge badge-inactive">Inativa</span>`
               }
             </td>
@@ -3323,16 +3373,16 @@
 
       document.getElementById("order-details").innerHTML = `
         <div class="card">
-          <strong>${escapeHTML(client?.name || "Cliente removido")}</strong>
+          <strong>${escapeHTML(client ? client.name : "Cliente removido")}</strong>
 
           <div class="muted">
-            ${escapeHTML(client?.phone || "Sem telefone")}
-            · ${escapeHTML(client?.email || "Sem e-mail")}
+            ${escapeHTML(client ? client.phone || "Sem telefone" : "Sem telefone")}
+            · ${escapeHTML(client ? client.email || "Sem e-mail" : "Sem e-mail")}
           </div>
 
           <div class="muted" style="margin-top:7px">
             Data: ${dateBR(sale.date)}
-            · Vendedor: ${escapeHTML(getSeller(sale.sellerId)?.name || "—")}
+            · Vendedor: ${escapeHTML(seller ? seller.name : "—")}
             · Canal: ${escapeHTML(sale.channel || "—")}
           </div>
         </div>
@@ -3391,8 +3441,8 @@
 
       if (!sale) return;
 
-      const item = sale.items.find(function(item) {
-        return item.productId === productId;
+      const item = sale.items.find(function(saleItem) {
+        return saleItem.productId === productId;
       });
 
       const product = getProduct(productId);
@@ -3422,14 +3472,15 @@
 
       if (!sale) return;
 
-      const PDF = window.jspdf?.jsPDF;
+      const PDF = window.jspdf ? window.jspdf.jsPDF : null;
 
       if (!PDF) {
-        alert("Não foi possível carregar o gerador de PDF.");
+        alert("Não foi possível carregar o gerador de PDF. Verifique sua conexão com a internet.");
         return;
       }
 
       const client = getClient(sale.clientId);
+      const seller = getSeller(sale.sellerId);
       const pdf = new PDF();
 
       let y = 20;
@@ -3444,10 +3495,10 @@
       y += 10;
       pdf.setFontSize(10);
 
-      pdf.text("Cliente: " + (client?.name || "—"), 15, y);
+      pdf.text("Cliente: " + (client ? client.name : "—"), 15, y);
       y += 6;
 
-      pdf.text("Telefone: " + (client?.phone || "—"), 15, y);
+      pdf.text("Telefone: " + (client ? client.phone || "—" : "—"), 15, y);
       y += 6;
 
       pdf.text("Data: " + dateBR(sale.date), 15, y);
@@ -3455,7 +3506,7 @@
 
       pdf.text(
         "Vendedor: " +
-        (getSeller(sale.sellerId)?.name || "—") +
+        (seller ? seller.name : "—") +
         " | Canal: " +
         (sale.channel || "—"),
         15,
@@ -3471,7 +3522,7 @@
       pdf.text("Produto / SKU", 18, y);
       pdf.text("Fornecedor", 95, y);
       pdf.text("Qtd.", 137, y);
-      pdf.text("Total", 173, y);
+      pdf.text("Total", 165, y);
 
       y += 9;
       pdf.setTextColor(0, 0, 0);
@@ -3482,9 +3533,7 @@
         const supplier = getSupplier(item.supplierId);
 
         pdf.text(
-          (
-            product?.name || "Produto removido"
-          ).substring(0, 35) +
+          (product ? product.name : "Produto removido").substring(0, 32) +
           " / " +
           (item.sku || "—"),
           18,
@@ -3492,13 +3541,13 @@
         );
 
         pdf.text(
-          (supplier?.name || "—").substring(0, 20),
+          (supplier ? supplier.name : "—").substring(0, 20),
           95,
           y
         );
 
         pdf.text(String(item.quantity), 137, y);
-        pdf.text(money(item.quantity * item.price), 173, y);
+        pdf.text(money(item.quantity * item.price), 165, y);
 
         y += 7;
 
@@ -3510,7 +3559,7 @@
 
       y += 8;
       pdf.setFontSize(13);
-      pdf.text("TOTAL: " + money(getSaleTotal(sale)), 145, y);
+      pdf.text("TOTAL: " + money(getSaleTotal(sale)), 135, y);
 
       if (sale.notes) {
         y += 12;
@@ -3547,22 +3596,29 @@
       let receivable = 0;
       let payable = 0;
       let received = 0;
+      let paid = 0;
 
       database.finances.forEach(function(item) {
+        const value = Number(item.value || 0);
+
         if (item.type === "receber") {
           if (item.status === "pendente") {
-            receivable += item.value;
+            receivable += value;
           } else {
-            received += item.value;
+            received += value;
           }
         }
 
-        if (item.type === "pagar" && item.status === "pendente") {
-          payable += item.value;
+        if (item.type === "pagar") {
+          if (item.status === "pendente") {
+            payable += value;
+          } else {
+            paid += value;
+          }
         }
       });
 
-      const result = received - payable;
+      const result = received - paid;
 
       document.getElementById("finance-receivable").textContent =
         money(receivable);
