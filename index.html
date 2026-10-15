@@ -9,15 +9,13 @@
 
   <style>
     :root {
-      --black: #080808;
-      --black-2: #121212;
-      --black-3: #1c1c1c;
-      --black-4: #292929;
+      --bg: #080808;
+      --panel: #121212;
+      --panel2: #1d1d1d;
       --border: #383838;
+      --white: #fff;
+      --muted: #aaa;
       --red: #e50914;
-      --red-dark: #640b10;
-      --white: #ffffff;
-      --gray: #a7a7a7;
       --green: #2dcc83;
       --yellow: #f4c542;
       --blue: #4098f0;
@@ -31,7 +29,7 @@
     body {
       margin: 0;
       color: var(--white);
-      background: var(--black);
+      background: var(--bg);
       font-family: Arial, Helvetica, sans-serif;
     }
 
@@ -48,11 +46,11 @@
     }
 
     button {
-      color: var(--white);
+      color: white;
     }
 
-    a.button {
-      display: inline-block;
+    a {
+      color: white;
       text-decoration: none;
     }
 
@@ -62,10 +60,8 @@
 
     .sidebar {
       position: fixed;
+      inset: 0 auto 0 0;
       z-index: 10;
-      top: 0;
-      bottom: 0;
-      left: 0;
       width: 240px;
       padding: 20px 12px;
       overflow-y: auto;
@@ -83,13 +79,13 @@
     .logo small {
       display: block;
       margin-top: 4px;
-      color: var(--gray);
+      color: var(--muted);
       font-size: 10px;
       font-weight: normal;
       letter-spacing: 1px;
     }
 
-    .nav-button {
+    .nav {
       display: block;
       width: 100%;
       margin: 3px 0;
@@ -97,13 +93,12 @@
       border: 0;
       border-radius: 6px;
       background: transparent;
-      color: #bdbdbd;
+      color: #bbb;
       text-align: left;
-      font-size: 14px;
     }
 
-    .nav-button:hover,
-    .nav-button.active {
+    .nav:hover,
+    .nav.active {
       background: var(--red);
       color: white;
     }
@@ -112,7 +107,7 @@
       width: calc(100% - 240px);
       min-height: 100vh;
       margin-left: 240px;
-      padding: 26px;
+      padding: 25px;
     }
 
     .topbar {
@@ -125,8 +120,7 @@
 
     h1,
     h2,
-    h3,
-    p {
+    h3 {
       margin-top: 0;
     }
 
@@ -141,12 +135,12 @@
     }
 
     h3 {
-      margin-bottom: 12px;
+      margin-bottom: 10px;
       font-size: 16px;
     }
 
     .muted {
-      color: var(--gray);
+      color: var(--muted);
       font-size: 13px;
     }
 
@@ -163,7 +157,7 @@
       padding: 17px;
       border: 1px solid var(--border);
       border-radius: 8px;
-      background: var(--black-2);
+      background: var(--panel);
     }
 
     .panel {
@@ -178,7 +172,7 @@
     }
 
     .metric-label {
-      color: var(--gray);
+      color: var(--muted);
       font-size: 11px;
       letter-spacing: .5px;
       text-transform: uppercase;
@@ -262,10 +256,6 @@
       border-color: var(--red);
     }
 
-    input[readonly] {
-      color: var(--green);
-    }
-
     textarea {
       min-height: 80px;
       resize: vertical;
@@ -276,19 +266,28 @@
       padding: 3px;
     }
 
-    .actions {
+    .actions,
+    .toolbar {
       display: flex;
+      align-items: center;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 9px;
+    }
+
+    .actions {
       margin-top: 14px;
+    }
+
+    .toolbar {
+      justify-content: space-between;
+      margin-bottom: 14px;
     }
 
     .button {
       padding: 9px 13px;
       border: 1px solid var(--border);
       border-radius: 5px;
-      background: var(--black-3);
-      color: white;
+      background: var(--panel2);
     }
 
     .button:hover {
@@ -315,20 +314,7 @@
       font-size: 12px;
     }
 
-    .toolbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .toolbar input {
-      max-width: 320px;
-    }
-
-    .table-container {
+    .table-wrap {
       overflow-x: auto;
     }
 
@@ -348,7 +334,7 @@
     }
 
     th {
-      color: var(--gray);
+      color: var(--muted);
       font-size: 11px;
       text-transform: uppercase;
     }
@@ -361,10 +347,63 @@
       background: #242424;
     }
 
+    .list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .list-item {
+      padding: 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: #101010;
+    }
+
+    .list-item strong {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .empty {
+      padding: 22px 10px;
+      color: var(--muted);
+      text-align: center;
+      font-size: 13px;
+    }
+
+    .alert {
+      margin-bottom: 14px;
+      padding: 12px;
+      border-left: 4px solid var(--yellow);
+      border-radius: 5px;
+      background: #261f08;
+      color: #f4d97b;
+      font-size: 13px;
+    }
+
+    .alert.red-alert {
+      border-left-color: var(--red);
+      background: #2a0a0d;
+      color: #ffafb4;
+    }
+
+    .progress {
+      height: 12px;
+      overflow: hidden;
+      border-radius: 20px;
+      background: #292929;
+    }
+
+    .progress-bar {
+      height: 100%;
+      border-radius: 20px;
+      background: linear-gradient(90deg, var(--red), #ff4851);
+    }
+
     .badge {
       display: inline-flex;
       align-items: center;
-      gap: 4px;
       padding: 4px 8px;
       border-radius: 20px;
       font-size: 11px;
@@ -396,11 +435,6 @@
       color: #ff969c;
     }
 
-    .badge-warning {
-      background: #564207;
-      color: #ffdd67;
-    }
-
     .chips {
       display: flex;
       flex-wrap: wrap;
@@ -416,11 +450,9 @@
       border-radius: 20px;
       background: #282828;
       font-size: 11px;
-      white-space: nowrap;
     }
 
     .chip.inactive {
-      border-color: #2b2b2b;
       background: #171717;
       color: #777;
     }
@@ -430,66 +462,6 @@
       width: 9px;
       height: 9px;
       border-radius: 50%;
-    }
-
-    .list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .list-item {
-      padding: 10px;
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      background: #101010;
-    }
-
-    .list-item strong {
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    .empty {
-      padding: 22px 10px;
-      color: var(--gray);
-      text-align: center;
-      font-size: 13px;
-    }
-
-    .alert {
-      margin-bottom: 14px;
-      padding: 12px;
-      border-left: 4px solid var(--yellow);
-      border-radius: 5px;
-      background: #261f08;
-      color: #f4d97b;
-      font-size: 13px;
-    }
-
-    .alert.red-alert {
-      border-left-color: var(--red);
-      background: #2a0a0d;
-      color: #ffafb4;
-    }
-
-    .alert.green-alert {
-      border-left-color: var(--green);
-      background: #082b1d;
-      color: #89e5b9;
-    }
-
-    .progress {
-      height: 12px;
-      overflow: hidden;
-      border-radius: 20px;
-      background: #292929;
-    }
-
-    .progress-bar {
-      height: 100%;
-      border-radius: 20px;
-      background: linear-gradient(90deg, var(--red), #ff4851);
     }
 
     .sale-line {
@@ -505,6 +477,40 @@
       color: var(--green);
       font-size: 13px;
       font-weight: bold;
+    }
+
+    .filter-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .comparison-card {
+      border-left: 4px solid var(--blue);
+    }
+
+    .comparison-card.current {
+      border-left-color: var(--green);
+    }
+
+    .comparison-card.previous {
+      border-left-color: var(--yellow);
+    }
+
+    .abc-row-a {
+      border-left: 5px solid var(--red);
+      background: rgba(229, 9, 20, .13);
+    }
+
+    .abc-row-b {
+      border-left: 5px solid var(--yellow);
+      background: rgba(244, 197, 66, .12);
+    }
+
+    .abc-row-c {
+      border-left: 5px solid var(--blue);
+      background: rgba(64, 152, 240, .12);
     }
 
     .modal {
@@ -530,7 +536,7 @@
       border: 1px solid #444;
       border-top: 3px solid var(--red);
       border-radius: 8px;
-      background: var(--black-2);
+      background: var(--panel);
     }
 
     .modal-header {
@@ -561,60 +567,12 @@
       gap: 15px;
     }
 
-    .abc-row-a {
-      border-left: 5px solid var(--red);
-      background: rgba(229, 9, 20, .13);
-    }
-
-    .abc-row-b {
-      border-left: 5px solid var(--yellow);
-      background: rgba(244, 197, 66, .12);
-    }
-
-    .abc-row-c {
-      border-left: 5px solid var(--blue);
-      background: rgba(64, 152, 240, .12);
-    }
-
-    .abc-row-a:hover {
-      background: rgba(229, 9, 20, .24) !important;
-    }
-
-    .abc-row-b:hover {
-      background: rgba(244, 197, 66, .23) !important;
-    }
-
-    .abc-row-c:hover {
-      background: rgba(64, 152, 240, .23) !important;
-    }
-
-    .abc-big {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 62px;
-      padding: 6px 8px;
-      border-radius: 5px;
-      font-weight: bold;
-    }
-
-    .abc-big.a {
-      background: var(--red);
-      color: white;
-    }
-
-    .abc-big.b {
-      background: #d5af16;
-      color: #111;
-    }
-
-    .abc-big.c {
-      background: #1676c5;
-      color: white;
-    }
-
     @media (max-width: 1100px) {
       .cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .grid-4 {
         grid-template-columns: repeat(2, 1fr);
       }
 
@@ -627,8 +585,7 @@
       .sidebar {
         position: sticky;
         top: 0;
-        bottom: auto;
-        left: 0;
+        inset: auto;
         display: flex;
         align-items: center;
         gap: 6px;
@@ -644,13 +601,12 @@
         display: none;
       }
 
-      .nav-button {
+      .nav {
         flex: 0 0 auto;
         width: auto;
         margin: 0;
         padding: 10px 14px;
         white-space: nowrap;
-        text-align: center;
         font-size: 13px;
       }
 
@@ -667,7 +623,8 @@
 
       .grid-2,
       .grid-3,
-      .grid-4 {
+      .grid-4,
+      .filter-row {
         grid-template-columns: 1fr;
       }
 
@@ -704,20 +661,21 @@
         <small>representação comercial</small>
       </div>
 
-      <button class="nav-button active" data-page="dashboard">Dashboard</button>
-      <button class="nav-button" data-page="clientes">Clientes</button>
-      <button class="nav-button" data-page="produtos">Produtos</button>
-      <button class="nav-button" data-page="fornecedores">Fornecedores</button>
-      <button class="nav-button" data-page="vendedores">Vendedores</button>
-      <button class="nav-button" data-page="financeiro">Financeiro</button>
-      <button class="nav-button" data-page="abc">Curva ABC</button>
+      <button class="nav active" data-page="dashboard">Dashboard</button>
+      <button class="nav" data-page="clientes">Clientes</button>
+      <button class="nav" data-page="produtos">Produtos</button>
+      <button class="nav" data-page="fornecedores">Fornecedores</button>
+      <button class="nav" data-page="vendedores">Vendedores</button>
+      <button class="nav" data-page="financeiro">Financeiro</button>
+      <button class="nav" data-page="abc">Curva ABC</button>
+      <button class="nav" data-page="configuracoes">Configurações</button>
     </aside>
 
     <main class="main">
       <div class="topbar">
         <div>
           <h1 id="page-title">Dashboard</h1>
-          <div class="muted">Gestão comercial, metas e oportunidades</div>
+          <div class="muted">Gestão comercial, metas e análises</div>
         </div>
 
         <button class="button primary" onclick="openSaleModal()">
@@ -727,21 +685,128 @@
 
       <!-- DASHBOARD -->
       <section class="page active" id="page-dashboard">
-        <div id="dashboard-alerts"></div>
-
         <div class="panel">
           <div class="toolbar">
             <div>
-              <h2>Meta de vendas</h2>
+              <h2>Filtros e comparação de períodos</h2>
               <div class="muted">
-                A meta diária é calculada automaticamente pela meta mensal.
+                Escolha um período principal e adicione períodos para comparar.
               </div>
             </div>
 
-            <button class="button small" onclick="openSettingsModal()">
-              Configurar meta
+            <div class="actions" style="margin-top:0">
+              <button class="button small" onclick="addComparison()">
+                + Adicionar comparação
+              </button>
+
+              <button class="button small danger" onclick="clearComparisons()">
+                Limpar comparações
+              </button>
+            </div>
+          </div>
+
+          <div class="filter-row">
+            <div class="field">
+              <label>Data inicial</label>
+              <input id="filter-start" type="date" onchange="renderDashboard()">
+            </div>
+
+            <div class="field">
+              <label>Data final</label>
+              <input id="filter-end" type="date" onchange="renderDashboard()">
+            </div>
+
+            <div class="field">
+              <label>Cliente</label>
+              <select id="filter-client" onchange="renderDashboard()"></select>
+            </div>
+
+            <div class="field">
+              <label>Vendedor</label>
+              <select id="filter-seller" onchange="renderDashboard()"></select>
+            </div>
+
+            <div class="field">
+              <label>Fornecedor</label>
+              <select id="filter-supplier" onchange="renderDashboard()"></select>
+            </div>
+
+            <div class="field">
+              <label>Produto</label>
+              <select id="filter-product" onchange="renderDashboard()"></select>
+            </div>
+
+            <div class="field">
+              <label>Canal</label>
+              <select id="filter-channel" onchange="renderDashboard()">
+                <option value="">Todos os canais</option>
+                <option>Presencial</option>
+                <option>WhatsApp</option>
+                <option>Telefone</option>
+                <option>Site</option>
+                <option>Outro</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label>Atalho</label>
+              <select id="filter-shortcut" onchange="applyShortcut()">
+                <option value="">Selecionar período</option>
+                <option value="today">Hoje</option>
+                <option value="7">Últimos 7 dias</option>
+                <option value="30">Últimos 30 dias</option>
+                <option value="90">Últimos 90 dias</option>
+                <option value="current-month">Mês atual</option>
+                <option value="previous-month">Mês anterior</option>
+                <option value="current-year">Ano atual</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="comparison-filters"></div>
+
+          <div class="actions">
+            <button class="button small" onclick="clearDashboardFilters()">
+              Limpar filtros
+            </button>
+
+            <button class="button small primary" onclick="renderDashboard()">
+              Atualizar análise
             </button>
           </div>
+        </div>
+
+        <div id="dashboard-alerts"></div>
+
+        <div class="cards">
+          <div class="card">
+            <div class="metric-label">Faturamento filtrado</div>
+            <div class="metric-value green" id="dashboard-revenue">R$ 0,00</div>
+          </div>
+
+          <div class="card">
+            <div class="metric-label">Pedidos filtrados</div>
+            <div class="metric-value" id="dashboard-orders">0</div>
+          </div>
+
+          <div class="card">
+            <div class="metric-label">Clientes alcançados</div>
+            <div class="metric-value blue" id="dashboard-clients">0</div>
+          </div>
+
+          <div class="card">
+            <div class="metric-label">Ticket médio</div>
+            <div class="metric-value yellow" id="dashboard-ticket">R$ 0,00</div>
+          </div>
+        </div>
+
+        <div class="panel">
+          <h2>Comparação de períodos</h2>
+          <div id="comparison-results" class="grid-3"></div>
+        </div>
+
+        <div class="panel">
+          <h2>Meta de vendas</h2>
 
           <div class="cards">
             <div class="card">
@@ -750,7 +815,7 @@
             </div>
 
             <div class="card">
-              <div class="metric-label">Meta diária calculada</div>
+              <div class="metric-label">Meta diária</div>
               <div class="metric-value yellow" id="goal-daily">R$ 0,00</div>
             </div>
 
@@ -772,31 +837,9 @@
           <div class="muted" id="goal-summary" style="margin-top:9px"></div>
         </div>
 
-        <div class="cards">
-          <div class="card">
-            <div class="metric-label">Clientes</div>
-            <div class="metric-value" id="metric-clients">0</div>
-          </div>
-
-          <div class="card">
-            <div class="metric-label">Produtos</div>
-            <div class="metric-value" id="metric-products">0</div>
-          </div>
-
-          <div class="card">
-            <div class="metric-label">Vendas</div>
-            <div class="metric-value" id="metric-sales">0</div>
-          </div>
-
-          <div class="card">
-            <div class="metric-label">Faturamento geral</div>
-            <div class="metric-value green" id="metric-revenue">R$ 0,00</div>
-          </div>
-        </div>
-
         <div class="grid-2">
           <div class="panel">
-            <h2>Aniversariantes do mês</h2>
+            <h2>Aniversariantes</h2>
             <div id="birthdays-list"></div>
           </div>
 
@@ -847,13 +890,18 @@
               </div>
 
               <div class="field">
-                <label>Cidade</label>
-                <input id="client-city">
+                <label>Empresa / CNPJ</label>
+                <input id="client-document">
               </div>
 
               <div class="field">
-                <label>Observações</label>
-                <input id="client-notes">
+                <label>Logo do cliente — URL</label>
+                <input id="client-logo" placeholder="https://...">
+              </div>
+
+              <div class="field full">
+                <label>Endereço</label>
+                <input id="client-address">
               </div>
             </div>
 
@@ -869,7 +917,7 @@
             <input id="client-search" placeholder="Buscar cliente..." oninput="renderClients()">
           </div>
 
-          <div class="table-container">
+          <div class="table-wrap">
             <table>
               <thead>
                 <tr>
@@ -911,7 +959,7 @@
               </div>
 
               <div class="field">
-                <label>Preço de venda *</label>
+                <label>Preço *</label>
                 <input id="product-price" type="number" min="0" step="0.01" required>
               </div>
 
@@ -923,11 +971,6 @@
               <div class="field">
                 <label>Garantia em dias</label>
                 <input id="product-warranty" type="number" min="0" value="0">
-              </div>
-
-              <div class="field full">
-                <label>Observações</label>
-                <textarea id="product-notes"></textarea>
               </div>
             </div>
 
@@ -943,14 +986,13 @@
             <input id="product-search" placeholder="Buscar produto ou SKU..." oninput="renderProducts()">
           </div>
 
-          <div class="table-container">
+          <div class="table-wrap">
             <table>
               <thead>
                 <tr>
                   <th>SKU</th>
                   <th>Produto</th>
                   <th>Fornecedor</th>
-                  <th>Categoria</th>
                   <th>Preço</th>
                   <th>Curva</th>
                   <th>Vendidos</th>
@@ -971,7 +1013,7 @@
           <form id="supplier-form">
             <div class="grid-3">
               <div class="field">
-                <label>Nome do fornecedor *</label>
+                <label>Nome *</label>
                 <input id="supplier-name" required>
               </div>
 
@@ -981,7 +1023,7 @@
               </div>
 
               <div class="field">
-                <label>Cor do fornecedor</label>
+                <label>Cor</label>
                 <input id="supplier-color" type="color" value="#e50914">
               </div>
             </div>
@@ -995,14 +1037,14 @@
         <div class="panel">
           <h2>Fornecedores cadastrados</h2>
 
-          <div class="table-container">
+          <div class="table-wrap">
             <table>
               <thead>
                 <tr>
                   <th>Fornecedor</th>
                   <th>Contato</th>
                   <th>Produtos</th>
-                  <th>Ações</th>
+                  <th>Ação</th>
                 </tr>
               </thead>
               <tbody id="suppliers-table"></tbody>
@@ -1019,7 +1061,7 @@
           <form id="seller-form">
             <div class="grid-3">
               <div class="field">
-                <label>Nome do vendedor *</label>
+                <label>Nome *</label>
                 <input id="seller-name" required>
               </div>
 
@@ -1056,17 +1098,16 @@
         <div class="panel">
           <h2>Vendedores cadastrados</h2>
 
-          <div class="table-container">
+          <div class="table-wrap">
             <table>
               <thead>
                 <tr>
                   <th>Nome</th>
                   <th>Telefone</th>
-                  <th>E-mail</th>
-                  <th>Meta mensal</th>
+                  <th>Meta</th>
                   <th>Faturamento</th>
                   <th>Status</th>
-                  <th>Ações</th>
+                  <th>Ação</th>
                 </tr>
               </thead>
               <tbody id="sellers-table"></tbody>
@@ -1079,12 +1120,12 @@
       <section class="page" id="page-financeiro">
         <div class="cards">
           <div class="card">
-            <div class="metric-label">Contas a receber</div>
+            <div class="metric-label">A receber</div>
             <div class="metric-value green" id="finance-receivable">R$ 0,00</div>
           </div>
 
           <div class="card">
-            <div class="metric-label">Contas a pagar</div>
+            <div class="metric-label">A pagar</div>
             <div class="metric-value red" id="finance-payable">R$ 0,00</div>
           </div>
 
@@ -1094,21 +1135,21 @@
           </div>
 
           <div class="card">
-            <div class="metric-label">Resultado DRE</div>
+            <div class="metric-label">Resultado</div>
             <div class="metric-value purple" id="finance-result">R$ 0,00</div>
           </div>
         </div>
 
         <div class="panel">
-          <h2>Nova movimentação financeira</h2>
+          <h2>Nova movimentação</h2>
 
           <form id="finance-form">
             <div class="grid-4">
               <div class="field">
-                <label>Tipo *</label>
+                <label>Tipo</label>
                 <select id="finance-type">
-                  <option value="receber">Conta a receber</option>
-                  <option value="pagar">Conta a pagar</option>
+                  <option value="receber">A receber</option>
+                  <option value="pagar">A pagar</option>
                 </select>
               </div>
 
@@ -1143,9 +1184,9 @@
         </div>
 
         <div class="panel">
-          <h2>Movimentações financeiras</h2>
+          <h2>Movimentações</h2>
 
-          <div class="table-container">
+          <div class="table-wrap">
             <table>
               <thead>
                 <tr>
@@ -1168,13 +1209,13 @@
         <div class="panel">
           <div class="toolbar">
             <div>
-              <h2>Curva ABC de produtos</h2>
+              <h2>Curva ABC</h2>
               <div class="muted">
-                Classificação automática pelo faturamento acumulado.
+                A = até 60% · B = 60% a 90% · C = acima de 90%.
               </div>
             </div>
 
-            <select id="abc-period" onchange="renderABC()" style="max-width:220px">
+            <select id="abc-period" onchange="renderABC()">
               <option value="all">Todo o período</option>
               <option value="365">Últimos 365 dias</option>
               <option value="90">Últimos 90 dias</option>
@@ -1182,20 +1223,7 @@
             </select>
           </div>
 
-          <div class="alert">
-            <strong>Critério utilizado:</strong>
-            Curva A reúne os produtos que formam os primeiros 60% do faturamento acumulado.
-            Curva B reúne os 30% seguintes (até 90% acumulado).
-            Curva C reúne os 10% restantes.
-          </div>
-
-          <div class="chips" style="margin-bottom:14px">
-            <span class="abc-big a">Curva A · 60%</span>
-            <span class="abc-big b">Curva B · 30%</span>
-            <span class="abc-big c">Curva C · 10%</span>
-          </div>
-
-          <div class="table-container">
+          <div class="table-wrap">
             <table>
               <thead>
                 <tr>
@@ -1218,18 +1246,15 @@
         <div class="panel">
           <h2>Curva ABC de clientes</h2>
 
-          <div class="table-container">
+          <div class="table-wrap">
             <table>
               <thead>
                 <tr>
                   <th>Cliente</th>
                   <th>Curva</th>
                   <th>Pedidos</th>
-                  <th>Itens</th>
                   <th>Faturamento</th>
-                  <th>% individual</th>
                   <th>% acumulado</th>
-                  <th>Última compra</th>
                   <th>Ação</th>
                 </tr>
               </thead>
@@ -1239,7 +1264,66 @@
         </div>
       </section>
 
-      <!-- PERFIL DO CLIENTE -->
+      <!-- CONFIGURAÇÕES -->
+      <section class="page" id="page-configuracoes">
+        <div class="panel">
+          <h2>Dados da empresa para o PDF</h2>
+
+          <form id="company-form">
+            <div class="grid-3">
+              <div class="field">
+                <label>Nome da empresa *</label>
+                <input id="company-name" required>
+              </div>
+
+              <div class="field">
+                <label>CNPJ</label>
+                <input id="company-document">
+              </div>
+
+              <div class="field">
+                <label>Telefone</label>
+                <input id="company-phone">
+              </div>
+
+              <div class="field">
+                <label>E-mail</label>
+                <input id="company-email" type="email">
+              </div>
+
+              <div class="field">
+                <label>Logo da empresa — URL</label>
+                <input id="company-logo" placeholder="https://...">
+              </div>
+
+              <div class="field full">
+                <label>Endereço da empresa</label>
+                <input id="company-address">
+              </div>
+            </div>
+
+            <div class="actions">
+              <button class="button primary">Salvar dados da empresa</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="panel">
+          <h2>Como usar as logos no PDF</h2>
+
+          <div class="muted">
+            Informe uma URL pública de imagem, por exemplo:
+            https://seusite.com/logo.png
+          </div>
+
+          <div class="alert" style="margin-top:14px">
+            Para o PDF carregar corretamente a logo, a imagem precisa permitir
+            acesso externo e estar em formato JPG, PNG ou base64.
+          </div>
+        </div>
+      </section>
+
+      <!-- PERFIL -->
       <section class="page" id="page-profile">
         <div id="client-profile"></div>
       </section>
@@ -1272,22 +1356,14 @@
           </div>
         </div>
 
-        <div class="alert" style="margin-top:14px">
-          A meta diária será calculada automaticamente pela fórmula:
-          meta mensal ÷ dias considerados.
-        </div>
-
         <div class="actions">
           <button class="button primary">Salvar meta</button>
-          <button type="button" class="button" onclick="closeModal('settings-modal')">
-            Cancelar
-          </button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- MODAL DE VENDA -->
+  <!-- MODAL VENDA -->
   <div class="modal" id="sale-modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -1324,11 +1400,11 @@
           </div>
         </div>
 
-        <h3 style="margin-top:20px">Itens da venda</h3>
+        <h3 style="margin-top:20px">Itens</h3>
 
         <div class="alert">
           Selecione o fornecedor antes do produto.
-          O sistema exibirá apenas produtos vinculados ao fornecedor selecionado.
+          O sistema exibirá os produtos vinculados ao fornecedor.
         </div>
 
         <div id="sale-lines"></div>
@@ -1349,15 +1425,12 @@
 
         <div class="actions">
           <button class="button primary">Salvar venda</button>
-          <button type="button" class="button" onclick="closeModal('sale-modal')">
-            Cancelar
-          </button>
         </div>
       </form>
     </div>
   </div>
 
-  <!-- MODAL DO PEDIDO -->
+  <!-- MODAL PEDIDO -->
   <div class="modal" id="order-modal">
     <div class="modal-content">
       <div class="modal-header">
@@ -1370,55 +1443,76 @@
   </div>
 
   <script>
-    const STORAGE_KEY = "gestao_comercial_completo_2026";
+    const STORAGE_KEY = "gestao_comercial_completo_comparacoes_pdf_v1";
 
-    let database;
+    let database = loadDatabase();
+    let comparisons = [];
 
-    try {
-      database = JSON.parse(localStorage.getItem(STORAGE_KEY));
-    } catch (error) {
-      database = null;
+    function loadDatabase() {
+      let data = null;
+
+      try {
+        data = JSON.parse(localStorage.getItem(STORAGE_KEY));
+      } catch (error) {
+        data = null;
+      }
+
+      if (!data || typeof data !== "object") {
+        data = {
+          settings: {
+            monthlyGoal: 0,
+            dailyGoal: 0,
+            consideredDays: 30
+          },
+          company: {
+            name: "",
+            document: "",
+            phone: "",
+            email: "",
+            address: "",
+            logo: ""
+          },
+          clients: [],
+          suppliers: [],
+          sellers: [],
+          products: [],
+          sales: [],
+          finances: [],
+          lowerReasons: []
+        };
+      }
+
+      data.settings = data.settings || {};
+      data.company = data.company || {};
+
+      data.settings.monthlyGoal = Number(data.settings.monthlyGoal || 0);
+      data.settings.dailyGoal = Number(data.settings.dailyGoal || 0);
+      data.settings.consideredDays = Number(data.settings.consideredDays || 30);
+
+      const arrays = [
+        "clients",
+        "suppliers",
+        "sellers",
+        "products",
+        "sales",
+        "finances",
+        "lowerReasons"
+      ];
+
+      arrays.forEach(function(key) {
+        if (!Array.isArray(data[key])) {
+          data[key] = [];
+        }
+      });
+
+      return data;
     }
-
-    if (!database || typeof database !== "object") {
-      database = {
-        settings: {
-          monthlyGoal: 0,
-          dailyGoal: 0,
-          consideredDays: 30
-        },
-        clients: [],
-        suppliers: [],
-        sellers: [],
-        products: [],
-        sales: [],
-        finances: [],
-        attachments: [],
-        lowerReasons: []
-      };
-    }
-
-    database.settings = database.settings || {};
-    database.settings.monthlyGoal = Number(database.settings.monthlyGoal || 0);
-    database.settings.dailyGoal = Number(database.settings.dailyGoal || 0);
-    database.settings.consideredDays = Number(database.settings.consideredDays || 30);
-
-    if (!Array.isArray(database.clients)) database.clients = [];
-    if (!Array.isArray(database.suppliers)) database.suppliers = [];
-    if (!Array.isArray(database.sellers)) database.sellers = [];
-    if (!Array.isArray(database.products)) database.products = [];
-    if (!Array.isArray(database.sales)) database.sales = [];
-    if (!Array.isArray(database.finances)) database.finances = [];
-    if (!Array.isArray(database.attachments)) database.attachments = [];
-    if (!Array.isArray(database.lowerReasons)) database.lowerReasons = [];
-
-    saveDatabase();
 
     function saveDatabase() {
       try {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(database));
       } catch (error) {
-        alert("Não foi possível salvar os dados. O armazenamento do navegador pode estar cheio (verifique os anexos).");
+        alert("Não foi possível salvar os dados no navegador.");
       }
     }
 
@@ -1428,11 +1522,11 @@
     }
 
     function today() {
-      const now = new Date();
-      const month = String(now.getMonth() + 1).padStart(2, "0");
-      const day = String(now.getDate()).padStart(2, "0");
+      const date = new Date();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
 
-      return now.getFullYear() + "-" + month + "-" + day;
+      return date.getFullYear() + "-" + month + "-" + day;
     }
 
     function money(value) {
@@ -1447,63 +1541,55 @@
 
       const parts = String(value).split("-");
 
-      if (parts.length !== 3) return value;
-
-      return parts[2] + "/" + parts[1] + "/" + parts[0];
+      return parts.length === 3
+        ? parts[2] + "/" + parts[1] + "/" + parts[0]
+        : value;
     }
 
     function escapeHTML(value) {
       return String(value ?? "").replace(/[&<>"']/g, function(character) {
-        const replacements = {
+        return {
           "&": "&",
           "<": "<",
           ">": ">",
           '"': "&quot;",
           "'": "&#039;"
-        };
-
-        return replacements[character];
+        }[character];
       });
     }
 
-    function getClient(clientId) {
-      return database.clients.find(function(client) {
-        return client.id === clientId;
-      });
+    function getClient(id) {
+      return database.clients.find(item => item.id === id);
     }
 
-    function getSupplier(supplierId) {
-      return database.suppliers.find(function(supplier) {
-        return supplier.id === supplierId;
-      });
+    function getSupplier(id) {
+      return database.suppliers.find(item => item.id === id);
     }
 
-    function getSeller(sellerId) {
-      return database.sellers.find(function(seller) {
-        return seller.id === sellerId;
-      });
+    function getSeller(id) {
+      return database.sellers.find(item => item.id === id);
     }
 
-    function getProduct(productId) {
-      return database.products.find(function(product) {
-        return product.id === productId;
-      });
+    function getProduct(id) {
+      return database.products.find(item => item.id === id);
     }
 
-    function getSaleTotal(sale) {
+    function saleTotal(sale) {
       return (sale.items || []).reduce(function(total, item) {
         return total + Number(item.quantity || 0) * Number(item.price || 0);
       }, 0);
     }
 
-    function getClientSales(clientId, source) {
-      return (source || database.sales).filter(function(sale) {
-        return sale.clientId === clientId;
+    function getMonthSales() {
+      const month = today().substring(0, 7);
+
+      return database.sales.filter(function(sale) {
+        return String(sale.date).substring(0, 7) === month;
       });
     }
 
-    function getProductQuantity(productId, source) {
-      return (source || database.sales).reduce(function(total, sale) {
+    function getProductQuantity(productId, sales) {
+      return (sales || database.sales).reduce(function(total, sale) {
         return total + (sale.items || []).reduce(function(sum, item) {
           return sum + (
             item.productId === productId
@@ -1514,40 +1600,27 @@
       }, 0);
     }
 
-    function getProductRevenue(productId, source) {
-      return (source || database.sales).reduce(function(total, sale) {
+    function getProductRevenue(productId, sales) {
+      return (sales || database.sales).reduce(function(total, sale) {
         return total + (sale.items || []).reduce(function(sum, item) {
-          if (item.productId !== productId) return sum;
-
-          return sum + Number(item.quantity || 0) * Number(item.price || 0);
+          return sum + (
+            item.productId === productId
+              ? Number(item.quantity || 0) * Number(item.price || 0)
+              : 0
+          );
         }, 0);
       }, 0);
     }
 
-    function getProductClients(productId, source) {
-      const clients = [];
-
-      (source || database.sales).forEach(function(sale) {
-        const hasProduct = (sale.items || []).some(function(item) {
-          return item.productId === productId;
-        });
-
-        if (hasProduct && !clients.includes(sale.clientId)) {
-          clients.push(sale.clientId);
-        }
-      });
-
-      return clients.length;
-    }
-
-    function getClientStats(clientId, source) {
-      const sales = getClientSales(clientId, source);
+    function getClientStats(clientId, sales) {
+      const source = sales || database.sales;
+      const selected = source.filter(sale => sale.clientId === clientId);
       const quantities = {};
       let revenue = 0;
       let items = 0;
 
-      sales.forEach(function(sale) {
-        revenue += getSaleTotal(sale);
+      selected.forEach(function(sale) {
+        revenue += saleTotal(sale);
 
         (sale.items || []).forEach(function(item) {
           quantities[item.productId] =
@@ -1558,16 +1631,14 @@
         });
       });
 
-      const dates = sales
-        .map(function(sale) {
-          return sale.date;
-        })
+      const dates = selected
+        .map(sale => sale.date)
         .filter(Boolean)
         .sort()
         .reverse();
 
       return {
-        sales: sales,
+        sales: selected,
         quantities: quantities,
         revenue: revenue,
         items: items,
@@ -1580,38 +1651,9 @@
 
       if (!stats.lastSale) return Infinity;
 
-      const lastDate = new Date(stats.lastSale + "T12:00:00");
+      const date = new Date(stats.lastSale + "T12:00:00");
 
-      return Math.floor((new Date() - lastDate) / 86400000);
-    }
-
-    function getClientStatus(client) {
-      const days = getDaysWithoutPurchase(client);
-
-      if (days === Infinity) return "Nunca comprou";
-      if (days > 45) return "Mais de 45 dias";
-      if (days > 30) return "Mais de 30 dias";
-      if (days > 15) return "Mais de 15 dias";
-
-      return "Ativo";
-    }
-
-    function getMonthSales() {
-      const month = today().substring(0, 7);
-
-      return database.sales.filter(function(sale) {
-        return String(sale.date).substring(0, 7) === month;
-      });
-    }
-
-    function getRemainingDaysInMonth() {
-      const current = new Date();
-
-      return new Date(
-        current.getFullYear(),
-        current.getMonth() + 1,
-        0
-      ).getDate() - current.getDate() + 1;
+      return Math.floor((new Date() - date) / 86400000);
     }
 
     function supplierChip(supplier, active) {
@@ -1629,87 +1671,508 @@
     }
 
     function abcBadge(curve) {
-      const normalized = String(curve).toLowerCase();
-
       return `
-        <span class="badge badge-${normalized}">
-          Curva ${String(curve).toUpperCase()}
+        <span class="badge badge-${String(curve).toLowerCase()}">
+          Curva ${curve}
         </span>
       `;
     }
 
-    function showPage(page) {
-      document.querySelectorAll(".page").forEach(function(section) {
-        section.classList.remove("active");
+    function calculateABC(rows) {
+      const sorted = rows.slice().sort(function(a, b) {
+        return Number(b.revenue || 0) - Number(a.revenue || 0);
       });
 
-      document.querySelectorAll(".nav-button").forEach(function(button) {
-        button.classList.remove("active");
+      const total = sorted.reduce(function(sum, row) {
+        return sum + Number(row.revenue || 0);
+      }, 0);
+
+      let accumulated = 0;
+
+      return sorted.map(function(row, index) {
+        const revenue = Number(row.revenue || 0);
+
+        if (total <= 0 || revenue <= 0) {
+          return {
+            row: row,
+            index: index + 1,
+            individual: 0,
+            accumulated: accumulated,
+            curve: "C"
+          };
+        }
+
+        const previous = accumulated;
+        const individual = revenue / total * 100;
+
+        accumulated += individual;
+
+        let curve = "C";
+
+        if (previous < 60) {
+          curve = "A";
+        } else if (previous < 90) {
+          curve = "B";
+        }
+
+        return {
+          row: row,
+          index: index + 1,
+          individual: individual,
+          accumulated: accumulated,
+          curve: curve
+        };
       });
-
-      const pageElement = document.getElementById("page-" + page);
-
-      if (pageElement) {
-        pageElement.classList.add("active");
-      }
-
-      const nav = document.querySelector('[data-page="' + page + '"]');
-
-      if (nav) {
-        nav.classList.add("active");
-      }
-
-      const titles = {
-        dashboard: "Dashboard",
-        clientes: "Clientes",
-        produtos: "Produtos",
-        fornecedores: "Fornecedores",
-        vendedores: "Vendedores",
-        financeiro: "Financeiro",
-        abc: "Curva ABC",
-        profile: "Perfil do cliente"
-      };
-
-      document.getElementById("page-title").textContent =
-        titles[page] || "Gestão";
-
-      window.scrollTo(0, 0);
     }
 
-    document.querySelectorAll(".nav-button").forEach(function(button) {
-      button.addEventListener("click", function() {
-        showPage(button.dataset.page);
-        renderAll();
-      });
-    });
+    function getFilteredSales(filters) {
+      return database.sales.filter(function(sale) {
+        const date = String(sale.date || "");
 
-    function renderAll() {
+        if (filters.start && date < filters.start) return false;
+        if (filters.end && date > filters.end) return false;
+
+        if (filters.client && sale.clientId !== filters.client) {
+          return false;
+        }
+
+        if (filters.seller && sale.sellerId !== filters.seller) {
+          return false;
+        }
+
+        if (filters.channel && sale.channel !== filters.channel) {
+          return false;
+        }
+
+        if (filters.supplier || filters.product) {
+          const validItem = (sale.items || []).some(function(item) {
+            const supplierOk = !filters.supplier ||
+              item.supplierId === filters.supplier;
+
+            const productOk = !filters.product ||
+              item.productId === filters.product;
+
+            return supplierOk && productOk;
+          });
+
+          if (!validItem) return false;
+        }
+
+        return true;
+      });
+    }
+
+    function readFilters(prefix) {
+      return {
+        start: document.getElementById(prefix + "start")?.value || "",
+        end: document.getElementById(prefix + "end")?.value || "",
+        client: document.getElementById(prefix + "client")?.value || "",
+        seller: document.getElementById(prefix + "seller")?.value || "",
+        supplier: document.getElementById(prefix + "supplier")?.value || "",
+        product: document.getElementById(prefix + "product")?.value || "",
+        channel: document.getElementById(prefix + "channel")?.value || ""
+      };
+    }
+
+    function fillFilterSelects(prefix) {
+      const client = document.getElementById(prefix + "client");
+      const seller = document.getElementById(prefix + "seller");
+      const supplier = document.getElementById(prefix + "supplier");
+      const product = document.getElementById(prefix + "product");
+      const channel = document.getElementById(prefix + "channel");
+
+      if (!client) return;
+
+      const values = {
+        client: client.value,
+        seller: seller.value,
+        supplier: supplier.value,
+        product: product.value,
+        channel: channel.value
+      };
+
+      client.innerHTML =
+        `<option value="">Todos os clientes</option>` +
+        database.clients.map(item => `
+          <option value="${item.id}">
+            ${escapeHTML(item.name)}
+          </option>
+        `).join("");
+
+      seller.innerHTML =
+        `<option value="">Todos os vendedores</option>` +
+        database.sellers.map(item => `
+          <option value="${item.id}">
+            ${escapeHTML(item.name)}
+          </option>
+        `).join("");
+
+      supplier.innerHTML =
+        `<option value="">Todos os fornecedores</option>` +
+        database.suppliers.map(item => `
+          <option value="${item.id}">
+            ${escapeHTML(item.name)}
+          </option>
+        `).join("");
+
+      product.innerHTML =
+        `<option value="">Todos os produtos</option>` +
+        database.products.map(item => `
+          <option value="${item.id}">
+            ${escapeHTML(item.sku)} — ${escapeHTML(item.name)}
+          </option>
+        `).join("");
+
+      channel.innerHTML = `
+        <option value="">Todos os canais</option>
+        <option>Presencial</option>
+        <option>WhatsApp</option>
+        <option>Telefone</option>
+        <option>Site</option>
+        <option>Outro</option>
+      `;
+
+      client.value = values.client;
+      seller.value = values.seller;
+      supplier.value = values.supplier;
+      product.value = values.product;
+      channel.value = values.channel;
+    }
+
+    function renderComparisonFilters() {
+      const container = document.getElementById("comparison-filters");
+
+      container.innerHTML = comparisons.map(function(item, index) {
+        return `
+          <div class="panel" style="margin:8px 0;padding:12px">
+            <div class="toolbar">
+              <strong>Comparação ${index + 1}</strong>
+
+              <button
+                class="button small danger"
+                onclick="removeComparison(${index})">
+                Remover
+              </button>
+            </div>
+
+            <div class="filter-row">
+              <div class="field">
+                <label>Data inicial</label>
+                <input
+                  id="compare-${index}-start"
+                  type="date"
+                  value="${item.start}"
+                  onchange="updateComparison(${index})">
+              </div>
+
+              <div class="field">
+                <label>Data final</label>
+                <input
+                  id="compare-${index}-end"
+                  type="date"
+                  value="${item.end}"
+                  onchange="updateComparison(${index})">
+              </div>
+
+              <div class="field">
+                <label>Cliente</label>
+                <select id="compare-${index}-client" onchange="updateComparison(${index})"></select>
+              </div>
+
+              <div class="field">
+                <label>Vendedor</label>
+                <select id="compare-${index}-seller" onchange="updateComparison(${index})"></select>
+              </div>
+
+              <div class="field">
+                <label>Fornecedor</label>
+                <select id="compare-${index}-supplier" onchange="updateComparison(${index})"></select>
+              </div>
+
+              <div class="field">
+                <label>Produto</label>
+                <select id="compare-${index}-product" onchange="updateComparison(${index})"></select>
+              </div>
+
+              <div class="field">
+                <label>Canal</label>
+                <select id="compare-${index}-channel" onchange="updateComparison(${index})">
+                  <option value="">Todos os canais</option>
+                  <option>Presencial</option>
+                  <option>WhatsApp</option>
+                  <option>Telefone</option>
+                  <option>Site</option>
+                  <option>Outro</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join("");
+
+      comparisons.forEach(function(item, index) {
+        fillComparisonSelects(index);
+      });
+    }
+
+    function fillComparisonSelects(index) {
+      const item = comparisons[index];
+
+      const client = document.getElementById("compare-" + index + "-client");
+      const seller = document.getElementById("compare-" + index + "-seller");
+      const supplier = document.getElementById("compare-" + index + "-supplier");
+      const product = document.getElementById("compare-" + index + "-product");
+      const channel = document.getElementById("compare-" + index + "-channel");
+
+      if (!client) return;
+
+      client.innerHTML =
+        `<option value="">Todos os clientes</option>` +
+        database.clients.map(x => `
+          <option value="${x.id}">${escapeHTML(x.name)}</option>
+        `).join("");
+
+      seller.innerHTML =
+        `<option value="">Todos os vendedores</option>` +
+        database.sellers.map(x => `
+          <option value="${x.id}">${escapeHTML(x.name)}</option>
+        `).join("");
+
+      supplier.innerHTML =
+        `<option value="">Todos os fornecedores</option>` +
+        database.suppliers.map(x => `
+          <option value="${x.id}">${escapeHTML(x.name)}</option>
+        `).join("");
+
+      product.innerHTML =
+        `<option value="">Todos os produtos</option>` +
+        database.products.map(x => `
+          <option value="${x.id}">
+            ${escapeHTML(x.sku)} — ${escapeHTML(x.name)}
+          </option>
+        `).join("");
+
+      client.value = item.client || "";
+      seller.value = item.seller || "";
+      supplier.value = item.supplier || "";
+      product.value = item.product || "";
+      channel.value = item.channel || "";
+    }
+
+    function updateComparison(index) {
+      const prefix = "compare-" + index + "-";
+
+      comparisons[index] = {
+        start: document.getElementById(prefix + "start").value,
+        end: document.getElementById(prefix + "end").value,
+        client: document.getElementById(prefix + "client").value,
+        seller: document.getElementById(prefix + "seller").value,
+        supplier: document.getElementById(prefix + "supplier").value,
+        product: document.getElementById(prefix + "product").value,
+        channel: document.getElementById(prefix + "channel").value
+      };
+
       renderDashboard();
-      renderClients();
-      renderProducts();
-      renderSuppliers();
-      renderSellers();
-      renderFinance();
-      renderABC();
-      updateSelects();
+    }
+
+    function addComparison() {
+      comparisons.push({
+        start: "",
+        end: "",
+        client: "",
+        seller: "",
+        supplier: "",
+        product: "",
+        channel: ""
+      });
+
+      renderComparisonFilters();
+      renderDashboard();
+    }
+
+    function removeComparison(index) {
+      comparisons.splice(index, 1);
+      renderComparisonFilters();
+      renderDashboard();
+    }
+
+    function clearComparisons() {
+      comparisons = [];
+      renderComparisonFilters();
+      renderDashboard();
+    }
+
+    function applyShortcut() {
+      const value = document.getElementById("filter-shortcut").value;
+      const start = document.getElementById("filter-start");
+      const end = document.getElementById("filter-end");
+      const current = new Date();
+
+      if (!value) return;
+
+      if (value === "today") {
+        start.value = today();
+        end.value = today();
+      }
+
+      if (["7", "30", "90"].includes(value)) {
+        const initial = new Date();
+        initial.setDate(initial.getDate() - Number(value));
+
+        start.value = initial.toISOString().substring(0, 10);
+        end.value = today();
+      }
+
+      if (value === "current-month") {
+        start.value = current.getFullYear() + "-" +
+          String(current.getMonth() + 1).padStart(2, "0") + "-01";
+
+        end.value = today();
+      }
+
+      if (value === "previous-month") {
+        const first = new Date(
+          current.getFullYear(),
+          current.getMonth() - 1,
+          1
+        );
+
+        const last = new Date(
+          current.getFullYear(),
+          current.getMonth(),
+          0
+        );
+
+        start.value = first.toISOString().substring(0, 10);
+        end.value = last.toISOString().substring(0, 10);
+      }
+
+      if (value === "current-year") {
+        start.value = current.getFullYear() + "-01-01";
+        end.value = today();
+      }
+
+      renderDashboard();
+    }
+
+    function clearDashboardFilters() {
+      [
+        "filter-start",
+        "filter-end",
+        "filter-client",
+        "filter-seller",
+        "filter-supplier",
+        "filter-product",
+        "filter-channel"
+      ].forEach(function(id) {
+        const element = document.getElementById(id);
+
+        if (element) {
+          element.value = "";
+        }
+      });
+
+      document.getElementById("filter-shortcut").value = "";
+      comparisons = [];
+      renderComparisonFilters();
+      renderDashboard();
     }
 
     function renderDashboard() {
-      const totalRevenue = database.sales.reduce(function(total, sale) {
-        return total + getSaleTotal(sale);
-      }, 0);
+      fillFilterSelects("filter-");
 
-      const monthRevenue = getMonthSales().reduce(function(total, sale) {
-        return total + getSaleTotal(sale);
-      }, 0);
+      const filters = readFilters("filter-");
+      const sales = getFilteredSales(filters);
+      const revenue = sales.reduce((sum, sale) => sum + saleTotal(sale), 0);
+      const clients = new Set(sales.map(sale => sale.clientId)).size;
+      const ticket = sales.length ? revenue / sales.length : 0;
+
+      document.getElementById("dashboard-revenue").textContent = money(revenue);
+      document.getElementById("dashboard-orders").textContent = sales.length;
+      document.getElementById("dashboard-clients").textContent = clients;
+      document.getElementById("dashboard-ticket").textContent = money(ticket);
+
+      renderGoal();
+      renderBirthdays();
+      renderInactive();
+      renderExpansion();
+      renderUnusedProducts();
+
+      const results = [];
+
+      comparisons.forEach(function(item, index) {
+        const comparisonSales = getFilteredSales(item);
+        const comparisonRevenue = comparisonSales.reduce(
+          (sum, sale) => sum + saleTotal(sale),
+          0
+        );
+
+        results.push(`
+          <div class="card comparison-card">
+            <div class="metric-label">Comparação ${index + 1}</div>
+            <div class="metric-value">${money(comparisonRevenue)}</div>
+            <div class="muted">
+              ${comparisonSales.length} pedido(s)
+            </div>
+          </div>
+        `);
+      });
+
+      results.unshift(`
+        <div class="card comparison-card current">
+          <div class="metric-label">Período principal</div>
+          <div class="metric-value">${money(revenue)}</div>
+          <div class="muted">
+            ${sales.length} pedido(s)
+          </div>
+        </div>
+      `);
+
+      document.getElementById("comparison-results").innerHTML =
+        results.join("");
+
+      const alerts = [];
+
+      if (!database.settings.monthlyGoal) {
+        alerts.push(`
+          <div class="alert">
+            Configure a meta mensal para acompanhar o desempenho.
+          </div>
+        `);
+      }
+
+      if (!sales.length && (
+        filters.start ||
+        filters.end ||
+        filters.client ||
+        filters.seller ||
+        filters.supplier ||
+        filters.product ||
+        filters.channel
+      )) {
+        alerts.push(`
+          <div class="alert red-alert">
+            Nenhuma venda corresponde aos filtros selecionados.
+          </div>
+        `);
+      }
+
+      document.getElementById("dashboard-alerts").innerHTML =
+        alerts.join("");
+    }
+
+    function renderGoal() {
+      const monthSales = getMonthSales();
+      const monthRevenue = monthSales.reduce(
+        (sum, sale) => sum + saleTotal(sale),
+        0
+      );
 
       const monthlyGoal = Number(database.settings.monthlyGoal || 0);
-      const consideredDays = Number(database.settings.consideredDays || 30);
-      const dailyGoal = monthlyGoal / Math.max(consideredDays, 1);
+      const days = Number(database.settings.consideredDays || 30);
+      const dailyGoal = monthlyGoal / Math.max(days, 1);
       const missing = Math.max(monthlyGoal - monthRevenue, 0);
-      const remainingDays = getRemainingDaysInMonth();
-      const necessaryDaily = missing / Math.max(remainingDays, 1);
-      const progress = monthlyGoal > 0
+      const progress = monthlyGoal
         ? Math.min(monthRevenue / monthlyGoal * 100, 100)
         : 0;
 
@@ -1720,94 +2183,32 @@
       document.getElementById("goal-progress").style.width = progress + "%";
 
       document.getElementById("goal-summary").textContent =
-        "Meta diária: " + money(dailyGoal) +
-        " · Necessário por dia até o fim do mês: " +
-        money(necessaryDaily) +
-        " · Dias considerados: " + consideredDays +
-        " · " + progress.toFixed(1) +
-        "% da meta atingida.";
-
-      document.getElementById("metric-clients").textContent =
-        database.clients.length;
-
-      document.getElementById("metric-products").textContent =
-        database.products.length;
-
-      document.getElementById("metric-sales").textContent =
-        database.sales.length;
-
-      document.getElementById("metric-revenue").textContent =
-        money(totalRevenue);
-
-      renderBirthdays();
-      renderInactive();
-      renderExpansion();
-      renderUnusedProducts();
-
-      const alerts = [];
-
-      if (monthlyGoal <= 0) {
-        alerts.push(`
-          <div class="alert">
-            A meta mensal ainda não foi configurada.
-            Clique em <strong>Configurar meta</strong>.
-          </div>
-        `);
-      }
-
-      const warranties = getWarrantyPendencies();
-
-      if (warranties.length) {
-        alerts.push(`
-          <div class="alert red-alert">
-            Existem <strong>${warranties.length}</strong>
-            garantia(s) ativa(s) para acompanhamento:
-            ${warranties.slice(0, 5).map(function(item) {
-              return escapeHTML(item.product.name) + " (" +
-                escapeHTML(item.client.name) + ")";
-            }).join(", ")}${warranties.length > 5 ? "..." : ""}
-          </div>
-        `);
-      }
-
-      document.getElementById("dashboard-alerts").innerHTML =
-        alerts.join("");
+        progress.toFixed(1) + "% da meta atingida · " +
+        days + " dias considerados.";
     }
 
     function renderBirthdays() {
-      const currentMonth = today().substring(5, 7);
+      const month = today().substring(5, 7);
 
-      const birthdays = database.clients
-        .filter(function(client) {
-          return client.birth &&
-            client.birth.substring(5, 7) === currentMonth;
-        })
-        .sort(function(a, b) {
-          return a.birth.substring(8, 10)
-            .localeCompare(b.birth.substring(8, 10));
-        });
+      const list = database.clients.filter(function(client) {
+        return client.birth &&
+          client.birth.substring(5, 7) === month;
+      });
 
       document.getElementById("birthdays-list").innerHTML =
-        birthdays.length
-          ? birthdays.map(function(client) {
+        list.length
+          ? list.map(function(client) {
               return `
-                <div
-                  class="list-item"
-                  style="cursor:pointer;margin-bottom:8px"
-                  onclick="openClientProfile('${client.id}')">
-
+                <div class="list-item">
                   <strong>${escapeHTML(client.name)}</strong>
-
                   <div class="muted">
                     Aniversário: dia ${client.birth.substring(8, 10)}
-                    · ${escapeHTML(client.phone || "Sem telefone")}
                   </div>
-
                   <div class="actions">
                     <button
-                      class="button small success"
-                      onclick="event.stopPropagation();sendBirthday('${client.id}')">
-                      Preparar WhatsApp
+                      class="button small"
+                      onclick="openClientProfile('${client.id}')">
+                      Ver cliente
                     </button>
                   </div>
                 </div>
@@ -1817,43 +2218,25 @@
     }
 
     function renderInactive() {
-      const inactive = database.clients
-        .map(function(client) {
-          return {
-            client: client,
-            days: getDaysWithoutPurchase(client),
-            stats: getClientStats(client.id)
-          };
-        })
-        .filter(function(item) {
-          return item.days === Infinity || item.days > 15;
-        })
-        .sort(function(a, b) {
-          if (a.days === b.days) return 0;
-          if (a.days === Infinity) return -1;
-          if (b.days === Infinity) return 1;
-
-          return b.days - a.days;
-        });
+      const list = database.clients.filter(function(client) {
+        const days = getDaysWithoutPurchase(client);
+        return days === Infinity || days > 15;
+      });
 
       document.getElementById("inactive-list").innerHTML =
-        inactive.length
-          ? inactive.map(function(item) {
+        list.length
+          ? list.map(function(client) {
+              const days = getDaysWithoutPurchase(client);
+
               return `
-                <div
-                  class="list-item"
-                  style="cursor:pointer;margin-bottom:8px"
-                  onclick="openClientProfile('${item.client.id}')">
-
-                  <strong>${escapeHTML(item.client.name)}</strong>
-
+                <div class="list-item">
+                  <strong>${escapeHTML(client.name)}</strong>
                   <div class="muted">
                     ${
-                      item.days === Infinity
+                      days === Infinity
                         ? "Nunca comprou"
-                        : item.days + " dia(s) sem comprar"
+                        : days + " dias sem comprar"
                     }
-                    · Faturamento: ${money(item.stats.revenue)}
                   </div>
                 </div>
               `;
@@ -1862,75 +2245,32 @@
     }
 
     function renderExpansion() {
-      const opportunities = database.clients
-        .map(function(client) {
-          const stats = getClientStats(client.id);
-          const suggestions = stats.sales.length
-            ? getSuggestions(client.id)
-            : [];
-          const lower = getLowerPurchases(client.id);
-
-          return {
-            client: client,
-            stats: stats,
-            suggestions: suggestions,
-            lower: lower
-          };
-        })
-        .filter(function(item) {
-          return item.suggestions.length || item.lower.length;
-        })
-        .slice(0, 10);
+      const opportunities = database.clients.filter(function(client) {
+        const stats = getClientStats(client.id);
+        return stats.sales.length > 0 && getSuggestions(client.id).length > 0;
+      });
 
       document.getElementById("expansion-list").innerHTML =
         opportunities.length
-          ? opportunities.map(function(item) {
-              const suggestionNames = item.suggestions
+          ? opportunities.slice(0, 10).map(function(client) {
+              const suggestions = getSuggestions(client.id)
                 .slice(0, 3)
-                .map(function(suggestion) {
-                  return suggestion.product.name;
-                })
-                .join(", ");
-
-              const lowerNames = item.lower
-                .slice(0, 2)
-                .map(function(lowerItem) {
-                  return lowerItem.product.name;
-                })
+                .map(item => item.product.name)
                 .join(", ");
 
               return `
-                <div
-                  class="list-item"
-                  style="cursor:pointer;margin-bottom:8px"
-                  onclick="openClientProfile('${item.client.id}')">
-
-                  <strong>${escapeHTML(item.client.name)}</strong>
-
+                <div class="list-item">
+                  <strong>${escapeHTML(client.name)}</strong>
                   <div class="muted">
-                    ${item.stats.sales.length} pedido(s)
-                    · ${money(item.stats.revenue)}
+                    Sugestões: ${escapeHTML(suggestions)}
                   </div>
-
-                  ${
-                    suggestionNames
-                      ? `
-                        <div class="muted" style="margin-top:5px">
-                          Sugestões: ${escapeHTML(suggestionNames)}
-                        </div>
-                      `
-                      : ""
-                  }
-
-                  ${
-                    lowerNames
-                      ? `
-                        <div class="muted" style="margin-top:5px">
-                          Abaixo da média: ${escapeHTML(lowerNames)}
-                        </div>
-                      `
-                      : ""
-                  }
+                  <div class="actions">
+                    <button
+                      class="button small"
+                      onclick="openClientProfile('${client.id}')">
+                      Ver análise
+                    </button>
+                  </div>
                 </div>
               `;
             }).join("")
@@ -1938,103 +2278,23 @@
     }
 
     function renderUnusedProducts() {
-      const unused = database.products.filter(function(product) {
+      const products = database.products.filter(function(product) {
         return getProductQuantity(product.id) === 0;
       });
 
       document.getElementById("unused-products").innerHTML =
-        unused.length
-          ? unused.map(function(product) {
-              const supplier = getSupplier(product.supplierId);
-
+        products.length
+          ? products.map(function(product) {
               return `
-                <div class="list-item" style="margin-bottom:8px">
+                <div class="list-item">
                   <strong>${escapeHTML(product.name)}</strong>
-
                   <div class="muted">
                     SKU: ${escapeHTML(product.sku)}
-                    · ${escapeHTML(supplier ? supplier.name : "Sem fornecedor")}
                   </div>
                 </div>
               `;
             }).join("")
-          : `<div class="empty">Todos os produtos possuem pedidos.</div>`;
-    }
-
-    function renderClients() {
-      const searchField = document.getElementById("client-search");
-      const search = (searchField ? searchField.value : "").toLowerCase();
-
-      const clients = database.clients.filter(function(client) {
-        return client.name.toLowerCase().includes(search) ||
-          (client.phone || "").toLowerCase().includes(search) ||
-          (client.email || "").toLowerCase().includes(search);
-      });
-
-      document.getElementById("clients-table").innerHTML =
-        clients.length
-          ? clients.map(function(client) {
-              const stats = getClientStats(client.id);
-              const status = getClientStatus(client);
-              const statusClass = status === "Ativo"
-                ? "badge-active"
-                : "badge-inactive";
-
-              return `
-                <tr
-                  class="clickable"
-                  onclick="openClientProfile('${client.id}')">
-
-                  <td>
-                    <strong>${escapeHTML(client.name)}</strong>
-                    <br>
-                    <span class="muted">
-                      ${escapeHTML(client.city || "")}
-                    </span>
-                  </td>
-
-                  <td>
-                    ${escapeHTML(client.phone || "—")}
-                    <br>
-                    <span class="muted">
-                      ${escapeHTML(client.email || "")}
-                    </span>
-                  </td>
-
-                  <td>${dateBR(stats.lastSale)}</td>
-
-                  <td>
-                    <span class="badge ${statusClass}">
-                      ${status}
-                    </span>
-                  </td>
-
-                  <td>${stats.sales.length}</td>
-                  <td class="green">${money(stats.revenue)}</td>
-
-                  <td>
-                    <button
-                      class="button small"
-                      onclick="event.stopPropagation();openClientProfile('${client.id}')">
-                      Abrir
-                    </button>
-
-                    <button
-                      class="button small danger"
-                      onclick="event.stopPropagation();deleteClient('${client.id}')">
-                      Excluir
-                    </button>
-                  </td>
-                </tr>
-              `;
-            }).join("")
-          : `
-            <tr>
-              <td colspan="7" class="empty">
-                Nenhum cliente encontrado.
-              </td>
-            </tr>
-          `;
+          : `<div class="empty">Todos os produtos possuem vendas.</div>`;
     }
 
     document.getElementById("client-form").addEventListener("submit", function(event) {
@@ -2046,9 +2306,9 @@
         phone: document.getElementById("client-phone").value.trim(),
         email: document.getElementById("client-email").value.trim(),
         birth: document.getElementById("client-birth").value,
-        city: document.getElementById("client-city").value.trim(),
-        notes: document.getElementById("client-notes").value.trim(),
-        createdAt: today()
+        document: document.getElementById("client-document").value.trim(),
+        logo: document.getElementById("client-logo").value.trim(),
+        address: document.getElementById("client-address").value.trim()
       });
 
       saveDatabase();
@@ -2058,68 +2318,43 @@
       alert("Cliente cadastrado com sucesso.");
     });
 
-    function deleteClient(clientId) {
-      const client = getClient(clientId);
+    function renderClients() {
+      const search = (
+        document.getElementById("client-search")?.value || ""
+      ).toLowerCase();
 
-      if (!client) return;
-
-      if (!confirm("Excluir o cliente e seu histórico de vendas?")) return;
-
-      database.clients = database.clients.filter(function(item) {
-        return item.id !== clientId;
+      const list = database.clients.filter(function(client) {
+        return client.name.toLowerCase().includes(search) ||
+          (client.document || "").toLowerCase().includes(search);
       });
 
-      database.sales = database.sales.filter(function(sale) {
-        return sale.clientId !== clientId;
-      });
-
-      database.attachments = database.attachments.filter(function(file) {
-        return file.clientId !== clientId;
-      });
-
-      database.lowerReasons = database.lowerReasons.filter(function(item) {
-        return item.clientId !== clientId;
-      });
-
-      saveDatabase();
-      renderAll();
-    }
-
-    function renderSuppliers() {
-      document.getElementById("suppliers-table").innerHTML =
-        database.suppliers.length
-          ? database.suppliers.map(function(supplier) {
-              const products = database.products.filter(function(product) {
-                return product.supplierId === supplier.id;
-              });
+      document.getElementById("clients-table").innerHTML =
+        list.length
+          ? list.map(function(client) {
+              const stats = getClientStats(client.id);
+              const inactive = getDaysWithoutPurchase(client) > 15 ||
+                getDaysWithoutPurchase(client) === Infinity;
 
               return `
-                <tr>
+                <tr
+                  class="clickable"
+                  onclick="openClientProfile('${client.id}')">
+                  <td><strong>${escapeHTML(client.name)}</strong></td>
+                  <td>${escapeHTML(client.phone || "—")}</td>
+                  <td>${dateBR(stats.lastSale)}</td>
                   <td>
-                    ${supplierChip(supplier, true)}
+                    <span class="badge ${
+                      inactive ? "badge-inactive" : "badge-active"
+                    }">
+                      ${inactive ? "Inativo" : "Ativo"}
+                    </span>
                   </td>
-
-                  <td>${escapeHTML(supplier.contact || "—")}</td>
-
-                  <td>
-                    ${
-                      products.length
-                        ? products.map(function(product) {
-                            return `
-                              <div class="muted">
-                                ${escapeHTML(product.sku)}
-                                — ${escapeHTML(product.name)}
-                              </div>
-                            `;
-                          }).join("")
-                        : "Nenhum produto"
-                    }
-                  </td>
-
+                  <td>${stats.sales.length}</td>
+                  <td class="green">${money(stats.revenue)}</td>
                   <td>
                     <button
                       class="button small danger"
-                      onclick="deleteSupplier('${supplier.id}')">
+                      onclick="event.stopPropagation();deleteClient('${client.id}')">
                       Excluir
                     </button>
                   </td>
@@ -2128,11 +2363,19 @@
             }).join("")
           : `
             <tr>
-              <td colspan="4" class="empty">
-                Nenhum fornecedor cadastrado.
-              </td>
+              <td colspan="7" class="empty">Nenhum cliente encontrado.</td>
             </tr>
           `;
+    }
+
+    function deleteClient(clientId) {
+      if (!confirm("Excluir este cliente e seu histórico?")) return;
+
+      database.clients = database.clients.filter(item => item.id !== clientId);
+      database.sales = database.sales.filter(item => item.clientId !== clientId);
+
+      saveDatabase();
+      renderAll();
     }
 
     document.getElementById("supplier-form").addEventListener("submit", function(event) {
@@ -2147,82 +2390,125 @@
 
       saveDatabase();
       event.target.reset();
-      document.getElementById("supplier-color").value = "#e50914";
       renderAll();
 
-      alert("Fornecedor cadastrado com sucesso.");
+      alert("Fornecedor cadastrado.");
     });
 
-    function deleteSupplier(supplierId) {
-      const linked = database.products.some(function(product) {
-        return product.supplierId === supplierId;
-      });
+    function renderSuppliers() {
+      document.getElementById("suppliers-table").innerHTML =
+        database.suppliers.length
+          ? database.suppliers.map(function(supplier) {
+              const products = database.products.filter(
+                product => product.supplierId === supplier.id
+              );
 
-      if (linked) {
-        alert("Não é possível excluir fornecedor com produtos vinculados.");
+              return `
+                <tr>
+                  <td>${supplierChip(supplier, true)}</td>
+                  <td>${escapeHTML(supplier.contact || "—")}</td>
+                  <td>
+                    ${
+                      products.length
+                        ? products.map(product => `
+                            <div class="muted">
+                              ${escapeHTML(product.sku)} —
+                              ${escapeHTML(product.name)}
+                            </div>
+                          `).join("")
+                        : "Nenhum produto"
+                    }
+                  </td>
+                  <td>
+                    <button
+                      class="button small danger"
+                      onclick="deleteSupplier('${supplier.id}')">
+                      Excluir
+                    </button>
+                  </td>
+                </tr>
+              `;
+            }).join("")
+          : `
+            <tr>
+              <td colspan="4" class="empty">Nenhum fornecedor cadastrado.</td>
+            </tr>
+          `;
+    }
+
+    function deleteSupplier(id) {
+      if (database.products.some(product => product.supplierId === id)) {
+        alert("Este fornecedor possui produtos vinculados.");
         return;
       }
 
-      database.suppliers = database.suppliers.filter(function(supplier) {
-        return supplier.id !== supplierId;
-      });
-
+      database.suppliers = database.suppliers.filter(item => item.id !== id);
       saveDatabase();
       renderAll();
     }
 
-    function renderProducts() {
-      const searchField = document.getElementById("product-search");
-      const search = (searchField ? searchField.value : "").toLowerCase();
+    document.getElementById("product-form").addEventListener("submit", function(event) {
+      event.preventDefault();
 
-      const productRows = database.products.map(function(product) {
+      const sku = document.getElementById("product-sku").value.trim().toUpperCase();
+
+      if (database.products.some(product => product.sku === sku)) {
+        alert("Este SKU já está cadastrado.");
+        return;
+      }
+
+      database.products.push({
+        id: createId("product"),
+        sku: sku,
+        name: document.getElementById("product-name").value.trim(),
+        supplierId: document.getElementById("product-supplier").value,
+        price: Number(document.getElementById("product-price").value || 0),
+        category: document.getElementById("product-category").value.trim(),
+        warrantyDays: Number(document.getElementById("product-warranty").value || 0)
+      });
+
+      saveDatabase();
+      event.target.reset();
+      renderAll();
+
+      alert("Produto cadastrado.");
+    });
+
+    function renderProducts() {
+      const search = (
+        document.getElementById("product-search")?.value || ""
+      ).toLowerCase();
+
+      const abc = calculateABC(database.products.map(function(product) {
         return {
           product: product,
           revenue: getProductRevenue(product.id)
         };
-      });
+      }));
 
-      const abc = calculateABC(productRows);
-
-      const products = database.products.filter(function(product) {
+      const list = database.products.filter(function(product) {
         return product.name.toLowerCase().includes(search) ||
-          product.sku.toLowerCase().includes(search) ||
-          (product.category || "").toLowerCase().includes(search);
+          product.sku.toLowerCase().includes(search);
       });
 
       document.getElementById("products-table").innerHTML =
-        products.length
-          ? products.map(function(product) {
-              const supplier = getSupplier(product.supplierId);
-              const classification = abc.find(function(item) {
-                return item.row.product.id === product.id;
-              });
+        list.length
+          ? list.map(function(product) {
+              const classification = abc.find(item =>
+                item.row.product.id === product.id
+              );
 
               const curve = classification ? classification.curve : "C";
+              const supplier = getSupplier(product.supplierId);
 
               return `
                 <tr class="abc-row-${curve.toLowerCase()}">
-                  <td>
-                    <strong>${escapeHTML(product.sku)}</strong>
-                  </td>
-
-                  <td>
-                    <strong>${escapeHTML(product.name)}</strong>
-                    <br>
-                    <span class="muted">
-                      Garantia: ${product.warrantyDays || 0} dia(s)
-                    </span>
-                  </td>
-
-                  <td>
-                    ${supplier ? supplierChip(supplier, true) : "—"}
-                  </td>
-
-                  <td>${escapeHTML(product.category || "—")}</td>
+                  <td>${escapeHTML(product.sku)}</td>
+                  <td>${escapeHTML(product.name)}</td>
+                  <td>${supplier ? supplierChip(supplier, true) : "—"}</td>
                   <td>${money(product.price)}</td>
                   <td>${abcBadge(curve)}</td>
                   <td>${getProductQuantity(product.id)}</td>
-
                   <td>
                     <button
                       class="button small danger"
@@ -2235,75 +2521,20 @@
             }).join("")
           : `
             <tr>
-              <td colspan="8" class="empty">
-                Nenhum produto encontrado.
-              </td>
+              <td colspan="7" class="empty">Nenhum produto encontrado.</td>
             </tr>
           `;
     }
 
-    document.getElementById("product-form").addEventListener("submit", function(event) {
-      event.preventDefault();
-
-      const sku = document
-        .getElementById("product-sku")
-        .value
-        .trim()
-        .toUpperCase();
-
-      const exists = database.products.some(function(product) {
-        return product.sku.toUpperCase() === sku;
-      });
-
-      if (exists) {
-        alert("Este SKU já está cadastrado.");
+    function deleteProduct(id) {
+      if (database.sales.some(sale =>
+        sale.items.some(item => item.productId === id)
+      )) {
+        alert("Este produto possui histórico de vendas.");
         return;
       }
 
-      const supplierId = document.getElementById("product-supplier").value;
-
-      if (!supplierId) {
-        alert("Selecione o fornecedor.");
-        return;
-      }
-
-      database.products.push({
-        id: createId("product"),
-        sku: sku,
-        name: document.getElementById("product-name").value.trim(),
-        supplierId: supplierId,
-        price: Number(document.getElementById("product-price").value || 0),
-        category: document.getElementById("product-category").value.trim(),
-        warrantyDays: Number(
-          document.getElementById("product-warranty").value || 0
-        ),
-        notes: document.getElementById("product-notes").value.trim()
-      });
-
-      saveDatabase();
-      event.target.reset();
-      document.getElementById("product-warranty").value = 0;
-      renderAll();
-
-      alert("Produto cadastrado com sucesso.");
-    });
-
-    function deleteProduct(productId) {
-      const used = database.sales.some(function(sale) {
-        return (sale.items || []).some(function(item) {
-          return item.productId === productId;
-        });
-      });
-
-      if (used) {
-        alert("Produto com histórico de vendas não pode ser excluído.");
-        return;
-      }
-
-      database.products = database.products.filter(function(product) {
-        return product.id !== productId;
-      });
-
+      database.products = database.products.filter(item => item.id !== id);
       saveDatabase();
       renderAll();
     }
@@ -2316,49 +2547,38 @@
         name: document.getElementById("seller-name").value.trim(),
         phone: document.getElementById("seller-phone").value.trim(),
         email: document.getElementById("seller-email").value.trim(),
-        monthlyGoal: Number(
-          document.getElementById("seller-goal").value || 0
-        ),
-        status: document.getElementById("seller-status").value,
-        createdAt: today()
+        goal: Number(document.getElementById("seller-goal").value || 0),
+        status: document.getElementById("seller-status").value
       });
 
       saveDatabase();
       event.target.reset();
-      document.getElementById("seller-goal").value = 0;
       renderAll();
 
-      alert("Vendedor cadastrado com sucesso.");
+      alert("Vendedor cadastrado.");
     });
-
-    function getSellerRevenue(sellerId) {
-      return database.sales
-        .filter(function(sale) {
-          return sale.sellerId === sellerId;
-        })
-        .reduce(function(total, sale) {
-          return total + getSaleTotal(sale);
-        }, 0);
-    }
 
     function renderSellers() {
       document.getElementById("sellers-table").innerHTML =
         database.sellers.length
           ? database.sellers.map(function(seller) {
+              const revenue = database.sales
+                .filter(sale => sale.sellerId === seller.id)
+                .reduce((sum, sale) => sum + saleTotal(sale), 0);
+
               return `
                 <tr>
-                  <td><strong>${escapeHTML(seller.name)}</strong></td>
+                  <td>${escapeHTML(seller.name)}</td>
                   <td>${escapeHTML(seller.phone || "—")}</td>
-                  <td>${escapeHTML(seller.email || "—")}</td>
-                  <td>${money(seller.monthlyGoal)}</td>
-                  <td class="green">${money(getSellerRevenue(seller.id))}</td>
+                  <td>${money(seller.goal)}</td>
+                  <td class="green">${money(revenue)}</td>
                   <td>
                     <span class="badge ${
                       seller.status === "ativo"
                         ? "badge-active"
                         : "badge-inactive"
                     }">
-                      ${seller.status === "ativo" ? "Ativo" : "Inativo"}
+                      ${seller.status}
                     </span>
                   </td>
                   <td>
@@ -2373,89 +2593,56 @@
             }).join("")
           : `
             <tr>
-              <td colspan="7" class="empty">
-                Nenhum vendedor cadastrado.
-              </td>
+              <td colspan="6" class="empty">Nenhum vendedor cadastrado.</td>
             </tr>
           `;
     }
 
-    function deleteSeller(sellerId) {
-      const used = database.sales.some(function(sale) {
-        return sale.sellerId === sellerId;
-      });
-
-      if (used) {
-        alert("Vendedor com vendas registradas não pode ser excluído.");
+    function deleteSeller(id) {
+      if (database.sales.some(sale => sale.sellerId === id)) {
+        alert("Este vendedor possui vendas registradas.");
         return;
       }
 
-      database.sellers = database.sellers.filter(function(seller) {
-        return seller.id !== sellerId;
-      });
-
+      database.sellers = database.sellers.filter(item => item.id !== id);
       saveDatabase();
       renderAll();
     }
 
     function updateSelects() {
-      const supplierSelect = document.getElementById("product-supplier");
+      const supplier = document.getElementById("product-supplier");
+      const client = document.getElementById("sale-client");
+      const seller = document.getElementById("sale-seller");
 
-      if (supplierSelect) {
-        const currentSupplier = supplierSelect.value;
-
-        supplierSelect.innerHTML =
+      if (supplier) {
+        supplier.innerHTML =
           `<option value="">Selecione...</option>` +
-          database.suppliers.map(function(supplier) {
-            return `
-              <option value="${supplier.id}">
-                ${escapeHTML(supplier.name)}
-              </option>
-            `;
-          }).join("");
-
-        supplierSelect.value = currentSupplier;
+          database.suppliers.map(item => `
+            <option value="${item.id}">${escapeHTML(item.name)}</option>
+          `).join("");
       }
 
-      const clientSelect = document.getElementById("sale-client");
-
-      if (clientSelect) {
-        const currentClient = clientSelect.value;
-
-        clientSelect.innerHTML =
+      if (client) {
+        client.innerHTML =
           `<option value="">Selecione...</option>` +
-          database.clients.map(function(client) {
-            return `
-              <option value="${client.id}">
-                ${escapeHTML(client.name)}
-              </option>
-            `;
-          }).join("");
-
-        clientSelect.value = currentClient;
+          database.clients.map(item => `
+            <option value="${item.id}">${escapeHTML(item.name)}</option>
+          `).join("");
       }
 
-      const sellerSelect = document.getElementById("sale-seller");
-
-      if (sellerSelect) {
-        const currentSeller = sellerSelect.value;
-
-        sellerSelect.innerHTML =
+      if (seller) {
+        seller.innerHTML =
           `<option value="">Selecione...</option>` +
           database.sellers
-            .filter(function(seller) {
-              return seller.status !== "inativo";
-            })
-            .map(function(seller) {
-              return `
-                <option value="${seller.id}">
-                  ${escapeHTML(seller.name)}
-                </option>
-              `;
-            }).join("");
-
-        sellerSelect.value = currentSeller;
+            .filter(item => item.status !== "inativo")
+            .map(item => `
+              <option value="${item.id}">
+                ${escapeHTML(item.name)}
+              </option>
+            `).join("");
       }
+
+      fillFilterSelects("filter-");
     }
 
     function calculateDailyGoal() {
@@ -2481,6 +2668,28 @@
       calculateDailyGoal
     );
 
+    document.getElementById("settings-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const monthly = Number(
+        document.getElementById("monthly-goal").value || 0
+      );
+
+      const days = Number(
+        document.getElementById("considered-days").value || 1
+      );
+
+      database.settings.monthlyGoal = monthly;
+      database.settings.consideredDays = days;
+      database.settings.dailyGoal = monthly / Math.max(days, 1);
+
+      saveDatabase();
+      closeModal("settings-modal");
+      renderAll();
+
+      alert("Meta salva e meta diária calculada.");
+    });
+
     function openSettingsModal() {
       document.getElementById("monthly-goal").value =
         database.settings.monthlyGoal || "";
@@ -2493,36 +2702,12 @@
       document.getElementById("settings-modal").classList.add("open");
     }
 
-    document.getElementById("settings-form").addEventListener("submit", function(event) {
-      event.preventDefault();
-
-      const monthly = Number(
-        document.getElementById("monthly-goal").value || 0
-      );
-
-      const days = Number(
-        document.getElementById("considered-days").value || 1
-      );
-
-      const daily = monthly / Math.max(days, 1);
-
-      database.settings.monthlyGoal = monthly;
-      database.settings.consideredDays = days;
-      database.settings.dailyGoal = daily;
-
-      saveDatabase();
-      closeModal("settings-modal");
-      renderAll();
-
-      alert("Meta mensal salva e meta diária calculada automaticamente.");
-    });
-
     function openSaleModal(clientId) {
       updateSelects();
 
       document.getElementById("sale-client").value = clientId || "";
-      document.getElementById("sale-seller").value = "";
       document.getElementById("sale-date").value = today();
+      document.getElementById("sale-seller").value = "";
       document.getElementById("sale-notes").value = "";
       document.getElementById("sale-lines").innerHTML = "";
 
@@ -2539,37 +2724,26 @@
       line.innerHTML = `
         <div class="field supplier-field">
           <label>Fornecedor *</label>
-
           <select class="sale-supplier" onchange="updateLineProducts(this)">
             <option value="">Selecione...</option>
-
-            ${database.suppliers.map(function(supplier) {
-              return `
-                <option value="${supplier.id}">
-                  ${escapeHTML(supplier.name)}
-                </option>
-              `;
-            }).join("")}
+            ${database.suppliers.map(item => `
+              <option value="${item.id}">
+                ${escapeHTML(item.name)}
+              </option>
+            `).join("")}
           </select>
         </div>
 
         <div class="field product-field">
           <label>Produto / SKU *</label>
-
           <select class="sale-product" onchange="updateSaleTotal()" disabled>
             <option value="">Selecione o fornecedor...</option>
           </select>
         </div>
 
         <div class="field">
-          <label>Quantidade</label>
-
-          <input
-            class="sale-quantity"
-            type="number"
-            min="1"
-            value="1"
-            oninput="updateSaleTotal()">
+          <label>Qtd.</label>
+          <input class="sale-quantity" type="number" min="1" value="1" oninput="updateSaleTotal()">
         </div>
 
         <div class="line-total">R$ 0,00</div>
@@ -2586,10 +2760,10 @@
       updateSaleTotal();
     }
 
-    function updateLineProducts(supplierSelect) {
-      const line = supplierSelect.closest(".sale-line");
+    function updateLineProducts(select) {
+      const line = select.closest(".sale-line");
       const productSelect = line.querySelector(".sale-product");
-      const supplierId = supplierSelect.value;
+      const supplierId = select.value;
 
       const products = database.products.filter(function(product) {
         return product.supplierId === supplierId;
@@ -2598,18 +2772,13 @@
       productSelect.disabled = !supplierId;
 
       productSelect.innerHTML = supplierId
-        ? `
-          <option value="">Selecione o produto...</option>
-          ${products.map(function(product) {
-            return `
-              <option value="${product.id}">
-                ${escapeHTML(product.sku)}
-                — ${escapeHTML(product.name)}
-                (${money(product.price)})
-              </option>
-            `;
-          }).join("")}
-        `
+        ? `<option value="">Selecione...</option>` +
+          products.map(product => `
+            <option value="${product.id}">
+              ${escapeHTML(product.sku)} — ${escapeHTML(product.name)}
+              (${money(product.price)})
+            </option>
+          `).join("")
         : `<option value="">Selecione o fornecedor...</option>`;
 
       updateSaleTotal();
@@ -2619,13 +2788,12 @@
       let total = 0;
 
       document.querySelectorAll(".sale-line").forEach(function(line) {
-        const productSelect = line.querySelector(".sale-product");
-        const quantityInput = line.querySelector(".sale-quantity");
-
-        const product = getProduct(productSelect ? productSelect.value : "");
+        const product = getProduct(
+          line.querySelector(".sale-product")?.value
+        );
 
         const quantity = Number(
-          quantityInput ? quantityInput.value || 0 : 0
+          line.querySelector(".sale-quantity")?.value || 0
         );
 
         const lineTotal = product
@@ -2634,11 +2802,8 @@
 
         total += lineTotal;
 
-        const display = line.querySelector(".line-total");
-
-        if (display) {
-          display.textContent = money(lineTotal);
-        }
+        line.querySelector(".line-total").textContent =
+          money(lineTotal);
       });
 
       document.getElementById("sale-total").textContent = money(total);
@@ -2647,8 +2812,6 @@
     document.getElementById("sale-form").addEventListener("submit", function(event) {
       event.preventDefault();
 
-      const clientId = document.getElementById("sale-client").value;
-      const sellerId = document.getElementById("sale-seller").value;
       const items = [];
       let invalid = false;
 
@@ -2676,32 +2839,29 @@
           supplierId: supplierId,
           sku: product.sku,
           quantity: quantity,
-          price: product.price,
-          warrantyActive: false,
-          warrantyStart: "",
-          warrantyEnd: ""
+          price: product.price
         });
       });
 
-      if (!clientId) {
+      if (!document.getElementById("sale-client").value) {
         alert("Selecione o cliente.");
         return;
       }
 
-      if (!sellerId) {
+      if (!document.getElementById("sale-seller").value) {
         alert("Selecione o vendedor.");
         return;
       }
 
       if (invalid || !items.length) {
-        alert("Preencha corretamente todos os itens da venda.");
+        alert("Preencha corretamente os itens da venda.");
         return;
       }
 
       database.sales.push({
         id: createId("sale"),
-        clientId: clientId,
-        sellerId: sellerId,
+        clientId: document.getElementById("sale-client").value,
+        sellerId: document.getElementById("sale-seller").value,
         date: document.getElementById("sale-date").value,
         channel: document.getElementById("sale-channel").value,
         notes: document.getElementById("sale-notes").value.trim(),
@@ -2712,129 +2872,124 @@
       closeModal("sale-modal");
       renderAll();
 
-      if (document.getElementById("page-profile").classList.contains("active")) {
-        openClientProfile(clientId);
-      }
-
       alert("Venda registrada com sucesso.");
     });
 
-    function getSalesByPeriod() {
-      const periodField = document.getElementById("abc-period");
-      const period = periodField ? periodField.value : "all";
+    document.getElementById("finance-form").addEventListener("submit", function(event) {
+      event.preventDefault();
 
-      if (period === "all") {
-        return database.sales;
-      }
-
-      const limit = new Date();
-
-      limit.setDate(limit.getDate() - Number(period));
-
-      return database.sales.filter(function(sale) {
-        return new Date(sale.date + "T12:00:00") >= limit;
+      database.finances.push({
+        id: createId("finance"),
+        type: document.getElementById("finance-type").value,
+        description: document.getElementById("finance-description").value.trim(),
+        value: Number(document.getElementById("finance-value").value || 0),
+        due: document.getElementById("finance-due").value,
+        status: document.getElementById("finance-status").value
       });
+
+      saveDatabase();
+      event.target.reset();
+      renderFinance();
+
+      alert("Movimentação registrada.");
+    });
+
+    function renderFinance() {
+      let receivable = 0;
+      let payable = 0;
+      let received = 0;
+      let paid = 0;
+
+      database.finances.forEach(function(item) {
+        if (item.type === "receber") {
+          item.status === "pago"
+            ? received += item.value
+            : receivable += item.value;
+        } else {
+          item.status === "pago"
+            ? paid += item.value
+            : payable += item.value;
+        }
+      });
+
+      document.getElementById("finance-receivable").textContent = money(receivable);
+      document.getElementById("finance-payable").textContent = money(payable);
+      document.getElementById("finance-received").textContent = money(received);
+      document.getElementById("finance-result").textContent = money(received - paid);
+
+      document.getElementById("finance-table").innerHTML =
+        database.finances.length
+          ? database.finances.map(function(item) {
+              return `
+                <tr>
+                  <td>${item.type === "receber" ? "A receber" : "A pagar"}</td>
+                  <td>${escapeHTML(item.description)}</td>
+                  <td>${money(item.value)}</td>
+                  <td>${dateBR(item.due)}</td>
+                  <td>${escapeHTML(item.status)}</td>
+                  <td>
+                    <button
+                      class="button small danger"
+                      onclick="deleteFinance('${item.id}')">
+                      Excluir
+                    </button>
+                  </td>
+                </tr>
+              `;
+            }).join("")
+          : `
+            <tr>
+              <td colspan="6" class="empty">
+                Nenhuma movimentação financeira.
+              </td>
+            </tr>
+          `;
     }
 
-    /*
-      REGRA DA CURVA ABC
-
-      1. Os registros são ordenados do maior para o menor faturamento.
-      2. O percentual individual é calculado sobre o faturamento total.
-      3. O percentual acumulado ANTES de somar o item define a curva:
-         - menor que 60%  -> Curva A
-         - de 60% até 90% -> Curva B
-         - 90% ou mais    -> Curva C
-      4. Itens sem faturamento ficam na Curva C.
-    */
-    function calculateABC(rows) {
-      const sorted = rows.slice().sort(function(a, b) {
-        return Number(b.revenue || 0) - Number(a.revenue || 0);
-      });
-
-      const total = sorted.reduce(function(sum, row) {
-        return sum + Number(row.revenue || 0);
-      }, 0);
-
-      let accumulated = 0;
-
-      return sorted.map(function(row, index) {
-        const revenue = Number(row.revenue || 0);
-
-        if (total <= 0 || revenue <= 0) {
-          return {
-            row: row,
-            index: index + 1,
-            individualPercentage: 0,
-            accumulatedPercentage: total > 0 ? accumulated : 0,
-            curve: "C"
-          };
-        }
-
-        const previous = accumulated;
-        const individual = revenue / total * 100;
-
-        accumulated += individual;
-
-        let curve = "C";
-
-        if (previous < 60) {
-          curve = "A";
-        } else if (previous < 90) {
-          curve = "B";
-        }
-
-        return {
-          row: row,
-          index: index + 1,
-          individualPercentage: individual,
-          accumulatedPercentage: accumulated,
-          curve: curve
-        };
-      });
+    function deleteFinance(id) {
+      database.finances = database.finances.filter(item => item.id !== id);
+      saveDatabase();
+      renderFinance();
     }
 
     function renderABC() {
-      const source = getSalesByPeriod();
+      const sales = getABCSales();
 
-      const productRows = database.products.map(function(product) {
+      const products = database.products.map(function(product) {
         return {
           product: product,
-          revenue: getProductRevenue(product.id, source),
-          quantity: getProductQuantity(product.id, source),
-          clients: getProductClients(product.id, source)
+          revenue: getProductRevenue(product.id, sales),
+          quantity: getProductQuantity(product.id, sales),
+          clients: new Set(
+            sales.filter(sale =>
+              sale.items.some(item => item.productId === product.id)
+            ).map(sale => sale.clientId)
+          ).size
         };
       });
 
-      const productsABC = calculateABC(productRows);
+      const productABC = calculateABC(products);
 
       document.getElementById("abc-products-table").innerHTML =
-        productsABC.length
-          ? productsABC.map(function(item) {
+        productABC.length
+          ? productABC.map(function(item) {
               const product = item.row.product;
               const supplier = getSupplier(product.supplierId);
 
               return `
                 <tr class="abc-row-${item.curve.toLowerCase()}">
                   <td>${item.index}</td>
-
                   <td>
                     <strong>${escapeHTML(product.name)}</strong>
                     <br>
-                    <span class="muted">
-                      SKU: ${escapeHTML(product.sku)}
-                    </span>
+                    <span class="muted">${escapeHTML(product.sku)}</span>
                   </td>
-
-                  <td>
-                    ${supplier ? supplierChip(supplier, true) : "—"}
-                  </td>
-
+                  <td>${supplier ? supplierChip(supplier, true) : "—"}</td>
                   <td>${abcBadge(item.curve)}</td>
                   <td>${item.row.quantity}</td>
                   <td class="green">${money(item.row.revenue)}</td>
-                  <td>${item.individualPercentage.toFixed(2)}%</td>
-                  <td>${item.accumulatedPercentage.toFixed(2)}%</td>
+                  <td>${item.individual.toFixed(2)}%</td>
+                  <td>${item.accumulated.toFixed(2)}%</td>
                   <td>${item.row.clients}</td>
                 </tr>
               `;
@@ -2847,8 +3002,8 @@
             </tr>
           `;
 
-      const clientRows = database.clients.map(function(client) {
-        const stats = getClientStats(client.id, source);
+      const clients = database.clients.map(function(client) {
+        const stats = getClientStats(client.id, sales);
 
         return {
           client: client,
@@ -2857,34 +3012,22 @@
         };
       });
 
-      const clientsABC = calculateABC(clientRows);
+      const clientABC = calculateABC(clients);
 
       document.getElementById("abc-clients-table").innerHTML =
-        clientsABC.length
-          ? clientsABC.map(function(item) {
-              const client = item.row.client;
-
+        clientABC.length
+          ? clientABC.map(function(item) {
               return `
-                <tr
-                  class="clickable abc-row-${item.curve.toLowerCase()}"
-                  onclick="openClientProfile('${client.id}')">
-
-                  <td>
-                    <strong>${escapeHTML(client.name)}</strong>
-                  </td>
-
+                <tr class="abc-row-${item.curve.toLowerCase()}">
+                  <td>${escapeHTML(item.row.client.name)}</td>
                   <td>${abcBadge(item.curve)}</td>
                   <td>${item.row.stats.sales.length}</td>
-                  <td>${item.row.stats.items}</td>
                   <td class="green">${money(item.row.revenue)}</td>
-                  <td>${item.individualPercentage.toFixed(2)}%</td>
-                  <td>${item.accumulatedPercentage.toFixed(2)}%</td>
-                  <td>${dateBR(item.row.stats.lastSale)}</td>
-
+                  <td>${item.accumulated.toFixed(2)}%</td>
                   <td>
                     <button
-                      class="button small primary"
-                      onclick="event.stopPropagation();openClientProfile('${client.id}')">
+                      class="button small"
+                      onclick="openClientProfile('${item.row.client.id}')">
                       Ver perfil
                     </button>
                   </td>
@@ -2893,18 +3036,31 @@
             }).join("")
           : `
             <tr>
-              <td colspan="9" class="empty">
+              <td colspan="6" class="empty">
                 Cadastre clientes e vendas para calcular a Curva ABC.
               </td>
             </tr>
           `;
     }
 
-    function getSuggestions(clientId) {
-      const clientStats = getClientStats(clientId);
-      const purchased = Object.keys(clientStats.quantities);
+    function getABCSales() {
+      const period = document.getElementById("abc-period")?.value || "all";
 
-      const abc = calculateABC(
+      if (period === "all") return database.sales;
+
+      const start = new Date();
+      start.setDate(start.getDate() - Number(period));
+
+      return database.sales.filter(function(sale) {
+        return new Date(sale.date + "T12:00:00") >= start;
+      });
+    }
+
+    function getSuggestions(clientId) {
+      const stats = getClientStats(clientId);
+      const purchased = Object.keys(stats.quantities);
+
+      const classification = calculateABC(
         database.products.map(function(product) {
           return {
             product: product,
@@ -2913,63 +3069,9 @@
         })
       );
 
-      return abc
-        .filter(function(item) {
-          return !purchased.includes(item.row.product.id);
-        })
-        .map(function(item) {
-          return {
-            product: item.row.product,
-            revenue: item.row.revenue,
-            curve: item.curve
-          };
-        });
-    }
-
-    function getLowerPurchases(clientId) {
-      const clientStats = getClientStats(clientId);
-      const result = [];
-
-      database.products.forEach(function(product) {
-        const clientQuantity = Number(
-          clientStats.quantities[product.id] || 0
-        );
-
-        if (clientQuantity <= 0) return;
-
-        let total = 0;
-        let buyers = 0;
-
-        database.clients.forEach(function(client) {
-          const stats = getClientStats(client.id);
-          const quantity = Number(stats.quantities[product.id] || 0);
-
-          if (quantity > 0) {
-            total += quantity;
-            buyers++;
-          }
-        });
-
-        if (!buyers) return;
-
-        const average = total / buyers;
-
-        if (clientQuantity < average) {
-          const reason = database.lowerReasons.find(function(item) {
-            return item.clientId === clientId &&
-              item.productId === product.id;
-          });
-
-          result.push({
-            product: product,
-            clientQuantity: clientQuantity,
-            average: average,
-            reason: reason ? reason.reason : ""
-          });
-        }
+      return classification.filter(function(item) {
+        return !purchased.includes(item.row.product.id);
       });
-
-      return result;
     }
 
     function openClientProfile(clientId) {
@@ -2978,119 +3080,12 @@
       if (!client) return;
 
       const stats = getClientStats(clientId);
-      const purchasedSuppliers = [];
-
-      Object.keys(stats.quantities).forEach(function(productId) {
-        const product = getProduct(productId);
-
-        if (product && !purchasedSuppliers.includes(product.supplierId)) {
-          purchasedSuppliers.push(product.supplierId);
-        }
-      });
-
-      const suppliersHTML = database.suppliers.length
-        ? database.suppliers.map(function(supplier) {
-            return supplierChip(
-              supplier,
-              purchasedSuppliers.includes(supplier.id)
-            );
-          }).join("")
-        : `<span class="muted">Nenhum fornecedor cadastrado.</span>`;
-
-      const ordersHTML = stats.sales.length
-        ? stats.sales
-            .slice()
-            .sort(function(a, b) {
-              return String(b.date).localeCompare(String(a.date));
-            })
-            .map(function(sale) {
-              const seller = getSeller(sale.sellerId);
-
-              return `
-                <div class="list-item">
-                  <strong>
-                    Pedido de ${dateBR(sale.date)}
-                    · ${money(getSaleTotal(sale))}
-                  </strong>
-
-                  <div class="muted">
-                    Vendedor:
-                    ${escapeHTML(seller ? seller.name : "—")}
-                    · ${escapeHTML(sale.channel || "—")}
-                  </div>
-
-                  <div class="actions">
-                    <button
-                      class="button small"
-                      onclick="openOrder('${sale.id}')">
-                      Ver pedido
-                    </button>
-
-                    <button
-                      class="button small primary"
-                      onclick="downloadPDF('${sale.id}')">
-                      Baixar PDF
-                    </button>
-                  </div>
-                </div>
-              `;
-            }).join("")
-        : `<div class="empty">Nenhum pedido para este cliente.</div>`;
-
       const suggestions = getSuggestions(clientId);
-
-      const suggestionsHTML = suggestions.length
-        ? suggestions.slice(0, 15).map(function(item) {
-            const supplier = getSupplier(item.product.supplierId);
-
-            return `
-              <div class="list-item abc-row-${item.curve.toLowerCase()}">
-                <strong>${escapeHTML(item.product.name)}</strong>
-
-                <div class="muted">
-                  SKU: ${escapeHTML(item.product.sku)}
-                  · ${abcBadge(item.curve)}
-                  · ${escapeHTML(supplier ? supplier.name : "Sem fornecedor")}
-                </div>
-              </div>
-            `;
-          }).join("")
-        : `<div class="empty">Nenhuma sugestão disponível.</div>`;
-
-      const lowerPurchases = getLowerPurchases(clientId);
-
-      const lowerHTML = lowerPurchases.length
-        ? lowerPurchases.map(function(item) {
-            return `
-              <div class="list-item">
-                <strong>${escapeHTML(item.product.name)}</strong>
-
-                <div class="muted">
-                  Comprado pelo cliente:
-                  <strong style="display:inline">${item.clientQuantity}</strong>
-                  · Média dos clientes:
-                  <strong style="display:inline">${item.average.toFixed(1)}</strong>
-                </div>
-
-                <div class="field" style="margin-top:8px">
-                  <label>Motivo da compra menor</label>
-
-                  <input
-                    value="${escapeHTML(item.reason)}"
-                    placeholder="Informe o motivo..."
-                    onchange="saveLowerReason('${clientId}','${item.product.id}',this.value)">
-                </div>
-              </div>
-            `;
-          }).join("")
-        : `<div class="empty">Nenhum produto abaixo da média.</div>`;
 
       document.getElementById("client-profile").innerHTML = `
         <div class="profile-header">
           <div>
-            <button
-              class="button small"
-              onclick="showPage('clientes');renderAll()">
+            <button class="button small" onclick="showPage('clientes');renderAll()">
               ← Voltar
             </button>
 
@@ -3099,29 +3094,13 @@
             <div class="muted">
               ${escapeHTML(client.phone || "Sem telefone")}
               · ${escapeHTML(client.email || "Sem e-mail")}
-              · ${escapeHTML(client.city || "Sem cidade")}
+              · ${escapeHTML(client.document || "Sem documento")}
             </div>
           </div>
 
-          <div class="actions" style="margin-top:0">
-            <button
-              class="button primary"
-              onclick="openSaleModal('${client.id}')">
-              + Nova venda
-            </button>
-
-            <button
-              class="button"
-              onclick="document.getElementById('attachment-input').click()">
-              Anexar arquivo
-            </button>
-
-            <input
-              id="attachment-input"
-              type="file"
-              hidden
-              onchange="saveAttachment('${client.id}', this.files[0])">
-          </div>
+          <button class="button primary" onclick="openSaleModal('${client.id}')">
+            + Nova venda
+          </button>
         </div>
 
         <div class="cards">
@@ -3131,7 +3110,7 @@
           </div>
 
           <div class="card">
-            <div class="metric-label">Itens comprados</div>
+            <div class="metric-label">Itens</div>
             <div class="metric-value">${stats.items}</div>
           </div>
 
@@ -3141,48 +3120,75 @@
           </div>
 
           <div class="card">
-            <div class="metric-label">Status</div>
-            <div class="metric-value" style="font-size:16px">
-              ${getClientStatus(client)}
+            <div class="metric-label">Última compra</div>
+            <div class="metric-value" style="font-size:17px">
+              ${dateBR(stats.lastSale)}
             </div>
           </div>
         </div>
 
         <div class="profile-columns">
-          <div>
-            <div class="panel">
-              <h2>Fornecedores do cliente</h2>
+          <div class="panel">
+            <h2>Pedidos do cliente</h2>
 
-              <div class="chips">
-                ${suppliersHTML}
-              </div>
+            <div class="list">
+              ${
+                stats.sales.length
+                  ? stats.sales.map(function(sale) {
+                      return `
+                        <div class="list-item">
+                          <strong>
+                            ${dateBR(sale.date)} · ${money(saleTotal(sale))}
+                          </strong>
 
-              <div class="muted" style="margin-top:10px">
-                Colorido: já comprou deste fornecedor.
-                Cinza: ainda não comprou.
-              </div>
-            </div>
+                          <div class="muted">
+                            Vendedor:
+                            ${escapeHTML(getSeller(sale.sellerId)?.name || "—")}
+                          </div>
 
-            <div class="panel">
-              <h2>Histórico de pedidos</h2>
-              <div class="list">${ordersHTML}</div>
-            </div>
+                          <div class="actions">
+                            <button
+                              class="button small"
+                              onclick="openOrder('${sale.id}')">
+                              Detalhes
+                            </button>
 
-            <div class="panel">
-              <h2>Anexos</h2>
-              ${renderAttachments(clientId)}
+                            <button
+                              class="button small primary"
+                              onclick="downloadPDF('${sale.id}')">
+                              PDF
+                            </button>
+                          </div>
+                        </div>
+                      `;
+                    }).join("")
+                  : `<div class="empty">Nenhum pedido.</div>`
+              }
             </div>
           </div>
 
-          <div>
-            <div class="panel">
-              <h2>Sugestões de produtos</h2>
-              <div class="list">${suggestionsHTML}</div>
-            </div>
+          <div class="panel">
+            <h2>Sugestões de produtos</h2>
 
-            <div class="panel">
-              <h2>Produtos abaixo da média</h2>
-              <div class="list">${lowerHTML}</div>
+            <div class="list">
+              ${
+                suggestions.length
+                  ? suggestions.slice(0, 15).map(function(item) {
+                      return `
+                        <div class="list-item abc-row-${item.curve.toLowerCase()}">
+                          <strong>
+                            ${escapeHTML(item.row.product.name)}
+                          </strong>
+
+                          <div class="muted">
+                            SKU: ${escapeHTML(item.row.product.sku)}
+                            · ${abcBadge(item.curve)}
+                          </div>
+                        </div>
+                      `;
+                    }).join("")
+                  : `<div class="empty">Nenhuma sugestão.</div>`
+              }
             </div>
           </div>
         </div>
@@ -3191,236 +3197,66 @@
       showPage("profile");
     }
 
-    function saveLowerReason(clientId, productId, reason) {
-      const existing = database.lowerReasons.find(function(item) {
-        return item.clientId === clientId &&
-          item.productId === productId;
-      });
-
-      if (existing) {
-        existing.reason = reason;
-      } else {
-        database.lowerReasons.push({
-          id: createId("reason"),
-          clientId: clientId,
-          productId: productId,
-          reason: reason
-        });
-      }
-
-      saveDatabase();
-    }
-
-    function renderAttachments(clientId) {
-      const files = database.attachments.filter(function(file) {
-        return file.clientId === clientId;
-      });
-
-      if (!files.length) {
-        return `<div class="empty">Nenhum anexo cadastrado.</div>`;
-      }
-
-      return `
-        <div class="list">
-          ${files.map(function(file) {
-            return `
-              <div class="list-item">
-                <strong>${escapeHTML(file.name)}</strong>
-
-                <div class="muted">
-                  Adicionado em ${dateBR(file.date)}
-                </div>
-
-                <div class="actions">
-                  <a
-                    class="button small"
-                    href="${file.data}"
-                    target="_blank"
-                    rel="noopener">
-                    Visualizar
-                  </a>
-
-                  <a
-                    class="button small"
-                    href="${file.data}"
-                    download="${escapeHTML(file.name)}">
-                    Baixar
-                  </a>
-
-                  <button
-                    class="button small danger"
-                    onclick="deleteAttachment('${file.id}','${clientId}')">
-                    Excluir
-                  </button>
-                </div>
-              </div>
-            `;
-          }).join("")}
-        </div>
-      `;
-    }
-
-    function saveAttachment(clientId, file) {
-      if (!file) return;
-
-      const reader = new FileReader();
-
-      reader.onload = function() {
-        database.attachments.push({
-          id: createId("file"),
-          clientId: clientId,
-          name: file.name,
-          type: file.type,
-          data: reader.result,
-          date: today()
-        });
-
-        saveDatabase();
-        openClientProfile(clientId);
-      };
-
-      reader.readAsDataURL(file);
-    }
-
-    function deleteAttachment(fileId, clientId) {
-      if (!confirm("Excluir este anexo?")) return;
-
-      database.attachments = database.attachments.filter(function(file) {
-        return file.id !== fileId;
-      });
-
-      saveDatabase();
-      openClientProfile(clientId);
-    }
-
-    function getWarrantyPendencies() {
-      const result = [];
-
-      database.sales.forEach(function(sale) {
-        (sale.items || []).forEach(function(item) {
-          if (!item.warrantyActive) return;
-
-          const product = getProduct(item.productId);
-          const client = getClient(sale.clientId);
-
-          if (product && client) {
-            result.push({
-              sale: sale,
-              item: item,
-              product: product,
-              client: client
-            });
-          }
-        });
-      });
-
-      return result;
-    }
-
     function openOrder(saleId) {
-      const sale = database.sales.find(function(item) {
-        return item.id === saleId;
-      });
+      const sale = database.sales.find(item => item.id === saleId);
 
       if (!sale) return;
 
       const client = getClient(sale.clientId);
       const seller = getSeller(sale.sellerId);
 
-      const rows = sale.items.map(function(item) {
-        const product = getProduct(item.productId);
-        const supplier = getSupplier(item.supplierId);
-
-        return `
-          <tr>
-            <td>
-              <strong>${escapeHTML(product ? product.name : "Produto removido")}</strong>
-              <br>
-              <span class="muted">
-                SKU: ${escapeHTML(item.sku || "—")}
-              </span>
-            </td>
-
-            <td>${supplier ? supplierChip(supplier, true) : "—"}</td>
-            <td>${item.quantity}</td>
-            <td>${money(item.price)}</td>
-            <td class="green">${money(item.quantity * item.price)}</td>
-
-            <td>
-              ${
-                item.warrantyActive
-                  ? `<span class="badge badge-active">Ativa até ${dateBR(item.warrantyEnd)}</span>`
-                  : `<span class="badge badge-inactive">Inativa</span>`
-              }
-            </td>
-
-            <td>
-              ${
-                item.warrantyActive
-                  ? ""
-                  : `
-                    <button
-                      class="button small success"
-                      onclick="activateWarranty('${sale.id}','${item.productId}')">
-                      Ativar
-                    </button>
-                  `
-              }
-            </td>
-          </tr>
-        `;
-      }).join("");
-
       document.getElementById("order-details").innerHTML = `
         <div class="card">
-          <strong>${escapeHTML(client ? client.name : "Cliente removido")}</strong>
+          <strong>${escapeHTML(client?.name || "Cliente")}</strong>
 
           <div class="muted">
-            ${escapeHTML(client ? client.phone || "Sem telefone" : "Sem telefone")}
-            · ${escapeHTML(client ? client.email || "Sem e-mail" : "Sem e-mail")}
+            ${escapeHTML(client?.phone || "Sem telefone")}
+            · ${escapeHTML(client?.email || "Sem e-mail")}
           </div>
 
-          <div class="muted" style="margin-top:7px">
+          <div class="muted" style="margin-top:6px">
             Data: ${dateBR(sale.date)}
-            · Vendedor: ${escapeHTML(seller ? seller.name : "—")}
-            · Canal: ${escapeHTML(sale.channel || "—")}
+            · Vendedor: ${escapeHTML(seller?.name || "—")}
           </div>
         </div>
 
-        <div class="table-container" style="margin-top:15px">
+        <div class="table-wrap" style="margin-top:15px">
           <table>
             <thead>
               <tr>
-                <th>Produto</th>
                 <th>Fornecedor</th>
+                <th>SKU</th>
+                <th>Produto</th>
                 <th>Qtd.</th>
                 <th>Preço</th>
                 <th>Total</th>
-                <th>Garantia</th>
-                <th>Ação</th>
               </tr>
             </thead>
-            <tbody>${rows}</tbody>
+
+            <tbody>
+              ${sale.items.map(function(item) {
+                const supplier = getSupplier(item.supplierId);
+                const product = getProduct(item.productId);
+
+                return `
+                  <tr>
+                    <td>${supplier ? supplierChip(supplier, true) : "—"}</td>
+                    <td>${escapeHTML(item.sku)}</td>
+                    <td>${escapeHTML(product?.name || "Produto removido")}</td>
+                    <td>${item.quantity}</td>
+                    <td>${money(item.price)}</td>
+                    <td class="green">${money(item.price * item.quantity)}</td>
+                  </tr>
+                `;
+              }).join("")}
+            </tbody>
           </table>
         </div>
 
-        <div style="margin-top:18px;text-align:right;font-size:20px">
+        <div style="margin-top:16px;text-align:right;font-size:20px">
           Total:
-          <strong class="green">${money(getSaleTotal(sale))}</strong>
+          <strong class="green">${money(saleTotal(sale))}</strong>
         </div>
-
-        ${
-          sale.notes
-            ? `
-              <div class="card" style="margin-top:15px">
-                <strong>Observações</strong>
-                <div class="muted" style="margin-top:6px">
-                  ${escapeHTML(sale.notes)}
-                </div>
-              </div>
-            `
-            : ""
-        }
 
         <div class="actions">
           <button
@@ -3434,51 +3270,23 @@
       document.getElementById("order-modal").classList.add("open");
     }
 
-    function activateWarranty(saleId, productId) {
-      const sale = database.sales.find(function(item) {
-        return item.id === saleId;
-      });
-
-      if (!sale) return;
-
-      const item = sale.items.find(function(saleItem) {
-        return saleItem.productId === productId;
-      });
-
-      const product = getProduct(productId);
-
-      if (!item || !product) return;
-
-      const start = new Date();
-      const end = new Date(start);
-
-      end.setDate(end.getDate() + Number(product.warrantyDays || 0));
-
-      item.warrantyActive = true;
-      item.warrantyStart = start.toISOString().substring(0, 10);
-      item.warrantyEnd = end.toISOString().substring(0, 10);
-
-      saveDatabase();
-      renderAll();
-      openOrder(saleId);
-
-      alert("Garantia ativada com sucesso.");
+    function openClientLogo(client) {
+      return client && client.logo ? client.logo : "";
     }
 
     function downloadPDF(saleId) {
-      const sale = database.sales.find(function(item) {
-        return item.id === saleId;
-      });
+      const sale = database.sales.find(item => item.id === saleId);
 
       if (!sale) return;
 
-      const PDF = window.jspdf ? window.jspdf.jsPDF : null;
+      const PDF = window.jspdf?.jsPDF;
 
       if (!PDF) {
-        alert("Não foi possível carregar o gerador de PDF. Verifique sua conexão com a internet.");
+        alert("A biblioteca PDF não foi carregada.");
         return;
       }
 
+      const company = database.company;
       const client = getClient(sale.clientId);
       const seller = getSeller(sale.sellerId);
       const pdf = new PDF();
@@ -3486,68 +3294,112 @@
       let y = 20;
 
       pdf.setFillColor(229, 9, 20);
-      pdf.rect(0, 0, 210, 10, "F");
+      pdf.rect(0, 0, 210, 8, "F");
+
+      if (company.logo) {
+        try {
+          pdf.addImage(company.logo, "PNG", 15, y - 8, 28, 18);
+        } catch (error) {
+          console.warn("Logo da empresa não pôde ser inserida.");
+        }
+      }
+
+      if (client?.logo) {
+        try {
+          pdf.addImage(client.logo, "PNG", 167, y - 8, 28, 18);
+        } catch (error) {
+          console.warn("Logo do cliente não pôde ser inserida.");
+        }
+      }
 
       pdf.setTextColor(0, 0, 0);
-      pdf.setFontSize(18);
+      pdf.setFontSize(16);
+      pdf.text(company.name || "Empresa", 48, y);
+
+      pdf.setFontSize(8);
+      pdf.text(
+        [
+          company.document || "",
+          company.phone || "",
+          company.email || "",
+          company.address || ""
+        ].filter(Boolean).join(" · ").substring(0, 100),
+        48,
+        y + 6
+      );
+
+      y += 26;
+
+      pdf.setFontSize(15);
       pdf.text("PEDIDO COMERCIAL", 15, y);
 
       y += 10;
       pdf.setFontSize(10);
 
-      pdf.text("Cliente: " + (client ? client.name : "—"), 15, y);
+      pdf.text("Cliente: " + (client?.name || "—"), 15, y);
       y += 6;
 
-      pdf.text("Telefone: " + (client ? client.phone || "—" : "—"), 15, y);
+      pdf.text("Documento: " + (client?.document || "—"), 15, y);
       y += 6;
 
-      pdf.text("Data: " + dateBR(sale.date), 15, y);
+      pdf.text("Telefone: " + (client?.phone || "—"), 15, y);
       y += 6;
 
-      pdf.text(
-        "Vendedor: " +
-        (seller ? seller.name : "—") +
-        " | Canal: " +
-        (sale.channel || "—"),
-        15,
-        y
-      );
+      pdf.text("E-mail: " + (client?.email || "—"), 15, y);
+      y += 6;
 
+      pdf.text("Endereço: " + (client?.address || "—"), 15, y);
+      y += 6;
+
+      pdf.text("Data do pedido: " + dateBR(sale.date), 15, y);
+      y += 6;
+
+      pdf.text("Vendedor: " + (seller?.name || "—"), 15, y);
+      y += 6;
+
+      pdf.text("Canal: " + (sale.channel || "—"), 15, y);
       y += 12;
 
       pdf.setFillColor(40, 40, 40);
       pdf.setTextColor(255, 255, 255);
       pdf.rect(15, y - 5, 180, 8, "F");
 
-      pdf.text("Produto / SKU", 18, y);
-      pdf.text("Fornecedor", 95, y);
-      pdf.text("Qtd.", 137, y);
-      pdf.text("Total", 165, y);
+      pdf.text("Fornecedor", 17, y);
+      pdf.text("SKU", 55, y);
+      pdf.text("Produto", 82, y);
+      pdf.text("Qtd.", 140, y);
+      pdf.text("Unitário", 153, y);
+      pdf.text("Total", 177, y);
 
       y += 9;
       pdf.setTextColor(0, 0, 0);
-      pdf.setFontSize(9);
+      pdf.setFontSize(8);
 
       sale.items.forEach(function(item) {
-        const product = getProduct(item.productId);
         const supplier = getSupplier(item.supplierId);
+        const product = getProduct(item.productId);
 
         pdf.text(
-          (product ? product.name : "Produto removido").substring(0, 32) +
-          " / " +
-          (item.sku || "—"),
-          18,
+          (supplier?.name || "—").substring(0, 18),
+          17,
           y
         );
 
         pdf.text(
-          (supplier ? supplier.name : "—").substring(0, 20),
-          95,
+          (item.sku || "—").substring(0, 14),
+          55,
           y
         );
 
-        pdf.text(String(item.quantity), 137, y);
-        pdf.text(money(item.quantity * item.price), 165, y);
+        pdf.text(
+          (product?.name || "Produto removido").substring(0, 30),
+          82,
+          y
+        );
+
+        pdf.text(String(item.quantity), 142, y);
+        pdf.text(money(item.price), 153, y);
+        pdf.text(money(item.price * item.quantity), 177, y);
 
         y += 7;
 
@@ -3557,155 +3409,118 @@
         }
       });
 
-      y += 8;
+      y += 10;
       pdf.setFontSize(13);
-      pdf.text("TOTAL: " + money(getSaleTotal(sale)), 135, y);
+      pdf.text("TOTAL DO PEDIDO: " + money(saleTotal(sale)), 125, y);
+
+      y += 14;
+      pdf.setFontSize(9);
 
       if (sale.notes) {
-        y += 12;
-        pdf.setFontSize(10);
         pdf.text("Observações:", 15, y);
         y += 6;
         pdf.text(pdf.splitTextToSize(sale.notes, 175), 15, y);
+        y += 12;
       }
 
-      pdf.save("pedido-" + (sale.date || today()) + ".pdf");
+      pdf.setFontSize(8);
+      pdf.text(
+        "Documento gerado pelo sistema de Gestão Comercial.",
+        15,
+        285
+      );
+
+      pdf.save(
+        "pedido-" +
+        (client?.name || "cliente").replace(/[^a-z0-9]/gi, "-") +
+        "-" +
+        sale.date +
+        ".pdf"
+      );
     }
 
-    document.getElementById("finance-form").addEventListener("submit", function(event) {
+    document.getElementById("company-form").addEventListener("submit", function(event) {
       event.preventDefault();
 
-      database.finances.push({
-        id: createId("finance"),
-        type: document.getElementById("finance-type").value,
-        description: document.getElementById("finance-description").value.trim(),
-        value: Number(document.getElementById("finance-value").value || 0),
-        due: document.getElementById("finance-due").value,
-        status: document.getElementById("finance-status").value,
-        createdAt: today()
-      });
+      database.company = {
+        name: document.getElementById("company-name").value.trim(),
+        document: document.getElementById("company-document").value.trim(),
+        phone: document.getElementById("company-phone").value.trim(),
+        email: document.getElementById("company-email").value.trim(),
+        logo: document.getElementById("company-logo").value.trim(),
+        address: document.getElementById("company-address").value.trim()
+      };
 
       saveDatabase();
-      event.target.reset();
-      renderFinance();
 
-      alert("Movimentação financeira salva.");
+      alert("Dados da empresa salvos.");
     });
 
-    function renderFinance() {
-      let receivable = 0;
-      let payable = 0;
-      let received = 0;
-      let paid = 0;
-
-      database.finances.forEach(function(item) {
-        const value = Number(item.value || 0);
-
-        if (item.type === "receber") {
-          if (item.status === "pendente") {
-            receivable += value;
-          } else {
-            received += value;
-          }
-        }
-
-        if (item.type === "pagar") {
-          if (item.status === "pendente") {
-            payable += value;
-          } else {
-            paid += value;
-          }
-        }
-      });
-
-      const result = received - paid;
-
-      document.getElementById("finance-receivable").textContent =
-        money(receivable);
-
-      document.getElementById("finance-payable").textContent =
-        money(payable);
-
-      document.getElementById("finance-received").textContent =
-        money(received);
-
-      document.getElementById("finance-result").textContent =
-        money(result);
-
-      document.getElementById("finance-table").innerHTML =
-        database.finances.length
-          ? database.finances
-              .slice()
-              .reverse()
-              .map(function(item) {
-                return `
-                  <tr>
-                    <td>
-                      <span class="badge ${
-                        item.type === "receber"
-                          ? "badge-active"
-                          : "badge-inactive"
-                      }">
-                        ${
-                          item.type === "receber"
-                            ? "A receber"
-                            : "A pagar"
-                        }
-                      </span>
-                    </td>
-
-                    <td>${escapeHTML(item.description)}</td>
-                    <td>${money(item.value)}</td>
-                    <td>${dateBR(item.due)}</td>
-                    <td>${escapeHTML(item.status)}</td>
-
-                    <td>
-                      <button
-                        class="button small danger"
-                        onclick="deleteFinance('${item.id}')">
-                        Excluir
-                      </button>
-                    </td>
-                  </tr>
-                `;
-              }).join("")
-          : `
-            <tr>
-              <td colspan="6" class="empty">
-                Nenhuma movimentação financeira.
-              </td>
-            </tr>
-          `;
+    function loadCompanyForm() {
+      document.getElementById("company-name").value = database.company.name || "";
+      document.getElementById("company-document").value = database.company.document || "";
+      document.getElementById("company-phone").value = database.company.phone || "";
+      document.getElementById("company-email").value = database.company.email || "";
+      document.getElementById("company-logo").value = database.company.logo || "";
+      document.getElementById("company-address").value = database.company.address || "";
     }
 
-    function deleteFinance(financeId) {
-      database.finances = database.finances.filter(function(item) {
-        return item.id !== financeId;
-      });
+    document.getElementById("settings-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      const monthly = Number(
+        document.getElementById("monthly-goal").value || 0
+      );
+
+      const days = Number(
+        document.getElementById("considered-days").value || 1
+      );
+
+      database.settings.monthlyGoal = monthly;
+      database.settings.consideredDays = days;
+      database.settings.dailyGoal = monthly / Math.max(days, 1);
 
       saveDatabase();
-      renderFinance();
+      closeModal("settings-modal");
+      renderAll();
+
+      alert("Meta salva com sucesso.");
+    });
+
+    function openSettingsModal() {
+      document.getElementById("monthly-goal").value =
+        database.settings.monthlyGoal || "";
+
+      document.getElementById("considered-days").value =
+        database.settings.consideredDays || 30;
+
+      document.getElementById("daily-goal").value =
+        database.settings.dailyGoal || "";
+
+      document.getElementById("settings-modal").classList.add("open");
     }
 
-    function sendBirthday(clientId) {
-      const client = getClient(clientId);
+    document.getElementById("monthly-goal").addEventListener(
+      "input",
+      calculateDailyGoal
+    );
 
-      if (!client || !client.phone) {
-        alert("O cliente não possui telefone cadastrado.");
-        return;
-      }
+    document.getElementById("considered-days").addEventListener(
+      "input",
+      calculateDailyGoal
+    );
 
-      const phone = client.phone.replace(/\D/g, "");
-
-      const message = encodeURIComponent(
-        "Olá, " + client.name +
-        "! Desejamos um feliz aniversário, muita saúde e sucesso!"
+    function calculateDailyGoal() {
+      const monthly = Number(
+        document.getElementById("monthly-goal").value || 0
       );
 
-      window.open(
-        "https://wa.me/55" + phone + "?text=" + message,
-        "_blank"
+      const days = Number(
+        document.getElementById("considered-days").value || 1
       );
+
+      document.getElementById("daily-goal").value =
+        (monthly / Math.max(days, 1)).toFixed(2);
     }
 
     function closeModal(id) {
@@ -3720,6 +3535,46 @@
       });
     });
 
+    function showPage(page) {
+      document.querySelectorAll(".page").forEach(function(item) {
+        item.classList.remove("active");
+      });
+
+      document.querySelectorAll(".nav").forEach(function(item) {
+        item.classList.remove("active");
+      });
+
+      document.getElementById("page-" + page)?.classList.addactive");
+      document.querySelector('[data-page="' + page + '"]')?.classList.add("active");
+
+      const titles = {
+        dashboard: "Dashboard",
+        clientes: "Clientes",
+        produtos: "Produtos",
+        fornecedores: "Fornecedores",
+        vendedores: "Vendedores",
+        financeiro: "Financeiro",
+        abc: "Curva ABC",
+        configuracoes: "Configurações",
+        profile: "Perfil do cliente"
+      };
+
+      document.getElementById("page-title").textContent =
+        titles[page] || "Gestão";
+
+      window.scrollTo(0, 0);
+    }
+
+    document.querySelectorAll(".nav").forEach(function(button) {
+      button.addEventListener("click", function() {
+        showPage(button.dataset.page);
+        renderAll();
+      });
+    });
+
+    loadCompanyForm();
+    renderComparisonFilters();
+    updateSelects();
     renderAll();
   </script>
 </body>
